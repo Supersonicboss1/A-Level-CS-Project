@@ -1,7 +1,11 @@
 <script>
-	import Counter from './Counter.svelte';
-	import welcome from '$lib/images/svelte-welcome.webp';
-	import welcome_fallback from '$lib/images/svelte-welcome.png';
+	async function fetch_data() {
+		const response = await fetch('http://localhost:8000/api/');
+		const data = await response.json();
+		console.log(data);
+		return data;
+	}
+	let d = fetch_data();
 </script>
 
 <svelte:head>
@@ -10,7 +14,35 @@
 </svelte:head>
 
 <section>
-	TEST TEST
+	<main>
+		{#await d}
+			<p>loading...</p>
+		{:then d}
+			Count: {d.length}
+			{#each d as item}
+				<p>{item}</p>
+			{/each}
+		{:catch error}
+			<p style="color: red">{error}</p>
+		{/await}
+		<slot />
+	</main>
+	<button
+		on:click={async () => {
+			await fetch('http://localhost:8000/api/add?data=OMAR');
+			d = fetch_data();
+		}}
+	>
+		INCREASE THE OMARS
+	</button>
+	<button
+		on:click={async () => {
+			await fetch('http://localhost:8000/api/clear');
+			d = fetch_data();
+		}}
+	>
+		CLEAR THE OMARS
+	</button>
 </section>
 
 <style>
@@ -20,25 +52,5 @@
 		justify-content: center;
 		align-items: center;
 		flex: 0.6;
-	}
-
-	h1 {
-		width: 100%;
-	}
-
-	.welcome {
-		display: block;
-		position: relative;
-		width: 100%;
-		height: 0;
-		padding: 0 0 calc(100% * 495 / 2048) 0;
-	}
-
-	.welcome img {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		display: block;
 	}
 </style>
