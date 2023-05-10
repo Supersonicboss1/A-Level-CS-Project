@@ -1,18 +1,6 @@
 <script lang="ts">
 	// const urlAPI = 'https://supersonicboss1-turbo-tribble-6rwr74774r72xv69-8000.preview.app.github.dev/api'
-	const urlAPI = `https://${import.meta.env.VITE_CSNAME}-8000.preview.app.github.dev/api/`;
-	async function fetchBackend(route: string) {
-		const x = urlAPI + route;
-		// check if any double slashes after https://
-		const y = x.replace(/([^:]\/)\/+/g, '$1');
-		return fetch(y, {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json',
-				'X-Github-Token': 'ghu_6RiErA4QT7TtwYn55bZ1Vq01ejPclh0C7SWj'
-			}
-		});
-	}
+	import { fetchBackend, urlAPI } from '$lib/api';
 	console.log(urlAPI);
 	async function fetch_data() {
 		const response = await fetchBackend('/');
