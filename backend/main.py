@@ -1,6 +1,8 @@
 """Main REST API"""
 from typing import Union
 
+from pydantic import BaseModel
+
 import auth
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -13,10 +15,12 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
-)
+) 
 
 datav = []
-
+class Data(BaseModel):
+    username: str
+    password: str
 
 @app.get("/api")
 def read_root():
@@ -46,21 +50,22 @@ def pop_data():
 
 
 # user authentication
-@app.get("/api/auth/register")
-def register(username: str, password: str) -> bool:
+@app.post("/api/auth/register")
+def register(data: Data) -> bool:
     """registers a user with the given username and password"""
-    auth.User(username, password)
+    auth.User(data.username, data.password)
     return True
 
 
-@app.get("/api/auth/login")
-def login(username: str, password: str) -> Union[dict, bool]:
+@app.post("/api/auth/login")
+def login(data: Data) -> Union[dict, bool]:
     """logs in a user with the given username and password"""
-    user = auth.login(username, password) # maybe have this return a cookie instead of a bool
+    user = auth.login(data.username, data.password) # maybe have this return a cookie instead of a bool
     if user:
-        return True
+        return user.get_user_info()
     return False
-# i don't know how to handle a 'session'. so for now, handle it on the frontend, and they can communicate with the backend to check if they're logged in or not using a cookie or something
+# i don't know how to handle a 'session'. so for now, handle it on the frontend, 
+# and they can communicate with the backend to check if they're logged in or not using a cookie or something
 
 @app.get("/api/auth/info")
 def get_user_info(username: str) -> Union[dict, bool]:
