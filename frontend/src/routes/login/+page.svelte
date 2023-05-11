@@ -6,11 +6,11 @@
 	};
 	let isSignUp = false;
 	export let data;
-	const userData = {
+	const userDataClient = {
 		// @ts-ignore
-		username: data.body.u.username,
+		username: data.body.userData.username,
 		// @ts-ignore
-		userID: data.body.u.user_id
+		userID: data.body.userData.user_id
 	};
 </script>
 
@@ -39,8 +39,8 @@
 	<button type="submit" on:click={() => (isSignUp = true)}>Sign Up</button>
 </form>
 <p>{signInResponse}</p>
-{userData.username}
-{userData.userID}
+{userDataClient.username}
+{userDataClient.userID}
 
 <style>
 	* {
