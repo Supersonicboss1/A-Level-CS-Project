@@ -1,0 +1,11 @@
+{
+    "recommendations": [
+        "charliermarsh.ruff",
+        "svelte.svelte-vscode",
+        "ms-python.python",
+        "vunguyentuan.vscode-postcss",
+        "ms-python.black-formatter",
+        "ms-playwright.playwright",
+        "ms-vscode.vscode-typescript-next"
+    ]
+}
