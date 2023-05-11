@@ -4,7 +4,7 @@ from typing import Union
 import auth
 from fastapi import FastAPI, Response
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel # @pylint: disable=no-name-in-module
+from pydantic import BaseModel  # @pylint: disable=no-name-in-module
 
 app = FastAPI()
 
@@ -16,21 +16,28 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-datav = []
+datav = []  # temp data storage - database soon™️
 
 
-class Data(BaseModel):
+class LoginData(BaseModel):
+    """Class to provide types for logging in and registering an account"""
+
     username: str
     password: str
 
 
 @app.get("/api")
-def read_root():
+def read_root() -> list:
+    """Root api endpoint
+
+    Returns:
+        list: list of data that has been added to it with the endpoint /api/add
+    """
     return datav
 
 
 @app.get("/api/add", status_code=201)
-def add_new_data(data):
+def add_new_data(data: str) -> bool:
     """adds data in request to datav"""
     datav.append(data)
     print(datav)
@@ -38,22 +45,22 @@ def add_new_data(data):
 
 
 @app.get("/api/clear")
-def clear_data():
+def clear_data() -> bool:
     """clears datav"""
     datav.clear()
     return True
 
 
 @app.get("/api/pop")
-def pop_data():
+def pop_data() -> bool:
     """pops last element from datav"""
     datav.pop()
     return True
 
 
-# user authentication
+#! user authentication
 @app.post("/api/auth/register", status_code=201)
-def register(data: Data, response: Response) -> Union[str, bool]:
+def register(data: LoginData, response: Response) -> Union[str, bool]:
     """registers a user with the given username and password"""
     # check both username and password are not empty
     if data.username == "" or data.password == "":
@@ -73,15 +80,11 @@ def register(data: Data, response: Response) -> Union[str, bool]:
 
 
 @app.post("/api/auth/login")
-def login(data: Data) -> Union[str, bool]:
+def login(data: LoginData) -> Union[str, bool]:
     """logs in a user with the given username and password"""
     return auth.login(
         data.username, data.password
     )  # maybe have this return a cookie instead of a bool
-
-
-# i don't know how to handle a 'session'. so for now, handle it on the frontend,
-# and they can communicate with the backend to check if they're logged in or not using a cookie or something
 
 
 @app.get("/api/auth/info")
@@ -98,7 +101,7 @@ def get_user_info(username: str, response: Response) -> Union[dict, bool]:
 
 
 @app.get("/api/auth/dev/clear")
-def clear_users():
+def clear_users() -> bool:
     """clears all users - for development purposes only"""
     auth.users.clear()
     return True

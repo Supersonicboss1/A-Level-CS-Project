@@ -4,6 +4,7 @@ from typing import Union
 
 import bcrypt
 
+
 def get_hashed_password(plain_text_password: str):
     """Hash a password for the first time
     (Using bcrypt, the salt is saved into the hash itself)"""
@@ -48,7 +49,10 @@ def login(username: str, password: str) -> bool:
                 # return token
             return False
     return False
+
+
 users = []
+
 
 class User:
     """Class which represents a basic user.
@@ -98,4 +102,6 @@ class User:
         for _ in range(8):
             id_str += str(random.randint(0, 9))
         return int(id_str)
+
+
 User("test", "test")

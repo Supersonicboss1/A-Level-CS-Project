@@ -1,6 +1,6 @@
 <script lang="ts">
 	// const urlAPI = 'https://supersonicboss1-turbo-tribble-6rwr74774r72xv69-8000.preview.app.github.dev/api'
-	import {  urlAPI, API } from '$lib/api';
+	import { API } from '$lib/api';
 	async function d(): Promise<string[]> {
 		let d = await API.get('/api', {});
 		console.log(d);
@@ -30,7 +30,7 @@
 	</main>
 	<button
 		on:click={async () => {
-			await API.get('/api/add', {params: {query: {data: 'test'}}});
+			await API.get('/api/add', { params: { query: { data: 'test' } } });
 			console.log('done');
 			data = d();
 		}}

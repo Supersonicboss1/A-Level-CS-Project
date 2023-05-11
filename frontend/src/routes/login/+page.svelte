@@ -1,19 +1,17 @@
 <script lang="ts">
-	import { user } from '$lib/stores.js';
-
 	let signInResponse = '';
 	let formData = {
 		username: 'test',
 		password: 'test'
 	};
 	let isSignUp = false;
-	export let data
+	export let data;
 	const userData = {
 		// @ts-ignore
 		username: data.body.u.username,
 		// @ts-ignore
-		userID: data.body.u.user_id,
-	}
+		userID: data.body.u.user_id
+	};
 </script>
 
 <svelte:head>
@@ -43,6 +41,7 @@
 <p>{signInResponse}</p>
 {userData.username}
 {userData.userID}
+
 <style>
 	* {
 		transition: all;
