@@ -18,8 +18,5 @@ uvicorn main:app --reload &
 cd ..
 # Navigate to frontend directory and start the development server
 cd ./frontend
-wget http://localhost:8000/openapi.json
-npx openapi-typescript openapi.json --output src/lib/types/api.d.ts
-rm openapi.json
 pnpm run dev --host
 # Navigate to backend directory and start the API server

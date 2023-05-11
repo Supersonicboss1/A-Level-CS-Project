@@ -1,4 +1,7 @@
 """Main REST API"""
+import json
+import os
+import subprocess
 from typing import Union
 
 import auth
@@ -105,3 +108,33 @@ def clear_users() -> bool:
     """clears all users - for development purposes only"""
     auth.users.clear()
     return True
+
+
+# on app launch, call FastAPI.openapi() to generate the OpenAPI schema
+# and use it in a npx command to generate the TS types
+def generate_types():
+    """Generates TypeScript types from the OpenAPI schema"""
+    print("Generating types...")
+    with open("openapi.json", "w", encoding="utf-8") as f:
+        json.dump(app.openapi(), f)
+    # move to frontend folder
+
+    os.chdir("../frontend")
+    # generate types
+
+    subprocess.run(
+        [
+            "pnpx",
+            "openapi-typescript",
+            "../backend/openapi.json",
+            "-o",
+            "src/lib/types/types.d.ts",
+        ],
+        check=True,
+    )
+    # move back to backend folder
+    os.chdir("../backend")
+    os.remove("openapi.json")
+
+
+generate_types()
