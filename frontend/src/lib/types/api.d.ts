@@ -6,7 +6,13 @@
 
 export interface paths {
   "/api": {
-    /** Read Root */
+    /**
+     * Read Root 
+     * @description Root api endpoint
+     * 
+     * Returns:
+     *     list: list of data that has been added to it with the endpoint /api/add
+     */
     get: operations["read_root_api_get"];
   };
   "/api/add": {
@@ -64,17 +70,20 @@ export type webhooks = Record<string, never>;
 
 export interface components {
   schemas: {
-    /** Data */
-    Data: {
-      /** Username */
-      username: string;
-      /** Password */
-      password: string;
-    };
     /** HTTPValidationError */
     HTTPValidationError: {
       /** Detail */
       detail?: (components["schemas"]["ValidationError"])[];
+    };
+    /**
+     * LoginData 
+     * @description Class to provide types for logging in and registering an account
+     */
+    LoginData: {
+      /** Username */
+      username: string;
+      /** Password */
+      password: string;
     };
     /** ValidationError */
     ValidationError: {
@@ -97,13 +106,19 @@ export type external = Record<string, never>;
 
 export interface operations {
 
-  /** Read Root */
+  /**
+   * Read Root 
+   * @description Root api endpoint
+   * 
+   * Returns:
+   *     list: list of data that has been added to it with the endpoint /api/add
+   */
   read_root_api_get: {
     responses: {
       /** @description Successful Response */
       200: {
         content: {
-          "application/json": unknown;
+          "application/json": (unknown)[];
         };
       };
     };
@@ -115,14 +130,14 @@ export interface operations {
   add_new_data_api_add_get: {
     parameters: {
       query: {
-        data: unknown;
+        data: string;
       };
     };
     responses: {
       /** @description Successful Response */
       201: {
         content: {
-          "application/json": unknown;
+          "application/json": boolean;
         };
       };
       /** @description Validation Error */
@@ -142,7 +157,7 @@ export interface operations {
       /** @description Successful Response */
       200: {
         content: {
-          "application/json": unknown;
+          "application/json": boolean;
         };
       };
     };
@@ -156,7 +171,7 @@ export interface operations {
       /** @description Successful Response */
       200: {
         content: {
-          "application/json": unknown;
+          "application/json": boolean;
         };
       };
     };
@@ -168,7 +183,7 @@ export interface operations {
   register_api_auth_register_post: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Data"];
+        "application/json": components["schemas"]["LoginData"];
       };
     };
     responses: {
@@ -193,7 +208,7 @@ export interface operations {
   login_api_auth_login_post: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Data"];
+        "application/json": components["schemas"]["LoginData"];
       };
     };
     responses: {
@@ -245,7 +260,7 @@ export interface operations {
       /** @description Successful Response */
       200: {
         content: {
-          "application/json": unknown;
+          "application/json": boolean;
         };
       };
     };
