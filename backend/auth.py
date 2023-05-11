@@ -1,12 +1,8 @@
 """Handles safely storing and checking user passwords, and the User class"""
 import random
-import string
 from typing import Union
 
 import bcrypt
-
-users = []  # for testing purposes only, will be replaced with a database
-
 
 def get_hashed_password(plain_text_password: str):
     """Hash a password for the first time
@@ -14,11 +10,20 @@ def get_hashed_password(plain_text_password: str):
     return bcrypt.hashpw(plain_text_password.encode("utf-8"), bcrypt.gensalt())
 
 
-def get_user_info(token: str) -> Union[dict, bool]:
+def get_user_info(username: str) -> Union[dict, bool]:
+    """Using a username, gets the info for a user given they are logged in
+
+    Args:
+        username (str): The username of a user, entered into the website
+
+    Returns:
+        Union[dict, bool]: Either a dict containing the user info,
+        or False if the user is not logged in
+    """
+    print(username)
     for user in users:
-        for u in user.session_tokens:
-            print(u)
-        if token in user.session_tokens:
+        if username == user.username:
+            print(user)
             return {
                 "username": user.username,
                 "user_id": user.user_id,
@@ -27,22 +32,23 @@ def get_user_info(token: str) -> Union[dict, bool]:
     return False
 
 
-def login(username: str, password: str) -> Union[str, bool]:
+def login(username: str, password: str) -> bool:
     """logs in a user with the given username and password"""
     for user in users:
         if user == username:
             if user.check_password(password):
                 user.logged_in = True
-                # generate a session token
-                token = "".join(
-                    random.choices(string.ascii_letters + string.digits, k=16)
-                )
-                user.session_tokens.append(token)
-                print(user.session_tokens)
-                return token
+                return True
+                # generate a session token - disabled for now
+                # token = "".join(
+                #     random.choices(string.ascii_letters + string.digits, k=16)
+                # )
+                # user.session_tokens.append(token)
+                # print(user.session_tokens)
+                # return token
             return False
     return False
-
+users = []
 
 class User:
     """Class which represents a basic user.
@@ -92,3 +98,4 @@ class User:
         for _ in range(8):
             id_str += str(random.randint(0, 9))
         return int(id_str)
+User("test", "test")

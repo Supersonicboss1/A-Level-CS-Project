@@ -1,49 +1,18 @@
 <script lang="ts">
+	import { user } from '$lib/stores.js';
+
 	let signInResponse = '';
-	import { fetchBackend, fetchData } from '$lib/api';
-	import { token } from '$lib/stores';
 	let formData = {
 		username: 'test',
 		password: 'test'
 	};
 	let isSignUp = false;
-	console.log(formData);
-	async function submitForm() {
-		if (isSignUp) {
-			let resl = await fetchBackend('/auth/register', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify(formData)
-			});
-			if (resl.status === 200) {
-				console.log(resl);
-				signInResponse = 'Sign up successful';
-				const tok = await resl.text();
-				console.log(tok);
-				if (tok.length == 16) {
-					token.set(await resl.text());
-				}
-			} else {
-				signInResponse = 'Sign up failed';
-			}
-		} else {
-			fetchBackend('/auth/login', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify(formData)
-			}).then((res) => {
-				if (res.status === 200) {
-					console.log(res);
-					signInResponse = 'Sign in successful';
-				} else {
-					signInResponse = 'Sign in failed';
-				}
-			});
-		}
+	export let data
+	const userData = {
+		// @ts-ignore
+		username: data.body.u.username,
+		// @ts-ignore
+		userID: data.body.u.user_id,
 	}
 </script>
 
@@ -51,7 +20,7 @@
 	<title>About</title>
 	<meta name="description" content="About this app" />
 </svelte:head>
-<form on:submit|preventDefault={() => submitForm()}>
+<form on:submit|preventDefault={() => console.log(formData)}>
 	<label for="username">Login</label>
 	<input
 		type="text"
@@ -72,16 +41,8 @@
 	<button type="submit" on:click={() => (isSignUp = true)}>Sign Up</button>
 </form>
 <p>{signInResponse}</p>
-{#await fetchData('/auth/info?token=' + $token)}
-	<p>loading...</p>
-{:then f}
-	{#if f.user_id}
-		<p>User ID: {f.user_id} - Hello, {f.username}!</p>
-	{/if}
-{:catch error}
-	<p style="color: red">{error}</p>
-{/await}
-
+{userData.username}
+{userData.userID}
 <style>
 	* {
 		transition: all;

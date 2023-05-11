@@ -4,7 +4,8 @@ from typing import Union
 import auth
 from fastapi import FastAPI, Response
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel # @pylint: disable=no-name-in-module
+
 app = FastAPI()
 
 app.add_middleware(
@@ -84,21 +85,20 @@ def login(data: Data) -> Union[str, bool]:
 
 
 @app.get("/api/auth/info")
-def get_user_info(token: str, response: Response) -> Union[dict, bool]:
+def get_user_info(username: str, response: Response) -> Union[dict, bool]:
     """gets the user info for the given username"""
     # search for user with the given username,
     # remove first and last character from token because of quotes
-    token = token[1:-1]
-    print(token)
-    info = auth.get_user_info(token)
+    print(username)
+    info = auth.get_user_info(username)
     if info:
         return info
     response.status_code = 403
     return False
+
 
 @app.get("/api/auth/dev/clear")
 def clear_users():
     """clears all users - for development purposes only"""
     auth.users.clear()
     return True
-

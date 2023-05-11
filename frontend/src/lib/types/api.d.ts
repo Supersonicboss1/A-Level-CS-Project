@@ -218,7 +218,7 @@ export interface operations {
   get_user_info_api_auth_info_get: {
     parameters: {
       query: {
-        token: string;
+        username: string;
       };
     };
     responses: {

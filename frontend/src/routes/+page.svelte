@@ -1,15 +1,13 @@
 <script lang="ts">
 	// const urlAPI = 'https://supersonicboss1-turbo-tribble-6rwr74774r72xv69-8000.preview.app.github.dev/api'
-	import { fetchBackend, urlAPI } from '$lib/api';
-	console.log(urlAPI);
-	async function fetch_data() {
-		const response = await fetchBackend('/');
-
-		const data = await response.json();
-		console.log(data);
-		return data;
+	import {  urlAPI, API } from '$lib/api';
+	async function d(): Promise<string[]> {
+		let d = await API.get('/api', {});
+		console.log(d);
+		// @ts-ignore
+		return d.data;
 	}
-	let d = fetch_data();
+	let data = d();
 </script>
 
 <svelte:head>
@@ -19,10 +17,9 @@
 
 <section>
 	<main>
-		{#await d}
+		{#await data}
 			<p>loading...</p>
 		{:then d}
-			Count: {d.length}
 			{#each d as item}
 				<p>{item}</p>
 			{/each}
@@ -33,16 +30,17 @@
 	</main>
 	<button
 		on:click={async () => {
-			await fetchBackend('/add?data=OMAR');
-			d = fetch_data();
+			await API.get('/api/add', {params: {query: {data: 'test'}}});
+			console.log('done');
+			data = d();
 		}}
 	>
 		INCREASE THE OMARS
 	</button>
 	<button
 		on:click={async () => {
-			await fetch(urlAPI + '/clear');
-			d = fetch_data();
+			await API.get('/api/clear', {});
+			data = d();
 		}}
 	>
 		CLEAR THE OMARS

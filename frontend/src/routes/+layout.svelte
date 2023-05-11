@@ -1,13 +1,16 @@
 <script lang="ts">
 	import Header from './Header.svelte';
 	import './styles.css';
+	export let data
 </script>
 
 <div class="app">
 	<Header />
+	Hello, {data.username}!
 	<main class="">
 		<slot />
 	</main>
+	
 </div>
 
 <style>

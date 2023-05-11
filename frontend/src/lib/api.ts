@@ -1,16 +1,10 @@
-export const urlAPI = import.meta.env.VITE_isWeb ? `https://${import.meta.env.VITE_CSNAME}-8000.preview.app.github.dev/api/` : 'http://localhost:8000/api/';
+export const urlAPI = import.meta.env.VITE_isWeb ? `https://${import.meta.env.VITE_CSNAME}-8000.preview.app.github.dev` : 'http://localhost:8000';
+import createClient from "openapi-fetch";
+import type { paths } from "./types/api";
+const { get, post } = createClient<paths>({ baseUrl: urlAPI });
 console.log(urlAPI);
 console.log(typeof import.meta.env.VITE_isWeb);
-export async function fetchBackend(route: string, data?: RequestInit) {
-	const x = urlAPI + route;
-	// check if any double slashes after https://
-	const y = x.replace(/([^:]\/)\/+/g, '$1');
-	return fetch(y, data);
-}
-export async function fetchData(urlValue = '/') {
-	const response = await fetchBackend(urlValue);
-
-	const data = await response.json();
-	console.log(data);
-	return data;
-}
+export const API = {
+    get,
+    post
+};
