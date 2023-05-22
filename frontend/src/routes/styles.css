@@ -1,5 +1,42 @@
 @import url('https://fonts.googleapis.com/css?family=Exo:400,700');
-
+:root {
+	--primary-color: #ffffff;
+	--secondary-color: #000000;
+	--primary-button-color: #b3c2ff;
+	--secondary-button-color: #1d1622;
+	--accent-color: #11236f;
+  }
+/* Primary Button */
+.primary-button {
+	background-color: var(--primary-button-color);
+	color: var(--primary-color);
+  }
+  
+  /* Secondary Button */
+  .secondary-button {
+	background-color: var(--secondary-button-color);
+	color: var(--primary-color);
+  }
+  
+  /* Accent Button */
+  .accent-button {
+	background-color: var(--accent-color);
+	color: var(--primary-color);
+  }
+  
+  /* Text Styles */
+  .primary-text {
+	color: var(--primary-color);
+  }
+  
+  .secondary-text {
+	color: var(--secondary-color);
+  }
+  
+  .accent-text {
+	color: var(--accent-color);
+  }
+  
 * {
 	margin: 0px;
 	padding: 0px;
@@ -7,39 +44,31 @@
 
 body {
 	font-family: 'Exo', sans-serif;
-	color: white;
+	color: var(--primary-color);
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 	background-size: cover;
 	background-position: top;
 	background-image: url(http://bit.ly/2gPLxZ4);
 	backdrop-filter: blur(10px);
+
 }
 
 button {
-	all: unset;
 	/* CSS (improve later) */
-	background-color: rgba(51, 51, 51, 0.05);
-	border-radius: 8px;
-	border-width: 0;
-	color: #333333;
-	cursor: pointer;
-	display: inline-block;
-	font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-size: 14px;
-	font-weight: 500;
-	line-height: 20px;
-	list-style: none;
-	margin: 0;
-	padding: 10px 12px;
-	text-align: center;
-	transition: all 200ms;
-	vertical-align: baseline;
-	white-space: nowrap;
-	user-select: none;
-	-webkit-user-select: none;
-	touch-action: manipulation;
-	background-color: #cccccc;
-	margin: 0.5rem;
+	padding: 1em 2em;
+    background-color: var(--primbuttn);
+    color: var(--secondary);
+    border-radius: 6px;
+    transition: transform ease 0.2s, box-shadow ease 0.2s, transition ease 0.2s;
+    display: inline-block;
+    font-size: 18px;
 
+}
+  
+button:hover {
+	transition: none;
+	transform: scale(1.05);
+	translate: 0px 5px;
+	box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
 }

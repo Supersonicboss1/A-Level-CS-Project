@@ -28,14 +28,14 @@
 		{/await}
 		<slot />
 	</main>
-	<button
+	<button class="primary-button"
 		on:click={async () => {
 			await API.get('/api/add', { params: { query: { data: 'test' } } });
 			console.log('done');
 			data = d();
 		}}
 	>
-		INCREASE THE OMARS
+		INCREASE
 	</button>
 	<button
 		on:click={async () => {
@@ -43,7 +43,7 @@
 			data = d();
 		}}
 	>
-		CLEAR THE OMARS
+		CLEAR
 	</button>
 </section>
 
