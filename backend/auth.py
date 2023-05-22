@@ -1,7 +1,7 @@
 """Handles safely storing and checking user passwords, and the User class"""
 import random
 from typing import Union
-
+import db
 import bcrypt
 
 
@@ -22,14 +22,22 @@ def get_user_info(username: str) -> Union[dict, bool]:
         or False if the user is not logged in
     """
     print(username)
-    for user in users:
-        if username == user.username:
-            print(user)
-            return {
-                "username": user.username,
-                "user_id": user.user_id,
-                "logged_in": user.logged_in,
-            }
+    # for user in users:
+    #     if username == user.username:
+    #         print(user)
+    #         return {
+    #             "username": user.username,
+    #             "user_id": user.user_id,
+    #             "logged_in": user.logged_in,
+    #         }
+    data = db.db1.get_user(username)
+    print(data)
+    if data:
+        return {
+            "username": data[0],
+            "user_id": data[1],
+            "logged_in": data[2],
+        }
     return False
 
 
@@ -103,5 +111,4 @@ class User:
             id_str += str(random.randint(0, 9))
         return int(id_str)
 
-
-User("test", "test")
+print(get_user_info("admin"))
