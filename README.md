@@ -1,0 +1,1 @@
+https://github.com/ferdikoomen/openapi-typescript-codegen use this
