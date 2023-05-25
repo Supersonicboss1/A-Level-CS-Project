@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Header from './Header.svelte';
-	import './styles.css';
-	export let data
+	import './styles.scss';
+	export let data;
 </script>
 
 <div class="app">
@@ -10,7 +10,6 @@
 	<main class="">
 		<slot />
 	</main>
-	
 </div>
 
 <style>

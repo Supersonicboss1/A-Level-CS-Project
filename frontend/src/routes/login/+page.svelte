@@ -2,12 +2,20 @@
 	import { API } from '$lib/api.js';
 	import { user } from '$lib/stores.js';
 	import { redirect } from '@sveltejs/kit';
+	import { afterUpdate, onDestroy } from 'svelte';
 
 	let signInResponse = '';
 	let formData = {
 		username: 'test',
 		password: 'test'
 	};
+	let isLoaded = false;
+	afterUpdate(() => {
+		isLoaded = true;
+	});
+	onDestroy(() => {
+		isLoaded = false;
+	});
 	let isSignUp = false;
 	export let data;
 	const userDataClient = {
@@ -51,7 +59,7 @@
 	<title>About</title>
 	<meta name="description" content="About this app" />
 </svelte:head>
-<form on:submit|preventDefault={() => submitForm()}>
+<form on:submit|preventDefault={() => submitForm()} class:fullyLoaded={isLoaded}>
 	<label for="username">Login</label>
 	<input
 		type="text"
@@ -75,13 +83,18 @@
 {userDataClient.username}
 {userDataClient.userID}
 
-<style>
+<style lang="scss">
 	* {
 		transition: all;
 	}
 	form {
 		width: 300px;
 		margin: 0 auto;
+		background-color: #171717;
+		padding: 10vh;
+		border-radius: 2vh;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+		transition: transform 1s ease-in-out;
 	}
 
 	/* Style for the labels */
@@ -92,13 +105,15 @@
 	}
 
 	/* Style for the input fields */
-	input[type='text'],
-	input[type='password'] {
-		width: 100%;
-		padding: 10px;
-		margin-bottom: 20px;
-		border: 1px solid #ccc;
-		border-radius: 5px;
-		box-sizing: border-box;
+
+	button {
+		&:hover {
+			outline: 3px solid #078011;
+			transition: all 0.15s ease-in-out;
+		}
+		&:active {
+			transition: all 0.05s ease-in-out;
+			background-color: #078011;
+		}
 	}
 </style>

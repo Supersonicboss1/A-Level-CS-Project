@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css?family=Exo:400,700');
+
+:root {
+	--primary-color: #ffffff;
+	--secondary-color: #000000;
+	--primary-button-color: #b3c2ff;
+	--secondary-button-color: #1d1622;
+	--accent-color: #11236f;
+}
+
+/* Primary Button */
+
+
+/* Text Styles */
+.primary-text {
+	color: var(--primary-color);
+}
+
+.secondary-text {
+	color: var(--secondary-color);
+}
+
+.accent-text {
+	color: var(--accent-color);
+}
+
+* {
+	transition: all 0.15s ease-in-out;
+	margin: 0px;
+	padding: 0px;
+}
+
+body {
+	font-family: 'Exo', sans-serif;
+	color: var(--primary-color);
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: cover;
+	background-position: top;
+	background-image: url(https://picsum.photos/1200/800);
+	backdrop-filter: blur(10px);
+
+}
+
+input[type='text'],
+input[type='password'] {
+	width: 100%;
+	padding: 20px;
+	margin-bottom: 20px;
+	border: 0;
+	outline: 0;
+	border-radius: 5px;
+	box-sizing: border-box;
+	outline-color: #8b0597;
+	background-color: #222222;
+	color: #ffffff;
+	transition: all 0.15s ease-in-out;
+
+	&:focus {
+		outline: 3px solid #8b0597;
+		transition: all 0.15s ease-in-out;
+	}
+}
+
+button {
+	all: unset;
+	width: 100%;
+	padding: 10px;
+	margin-bottom: 20px;
+	background-color: #222222;
+	border-radius: 5px;
+	box-sizing: border-box;
+	transition: all 0.15s ease-in-out;
+
+	&:hover {
+		outline: 3px solid #8b0597;
+		transition: all 0.15s ease-in-out;
+	}
+
+	&:active {
+		transition: all 0.05s ease-in-out;
+		background-color: #8b0597;
+	}
+}

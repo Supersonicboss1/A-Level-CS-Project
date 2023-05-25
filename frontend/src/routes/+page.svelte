@@ -17,9 +17,7 @@
 
 <section>
 	<main>
-		{#await data}
-			<p>loading...</p>
-		{:then d}
+		{#await data then d}
 			{#each d as item}
 				<p>{item}</p>
 			{/each}
@@ -28,31 +26,55 @@
 		{/await}
 		<slot />
 	</main>
-	<button class="primary-button"
-		on:click={async () => {
-			await API.get('/api/add', { params: { query: { data: 'test' } } });
-			console.log('done');
-			data = d();
-		}}
-	>
-		INCREASE
-	</button>
-	<button
-		on:click={async () => {
-			await API.get('/api/clear', {});
-			data = d();
-		}}
-	>
-		CLEAR
-	</button>
+	<div class="buttons">
+		<button
+			on:click={async () => {
+				await API.get('/api/add', { params: { query: { data: 'test' } } });
+				console.log('done');
+				data = d();
+			}}
+		>
+			INCREASE
+		</button>
+		<button
+			class="warning"
+			on:click={async () => {
+				await API.get('/api/clear', {});
+				data = d();
+			}}
+		>
+			CLEAR
+		</button>
+	</div>
 </section>
 
-<style>
+<style lang="scss">
 	section {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
 		flex: 0.6;
+	}
+	.buttons {
+		position: absolute;
+		bottom: 0;
+		display: flex;
+		margin: 2vh;
+		button {
+			margin: 0 0.5vh;
+			width: 20vh;
+			text-align: center;
+		}
+	}
+	button.warning {
+		&:hover {
+			outline: 3px solid #ff0000;
+			transition: all 0.15s ease-in-out;
+		}
+		&:active {
+			transition: all 0.05s ease-in-out;
+			background-color: #ff0000;
+		}
 	}
 </style>
