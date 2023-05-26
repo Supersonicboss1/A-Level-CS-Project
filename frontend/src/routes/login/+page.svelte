@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { user } from '$lib/stores.js';
-	import { redirect } from '@sveltejs/kit';
 	import { afterUpdate, onDestroy } from 'svelte';
 
 	let signInResponse = '';
@@ -17,12 +15,6 @@
 	});
 	let isSignUp = false;
 	export let data;
-	const userDataClient = {
-		// @ts-ignore
-		username: data.body.userData.username,
-		// @ts-ignore
-		userID: data.body.userData.user_id
-	};
 	function submitForm() {
 		
 	}
@@ -53,8 +45,8 @@
 	<button type="submit" on:click={() => (isSignUp = true)}>Sign Up</button>
 </form>
 <p>{signInResponse}</p>
-{userDataClient.username}
-{userDataClient.userID}
+{data.username}
+{data.user_id}
 
 <style lang="scss">
 	* {

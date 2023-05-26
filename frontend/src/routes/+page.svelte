@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { DefaultService } from "$lib/api";
-	import Header from "./Header.svelte";
 
 	// const urlAPI = 'https://supersonicboss1-turbo-tribble-6rwr74774r72xv69-8000.preview.app.github.dev/api'
 	
