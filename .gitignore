@@ -161,3 +161,4 @@ cython_debug/
 
 # this WAS in the original .gitignore file i don't know what happened to it
 node_modules/
+frontend/src/lib/api

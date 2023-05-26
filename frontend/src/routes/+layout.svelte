@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { OpenAPI } from '$lib/api';
+	OpenAPI.BASE = import.meta.env.VITE_isWeb ? `https://${import.meta.env.VITE_CSNAME}-8000.preview.app.github.dev` : 'http://127.0.0.1:8000';
 	import Header from './Header.svelte';
 	import './styles.scss';
 	export let data;

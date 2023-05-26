@@ -89,9 +89,14 @@ def login(data: LoginData) -> Union[str, bool]:
         data.username, data.password
     )  # maybe have this return a cookie instead of a bool
 
+class UserInfoResponse(BaseModel):
+    """Class to provide types for the response of the /api/auth/info endpoint"""
+    username: str
+    user_id: str
+    logged_in: bool
 
-@app.get("/api/auth/info")
-def get_user_info(username: str, response: Response) -> Union[dict, bool]:
+@app.get("/api/auth/info", response_model=UserInfoResponse)
+def get_user_info(username: str, response: Response) -> UserInfoResponse:
     """gets the user info for the given username"""
     # search for user with the given username,
     # remove first and last character from token because of quotes
@@ -100,7 +105,11 @@ def get_user_info(username: str, response: Response) -> Union[dict, bool]:
     if info:
         return info
     response.status_code = 403
-    return False
+    return {
+        "username": "",
+        "user_id": "",
+        "logged_in": False,
+    }
 
 
 @app.get("/api/auth/dev/clear")
@@ -125,10 +134,11 @@ def generate_types():
     subprocess.run(
         [
             "pnpx",
-            "openapi-typescript",
+            "openapi-typescript-codegen",
+            "--input",
             "../backend/openapi.json",
-            "-o",
-            "src/lib/types/types.d.ts",
+            "--output",
+            "src/lib/api",
         ],
         check=True,
     )

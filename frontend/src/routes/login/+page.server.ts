@@ -1,13 +1,7 @@
+import { DefaultService, type UserInfoResponse } from "$lib/api"
+
 /** @type {import('./$types').PageLoad} */
-import { API } from "$lib/api";
-export async function load() {
-    const userInfo = await API.get('/api/auth/info', { params: { query: { username: 'test' } } });
-    console.log(userInfo.data);
-    const userData = userInfo.data;
-    return {
-        status: 200,
-        body: {
-            userData: userData
-        }
+export async function load(): Promise<UserInfoResponse> {
+    const userData = await DefaultService.getUserInfoApiAuthInfoGet('test');
+    return userData
     }
-}

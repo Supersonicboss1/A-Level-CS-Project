@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { API } from '$lib/api.js';
 	import { user } from '$lib/stores.js';
 	import { redirect } from '@sveltejs/kit';
 	import { afterUpdate, onDestroy } from 'svelte';
@@ -25,33 +24,7 @@
 		userID: data.body.userData.user_id
 	};
 	function submitForm() {
-		if (isSignUp) {
-			API.post('/api/auth/register', {
-				body: {
-					username: formData.username,
-					password: formData.password
-				}
-			}).then((res) => {
-				signInResponse = res.data ? 'Signed up' : 'Failed to sign up';
-			});
-		} else {
-			API.post('/api/auth/login', {
-				body: {
-					username: formData.username,
-					password: formData.password
-				}
-			}).then((res) => {
-				signInResponse = res.data ? 'Logged in' : 'Failed to log in';
-				// redirect to home page
-				if (res.data) {
-					console.log(res.data);
-					(async () => {
-						$user = await res.response.json();
-					})();
-					redirect(303, '/');
-				}
-			});
-		}
+		
 	}
 </script>
 
