@@ -2,12 +2,11 @@
 import json
 import os
 import subprocess
-from typing import Union
 
 import auth
+from classtypes import LoginData, UserInfoResponse
 from fastapi import FastAPI, Response
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel  # @pylint: disable=no-name-in-module
 
 app = FastAPI()
 
@@ -22,13 +21,6 @@ app.add_middleware(
 datav = []  # temp data storage - database soon™️
 
 
-class LoginData(BaseModel):
-    """Class to provide types for logging in and registering an account"""
-
-    username: str
-    password: str
-
-
 @app.get("/api")
 def read_root() -> list:
     """Root api endpoint
@@ -41,7 +33,14 @@ def read_root() -> list:
 
 @app.get("/api/add", status_code=201)
 def add_new_data(data: str) -> bool:
-    """adds data in request to datav"""
+    """add a specified string to datav
+
+    Args:
+        data (str): the data to be added
+
+    Returns:
+        bool: whether the data was added successfully (only returns True)
+    """
     datav.append(data)
     print(datav)
     return True
@@ -49,57 +48,76 @@ def add_new_data(data: str) -> bool:
 
 @app.get("/api/clear")
 def clear_data() -> bool:
-    """clears datav"""
+    """Clears the data in datav
+
+    Returns:
+        bool: whether the data was cleared successfully (only returns True)
+    """
     datav.clear()
     return True
 
 
 @app.get("/api/pop")
 def pop_data() -> bool:
-    """pops last element from datav"""
+    """remove the last element from datav
+
+    Returns:
+        bool: whether the data was popped successfully (only returns True)"""
     datav.pop()
     return True
 
 
 #! user authentication
 @app.post("/api/auth/register", status_code=201)
-def register(data: LoginData, response: Response) -> Union[str, bool]:
-    """registers a user with the given username and password"""
+def register(data: LoginData, response: Response) -> bool:
+    """register a new user with the given username and password
+    and add them to the database
+
+    Args:
+        data (LoginData): a dict with the username and password
+
+    Returns:
+        bool: Whether the user was registered successfully
+    """
     # check both username and password are not empty
     if data.username == "" or data.password == "":
         response.status_code = 400
-        return "Username or password cannot be empty"
+        return False
     # check if username is already taken
     for user in auth.users:
         if user == data.username:
             response.status_code = 400
-            return "Username already taken"
+            return False
     # register user
     auth.User(data.username, data.password)
-    token = auth.login(
-        data.username, data.password
-    )  # maybe have this return a cookie instead of a bool
+    token = auth.login(data.username, data.password)
     return token
 
 
 @app.post("/api/auth/login")
-def login(data: LoginData) -> Union[str, bool]:
-    """logs in a user with the given username and password"""
-    return auth.login(
-        data.username, data.password
-    )  # maybe have this return a cookie instead of a bool
+def login(data: LoginData) -> bool:
+    """Logs in a user with the given username and password
 
-class UserInfoResponse(BaseModel):
-    """Class to provide types for the response of the /api/auth/info endpoint"""
-    username: str
-    user_id: str
-    logged_in: bool
+    Args:
+        data (LoginData): username and password
+
+    Returns:
+        bool: whether the user was logged in successfully
+    """
+    return auth.login(data.username, data.password)
+
 
 @app.get("/api/auth/info", response_model=UserInfoResponse)
-def get_user_info(username: str, response: Response) -> UserInfoResponse:
-    """gets the user info for the given username"""
-    # search for user with the given username,
-    # remove first and last character from token because of quotes
+def get_user_info(username: str, response: Response) -> dict[str, str | bool]:
+    """Get the info for a user given they are logged in
+
+    Args:
+        username (str): the username of the user
+
+    Returns:
+        dict[str, str | bool]: a dict with the username, user_id, and
+        whether the user is logged in
+    """
     print(username)
     info = auth.get_user_info(username)
     if info:
@@ -114,7 +132,11 @@ def get_user_info(username: str, response: Response) -> UserInfoResponse:
 
 @app.get("/api/auth/dev/clear")
 def clear_users() -> bool:
-    """clears all users - for development purposes only"""
+    """Clears the users database
+
+    Returns:
+        bool: whether the users database was cleared successfully (only returns True)
+    """
     auth.users.clear()
     return True
 

@@ -1,25 +1,31 @@
 """Handles safely storing and checking user passwords, and the User class"""
 import random
-from typing import Union
+from typing import TypedDict, Union
 
 import bcrypt
 
 
 def get_hashed_password(plain_text_password: str):
     """Hash a password for the first time
-    (Using bcrypt, the salt is saved into the hash itself)"""
+
+    Args:
+        plain_text_password (str): The password to hash
+
+    Returns:
+        bytes: The hashed password
+    """
     return bcrypt.hashpw(plain_text_password.encode("utf-8"), bcrypt.gensalt())
 
 
-def get_user_info(username: str) -> Union[dict, bool]:
+def get_user_info(username: str) -> dict[str, str | bool]:
     """Using a username, gets the info for a user given they are logged in
 
     Args:
         username (str): The username of a user, entered into the website
 
     Returns:
-        Union[dict, bool]: Either a dict containing the user info,
-        or False if the user is not logged in
+        dict[str, str | bool]: Either a dict containing the user info,
+        or a dict with empty strings and False if the user is not logged in
     """
     print(username)
     for user in users:
@@ -30,7 +36,11 @@ def get_user_info(username: str) -> Union[dict, bool]:
                 "user_id": user.user_id,
                 "logged_in": user.logged_in,
             }
-    return False
+    return {
+        "username": "",
+        "user_id": "",
+        "logged_in": False,
+    }
 
 
 def login(username: str, password: str) -> bool:
