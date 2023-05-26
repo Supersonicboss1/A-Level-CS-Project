@@ -1,6 +1,6 @@
 <script lang="ts">
+	import { DefaultService } from '$lib/api/index.js';
 	import { afterUpdate, onDestroy } from 'svelte';
-
 	let signInResponse = '';
 	let formData = {
 		username: 'test',
@@ -14,9 +14,16 @@
 		isLoaded = false;
 	});
 	let isSignUp = false;
-	export let data;
 	function submitForm() {
-		
+		if (isSignUp) {
+			DefaultService.registerApiAuthRegisterPost(formData)
+				.then((res) => {
+					signInResponse = res ? 'Success' : 'Failed';
+				})
+				.catch(() => {
+					signInResponse = 'Sign up failed - does the user already exist?';
+				});
+		}
 	}
 </script>
 
@@ -25,7 +32,9 @@
 	<meta name="description" content="About this app" />
 </svelte:head>
 <form on:submit|preventDefault={() => submitForm()} class:fullyLoaded={isLoaded}>
-	<label for="username">Login</label>
+	<h2>Login</h2>
+	<sup>or sign up</sup>
+	<label for="username">Username</label>
 	<input
 		type="text"
 		name="username"
@@ -43,10 +52,8 @@
 	/>
 	<button type="submit" on:click={() => (isSignUp = false)}>Login</button>
 	<button type="submit" on:click={() => (isSignUp = true)}>Sign Up</button>
+	<p>{signInResponse}</p>
 </form>
-<p>{signInResponse}</p>
-{data.username}
-{data.user_id}
 
 <style lang="scss">
 	* {
