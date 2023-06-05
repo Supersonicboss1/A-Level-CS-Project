@@ -164,9 +164,11 @@ def generate_types():
         ],
         check=True,
     )
+    subprocess.run("git apply apipatch.patch -v", shell=True, check=True)
     # move back to backend folder
     os.chdir("../backend")
     os.remove("openapi.json")
+    print("Types generated!")
 
 
 generate_types()
