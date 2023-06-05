@@ -1,13 +1,13 @@
 <script lang="ts">
-	import { DefaultService } from "$lib/api";
+	import { DefaultService } from '$lib/api';
 
 	// const urlAPI = 'https://supersonicboss1-turbo-tribble-6rwr74774r72xv69-8000.preview.app.github.dev/api'
-	
+
 	async function d(): Promise<string[]> {
 		let d = await DefaultService.readRootApiGet();
 		console.log(d + 'test');
 		// @ts-ignore
-		return d
+		return d;
 	}
 	let data = d();
 </script>
