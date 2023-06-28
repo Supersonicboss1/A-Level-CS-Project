@@ -32,13 +32,20 @@
 	<meta name="description" content="Login to the app" />
 </svelte:head>
 <form on:submit|preventDefault={() => submitForm()} class:fullyLoaded={isLoaded}>
-	<h2>Login</h2>
-	<sup>or <a href="/signup" title="sign up coming soon to a website near you!">sign up</a></sup>
-	<label for="username">Email Address</label>
+	<h2>Sign Up</h2>
+	<sup>or <a href="/login" title="sign up coming soon to a website near you!">log in</a></sup>
+	<label for="fname">Name</label>
+	<div class="namegrid">
+		<input type="text" name="fname" id="fname" placeholder="First Name" />
+		<input type="text" name="lname" id="lname" placeholder="Last Name" />
+	</div>
+	<label for="dob">Age</label>
+	<input type="text" name="dob" id="dob" placeholder="18" />
+	<label for="email">Email Address</label>
 	<input
 		type="text"
-		name="username"
-		id="username"
+		name="email"
+		id="email"
 		placeholder="omar@hotmail.co.uk"
 		bind:value={formData.username}
 	/>
@@ -50,13 +57,18 @@
 		placeholder="••••••••"
 		bind:value={formData.password}
 	/>
-	<button type="submit" on:click={() => (isSignUp = false)}>Login</button>
-	Forgot your password?
-	<a href="/forgot" title="ok, maybe this doesn't exist right now...">Reset it</a>
+	<input type="password" name="password" id="password" placeholder="Confirm Password" />
+	<button type="submit" on:click={() => (isSignUp = false)}>Sign Up</button>
 	<p>{signInResponse}</p>
 </form>
 
 <style lang="scss">
+	.namegrid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-gap: 5px;
+		grid-row: 2;
+	}
 	* {
 		transition: all;
 	}
