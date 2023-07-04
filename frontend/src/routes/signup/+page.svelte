@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { DefaultService } from '$lib/api/index.js';
-	import { afterUpdate, onDestroy } from 'svelte';
 	let signInResponse = '';
 	let confirmPassword = '';
 	let formData = {
@@ -10,11 +9,10 @@
 		lastName: '',
 		age: 0
 	};
+	let isValid = false;
+	function validateFormItem() {}
+
 	function submitForm() {
-		if (confirmPassword !== formData.password) {
-			signInResponse = 'Passwords do not match';
-			return;
-		}
 		DefaultService.registerApiAuthRegisterPost(formData)
 			.then((res) => {
 				signInResponse = res ? 'Success' : 'Failed';
@@ -74,7 +72,7 @@
 		placeholder="Confirm Password"
 		bind:value={confirmPassword}
 	/>
-	<button type="submit" on:click={() => submitForm()}>Sign Up</button>
+	<button type="submit" on:click={() => submitForm()} disabled={isValid}>Sign Up</button>
 	<p>{signInResponse}</p>
 </form>
 

@@ -1,29 +1,19 @@
 <script lang="ts">
 	import { DefaultService } from '$lib/api/index.js';
-	import { afterUpdate, onDestroy } from 'svelte';
 	let signInResponse = '';
 	let formData = {
 		username: '',
 		password: ''
 	};
 	let isLoaded = false;
-	afterUpdate(() => {
-		isLoaded = true;
-	});
-	onDestroy(() => {
-		isLoaded = false;
-	});
-	let isSignUp = false;
 	function submitForm() {
-		if (isSignUp) {
-			DefaultService.registerApiAuthRegisterPost(formData)
-				.then((res) => {
-					signInResponse = res ? 'Success' : 'Failed';
-				})
-				.catch(() => {
-					signInResponse = 'Sign up failed - does the user already exist?';
-				});
-		}
+		DefaultService.loginApiAuthLoginPost(formData)
+			.then((res) => {
+				signInResponse = res ? 'Success' : 'Failed';
+			})
+			.catch(() => {
+				signInResponse = 'Sign up failed - does the user already exist?';
+			});
 	}
 </script>
 
@@ -50,7 +40,7 @@
 		placeholder="••••••••"
 		bind:value={formData.password}
 	/>
-	<button type="submit" on:click={() => (isSignUp = false)}>Login</button>
+	<button type="submit" on:click={() => submitForm()}>Login</button>
 	Forgot your password?
 	<a href="/forgot" title="ok, maybe this doesn't exist right now...">Reset it</a>
 	<p>{signInResponse}</p>
