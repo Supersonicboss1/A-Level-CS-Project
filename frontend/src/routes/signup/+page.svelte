@@ -2,6 +2,7 @@
 	import { DefaultService } from '$lib/api/index.js';
 	import { afterUpdate, onDestroy } from 'svelte';
 	let signInResponse = '';
+	let confirmPassword = '';
 	let formData = {
 		password: '',
 		email: '',
@@ -10,6 +11,10 @@
 		age: 0
 	};
 	function submitForm() {
+		if (confirmPassword !== formData.password) {
+			signInResponse = 'Passwords do not match';
+			return;
+		}
 		DefaultService.registerApiAuthRegisterPost(formData)
 			.then((res) => {
 				signInResponse = res ? 'Success' : 'Failed';
@@ -27,13 +32,25 @@
 <form on:submit|preventDefault={() => submitForm()}>
 	<h2>Sign Up</h2>
 	<sup>or <a href="/login" title="sign up coming soon to a website near you!">log in</a></sup>
-	<label for="fname">Name</label>
+	<label for="namegrid">Name</label>
 	<div class="namegrid">
-		<input type="text" name="fname" id="fname" placeholder="First Name" />
-		<input type="text" name="lname" id="lname" placeholder="Last Name" />
+		<input
+			type="text"
+			name="fname"
+			id="fname"
+			placeholder="First Name"
+			bind:value={formData.firstName}
+		/>
+		<input
+			type="text"
+			name="lname"
+			id="lname"
+			placeholder="Last Name"
+			bind:value={formData.lastName}
+		/>
 	</div>
-	<label for="dob">Age</label>
-	<input type="text" name="dob" id="dob" placeholder="24" />
+	<label for="age">Age</label>
+	<input type="text" name="age" id="age" placeholder="24" bind:value={formData.age} />
 	<label for="email">Email Address</label>
 	<input
 		type="text"
@@ -50,7 +67,13 @@
 		placeholder="••••••••"
 		bind:value={formData.password}
 	/>
-	<input type="password" name="password" id="password" placeholder="Confirm Password" />
+	<input
+		type="password"
+		name="password"
+		id="password"
+		placeholder="Confirm Password"
+		bind:value={confirmPassword}
+	/>
 	<button type="submit" on:click={() => submitForm()}>Sign Up</button>
 	<p>{signInResponse}</p>
 </form>
