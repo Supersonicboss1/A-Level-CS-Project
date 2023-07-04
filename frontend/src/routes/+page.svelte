@@ -3,13 +3,13 @@
 
 	// const urlAPI = 'https://supersonicboss1-turbo-tribble-6rwr74774r72xv69-8000.preview.app.github.dev/api'
 
-	async function d(): Promise<string[]> {
-		let d = await DefaultService.readRootApiGet();
-		console.log(d + 'test');
+	async function getData(): Promise<string[]> {
+		let fetchedData = await DefaultService.readRootApiGet();
+		console.log(fetchedData + 'test');
 		// @ts-ignore
-		return d;
+		return fetchedData;
 	}
-	let data = d();
+	let data = getData();
 </script>
 
 <svelte:head>
@@ -33,7 +33,7 @@
 			on:click={async () => {
 				await DefaultService.addNewDataApiAddGet('test');
 				console.log('done');
-				data = d();
+				data = getData();
 			}}
 		>
 			INCREASE
@@ -42,7 +42,7 @@
 			class="warning"
 			on:click={async () => {
 				await DefaultService.clearDataApiClearGet();
-				data = d();
+				data = getData();
 			}}
 		>
 			CLEAR
