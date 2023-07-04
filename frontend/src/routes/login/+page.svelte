@@ -2,17 +2,26 @@
 	import { DefaultService } from '$lib/api/index.js';
 	let signInResponse = '';
 	let formData = {
+		// this is the data which will be sent to the API upon submission
 		username: '',
 		password: ''
 	};
-	let isLoaded = false;
+	function validateFormItem() {
+		if (formData.username === '' || formData.password === '') {
+			signInResponse = 'Please fill in all fields';
+		} else if (formData.password.length < 8) {
+			signInResponse = 'Password must be at least 8 characters';
+		} else {
+			signInResponse = '';
+		}
+	}
 	function submitForm() {
 		DefaultService.loginApiAuthLoginPost(formData)
 			.then((res) => {
 				signInResponse = res ? 'Success' : 'Failed';
 			})
 			.catch(() => {
-				signInResponse = 'Sign up failed - does the user already exist?';
+				signInResponse = 'Sign in failed - do you have an account?';
 			});
 	}
 </script>
@@ -21,7 +30,7 @@
 	<title>Login</title>
 	<meta name="description" content="Login to the app" />
 </svelte:head>
-<form on:submit|preventDefault={() => submitForm()} class:fullyLoaded={isLoaded}>
+<form on:submit|preventDefault={() => submitForm()}>
 	<h2>Login</h2>
 	<sup>or <a href="/signup" title="sign up coming soon to a website near you!">sign up</a></sup>
 	<label for="username">Email Address</label>
@@ -40,7 +49,8 @@
 		placeholder="••••••••"
 		bind:value={formData.password}
 	/>
-	<button type="submit" on:click={() => submitForm()}>Login</button>
+	<button type="submit" on:click={() => submitForm()} disabled={signInResponse === ''}>Login</button
+	>
 	Forgot your password?
 	<a href="/forgot" title="ok, maybe this doesn't exist right now...">Reset it</a>
 	<p>{signInResponse}</p>

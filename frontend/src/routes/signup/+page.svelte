@@ -10,7 +10,21 @@
 		age: 0
 	};
 	let isValid = false;
-	function validateFormItem() {}
+	function validateForm() {
+		if (formData.age < 16) {
+			signInResponse = 'You must be at least 16 years old to use this service';
+		} else if (formData.password.length < 8) {
+			signInResponse = 'Password must be at least 8 characters';
+		} else if (formData.password !== confirmPassword) {
+			signInResponse = 'Passwords do not match';
+		} else if (formData.email.includes('@') === false) {
+			signInResponse = 'Please enter a valid email address';
+		} else if (formData.firstName === '' || formData.lastName === '') {
+			signInResponse = 'Please enter your full name';
+		} else {
+			signInResponse = '';
+		}
+	}
 
 	function submitForm() {
 		DefaultService.registerApiAuthRegisterPost(formData)
@@ -37,6 +51,7 @@
 			name="fname"
 			id="fname"
 			placeholder="First Name"
+			aria-label="First Name"
 			bind:value={formData.firstName}
 		/>
 		<input
@@ -44,6 +59,7 @@
 			name="lname"
 			id="lname"
 			placeholder="Last Name"
+			aria-label="Last Name"
 			bind:value={formData.lastName}
 		/>
 	</div>
@@ -72,7 +88,9 @@
 		placeholder="Confirm Password"
 		bind:value={confirmPassword}
 	/>
-	<button type="submit" on:click={() => submitForm()} disabled={isValid}>Sign Up</button>
+	<button type="submit" on:click={() => submitForm()} disabled={signInResponse != ''}
+		>Sign Up</button
+	>
 	<p>{signInResponse}</p>
 </form>
 
