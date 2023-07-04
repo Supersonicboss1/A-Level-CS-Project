@@ -52,11 +52,12 @@ input[type='password'] {
 	outline-color: #8b0597;
 	background-color: #222222;
 	color: #ffffff;
-	transition: all 0.15s ease-in-out;
+	transition: all 0.05s ease-in-out;
+	transition: background-color 0s;
 
 	&:focus {
-		outline: 3px solid #8b0597;
-		transition: all 0.15s ease-in-out;
+		outline: 2px solid #8b0597;
+		transition: all 0.05s ease-in-out;
 	}
 }
 
