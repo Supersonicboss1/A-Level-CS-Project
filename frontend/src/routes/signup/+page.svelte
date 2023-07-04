@@ -3,27 +3,20 @@
 	import { afterUpdate, onDestroy } from 'svelte';
 	let signInResponse = '';
 	let formData = {
-		username: '',
-		password: ''
+		password: '',
+		email: '',
+		firstName: '',
+		lastName: '',
+		age: 0
 	};
-	let isLoaded = false;
-	afterUpdate(() => {
-		isLoaded = true;
-	});
-	onDestroy(() => {
-		isLoaded = false;
-	});
-	let isSignUp = false;
 	function submitForm() {
-		if (isSignUp) {
-			DefaultService.registerApiAuthRegisterPost(formData)
-				.then((res) => {
-					signInResponse = res ? 'Success' : 'Failed';
-				})
-				.catch(() => {
-					signInResponse = 'Sign up failed - does the user already exist?';
-				});
-		}
+		DefaultService.registerApiAuthRegisterPost(formData)
+			.then((res) => {
+				signInResponse = res ? 'Success' : 'Failed';
+			})
+			.catch(() => {
+				signInResponse = 'Sign up failed - does the user already exist?';
+			});
 	}
 </script>
 
@@ -31,7 +24,7 @@
 	<title>Login</title>
 	<meta name="description" content="Login to the app" />
 </svelte:head>
-<form on:submit|preventDefault={() => submitForm()} class:fullyLoaded={isLoaded}>
+<form on:submit|preventDefault={() => submitForm()}>
 	<h2>Sign Up</h2>
 	<sup>or <a href="/login" title="sign up coming soon to a website near you!">log in</a></sup>
 	<label for="fname">Name</label>
@@ -40,14 +33,14 @@
 		<input type="text" name="lname" id="lname" placeholder="Last Name" />
 	</div>
 	<label for="dob">Age</label>
-	<input type="text" name="dob" id="dob" placeholder="18" />
+	<input type="text" name="dob" id="dob" placeholder="24" />
 	<label for="email">Email Address</label>
 	<input
 		type="text"
 		name="email"
 		id="email"
 		placeholder="omar@hotmail.co.uk"
-		bind:value={formData.username}
+		bind:value={formData.email}
 	/>
 	<label for="password">Password</label>
 	<input
@@ -58,7 +51,7 @@
 		bind:value={formData.password}
 	/>
 	<input type="password" name="password" id="password" placeholder="Confirm Password" />
-	<button type="submit" on:click={() => (isSignUp = false)}>Sign Up</button>
+	<button type="submit" on:click={() => submitForm()}>Sign Up</button>
 	<p>{signInResponse}</p>
 </form>
 

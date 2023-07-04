@@ -14,3 +14,10 @@ class LoginData(BaseModel):
 
     username: str
     password: str
+
+class SignupData(BaseModel):
+    email: str
+    password: str
+    firstName: str
+    lastName: str
+    age: int

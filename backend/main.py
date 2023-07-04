@@ -4,7 +4,7 @@ import os
 import subprocess
 
 import auth
-from classtypes import LoginData, UserInfoResponse
+from classtypes import LoginData, SignupData, UserInfoResponse
 from fastapi import FastAPI, Response
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -69,7 +69,7 @@ def pop_data() -> bool:
 
 #! user authentication
 @app.post("/api/auth/register", status_code=201)
-def register(data: LoginData, response: Response) -> bool:
+def register(data: SignupData, response: Response) -> bool:
     """register a new user with the given username and password
     and add them to the database
 
