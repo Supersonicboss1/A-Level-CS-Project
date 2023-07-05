@@ -65,12 +65,11 @@ users = []
 
 
 class User:
-    """Class which represents a basic user.
-    password is NEVER stored in plaintext, only as a hash"""
+    """Class which represents a basic user."""
 
-    def __init__(self, username: str, password: str):
+    def __init__(self, name: str, password: str):
         self.user_id = self.generate_random_id()
-        self.username = username
+        self.name = name
         self.password_hash = get_hashed_password(password)
         self.logged_in = False
         self.session_tokens = []

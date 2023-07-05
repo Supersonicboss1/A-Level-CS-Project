@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { OpenAPI } from '$lib/api';
 	import Header from './Header.svelte';
 	import './styles.scss';
 </script>

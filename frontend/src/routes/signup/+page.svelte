@@ -2,17 +2,36 @@
 	import { DefaultService } from '$lib/api/index.js';
 	let signInResponse = '';
 	let confirmPassword = '';
+	let DoBString = '';
+	$: formData.dob = new Date(DoBString).getTime();
 
 	let formData = {
 		password: '',
 		email: '',
 		firstName: '',
 		lastName: '',
-		dob: ''
+		dob: 0
 	};
+	function validateDate() {
+		// get current date in milliseconds
+		const currentYear = new Date().getTime();
+		// get date of birth in milliseconds
+		const dob = new Date(DoBString).getTime();
+		// get difference between current year and year of birth
+		const age = currentYear - dob;
+		// convert difference to years
+		const ageInYears = age / 31536000000;
+		// if age is less than 16
+		if (ageInYears < 16) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	$: console.log(formData);
 	function validateForm() {
-		if (Number(formData.dob.slice(0, 4)) < 2005) {
-			// change this to be dynamic
+		if (validateDate() === false) {
+			// if under 16
 			signInResponse = 'You must be at least 16 years old to use this service';
 		} else if (formData.password.length < 8) {
 			signInResponse = 'Password must be at least 8 characters';
@@ -65,7 +84,7 @@
 		/>
 	</div>
 	<label for="dob">Date of Birth</label>
-	<input type="date" name="dob" id="dob" placeholder="24" bind:value={formData.dob} />
+	<input type="date" name="dob" id="dob" placeholder="24" bind:value={DoBString} />
 	<label for="email">Email Address</label>
 	<input
 		type="text"
