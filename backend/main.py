@@ -18,55 +18,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-datav = []  # temp data storage - database soon™️
-
-
-@app.get("/api")
-def read_root() -> list:
-    """Root api endpoint
-
-    Returns:
-        list: list of data that has been added to it with the endpoint /api/add
-    """
-    return datav
-
-
-@app.get("/api/add", status_code=201)
-def add_new_data(data: str) -> bool:
-    """add a specified string to datav
-
-    Args:
-        data (str): the data to be added
-
-    Returns:
-        bool: whether the data was added successfully (only returns True)
-    """
-    datav.append(data)
-    print(datav)
-    return True
-
-
-@app.get("/api/clear")
-def clear_data() -> bool:
-    """Clears the data in datav
-
-    Returns:
-        bool: whether the data was cleared successfully (only returns True)
-    """
-    datav.clear()
-    return True
-
-
-@app.get("/api/pop")
-def pop_data() -> bool:
-    """remove the last element from datav
-
-    Returns:
-        bool: whether the data was popped successfully (only returns True)"""
-    datav.pop()
-    return True
-
-
 #! user authentication
 @app.post("/api/auth/register", status_code=201)
 def register(data: SignupData, response: Response) -> bool:
@@ -82,6 +33,8 @@ def register(data: SignupData, response: Response) -> bool:
     # check both username and password are not empty
     if data.username == "" or data.password == "":
         response.status_code = 400
+        return False
+    elif len(data.password) < 8:
         return False
     # check if username is already taken
     for user in auth.users:

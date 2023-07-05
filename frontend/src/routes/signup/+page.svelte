@@ -2,16 +2,17 @@
 	import { DefaultService } from '$lib/api/index.js';
 	let signInResponse = '';
 	let confirmPassword = '';
+
 	let formData = {
 		password: '',
 		email: '',
 		firstName: '',
 		lastName: '',
-		age: 0
+		dob: ''
 	};
-	let isValid = false;
 	function validateForm() {
-		if (formData.age < 16) {
+		if (Number(formData.dob.slice(0, 4)) < 2005) {
+			// change this to be dynamic
 			signInResponse = 'You must be at least 16 years old to use this service';
 		} else if (formData.password.length < 8) {
 			signInResponse = 'Password must be at least 8 characters';
@@ -41,7 +42,7 @@
 	<title>Login</title>
 	<meta name="description" content="Login to the app" />
 </svelte:head>
-<form on:submit|preventDefault={() => submitForm()}>
+<form on:input={() => validateForm()} on:submit|preventDefault={() => submitForm()}>
 	<h2>Sign Up</h2>
 	<sup>or <a href="/login" title="sign up coming soon to a website near you!">log in</a></sup>
 	<label for="namegrid">Name</label>
@@ -63,8 +64,8 @@
 			bind:value={formData.lastName}
 		/>
 	</div>
-	<label for="age">Age</label>
-	<input type="text" name="age" id="age" placeholder="24" bind:value={formData.age} />
+	<label for="dob">Date of Birth</label>
+	<input type="date" name="dob" id="dob" placeholder="24" bind:value={formData.dob} />
 	<label for="email">Email Address</label>
 	<input
 		type="text"
@@ -79,6 +80,7 @@
 		name="password"
 		id="password"
 		placeholder="••••••••"
+		autocomplete="new-password"
 		bind:value={formData.password}
 	/>
 	<input
@@ -86,6 +88,7 @@
 		name="password"
 		id="password"
 		placeholder="Confirm Password"
+		autocomplete="new-password"
 		bind:value={confirmPassword}
 	/>
 	<button type="submit" on:click={() => submitForm()} disabled={signInResponse != ''}

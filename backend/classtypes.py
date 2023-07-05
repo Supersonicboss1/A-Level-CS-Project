@@ -20,4 +20,4 @@ class SignupData(BaseModel):
     password: str
     firstName: str
     lastName: str
-    age: int
+    dob: str
