@@ -20,4 +20,4 @@ class SignupData(BaseModel):
     password: str
     firstName: str
     lastName: str
-    dob: int # unix timestamp for DoB
+    dob: str # unix timestamp for DoB

@@ -21,56 +21,37 @@ app.add_middleware(
 #! user authentication
 @app.post("/api/auth/register", status_code=201)
 def register(data: SignupData, response: Response) -> bool:
-    """register a new user with the given username and password
-    and add them to the database
-
-    Args:
-        data (LoginData): a dict with the username and password
-
-    Returns:
-        bool: Whether the user was registered successfully
-    """
     # check both username and password are not empty
-    if data.username == "" or data.password == "":
+    if data.email == "" or data.password == "":
         response.status_code = 400
         return False
     elif len(data.password) < 8:
         return False
     # check if username is already taken
     for user in auth.users:
-        if user == data.username:
+        if user == data.email:
             response.status_code = 400
             return False
     # register user
-    auth.User(data.username, data.password)
-    token = auth.login(data.username, data.password)
+    auth.User(
+        email=data.email,
+        password=data.password,
+        firstName=data.firstName,
+        lastName=data.lastName,
+        dob=data.dob,
+    )
+    token = auth.login(data.email, data.password)
+    print(auth.users)
     return token
 
 
 @app.post("/api/auth/login")
 def login(data: LoginData) -> bool:
-    """Logs in a user with the given username and password
-
-    Args:
-        data (LoginData): username and password
-
-    Returns:
-        bool: whether the user was logged in successfully
-    """
     return auth.login(data.username, data.password)
 
 
 @app.get("/api/auth/info", response_model=UserInfoResponse)
 def get_user_info(username: str, response: Response) -> dict[str, str | bool]:
-    """Get the info for a user given they are logged in
-
-    Args:
-        username (str): the username of the user
-
-    Returns:
-        dict[str, str | bool]: a dict with the username, user_id, and
-        whether the user is logged in
-    """
     print(username)
     info = auth.get_user_info(username)
     if info:
@@ -85,11 +66,6 @@ def get_user_info(username: str, response: Response) -> dict[str, str | bool]:
 
 @app.get("/api/auth/dev/clear")
 def clear_users() -> bool:
-    """Clears the users database
-
-    Returns:
-        bool: whether the users database was cleared successfully (only returns True)
-    """
     auth.users.clear()
     return True
 
