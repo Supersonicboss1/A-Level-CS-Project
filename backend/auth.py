@@ -1,6 +1,6 @@
 """Handles safely storing and checking user passwords, and the User class"""
 import random
-from typing import Union
+from typing import Tuple, Union
 
 import bcrypt
 
@@ -26,13 +26,14 @@ def get_user_info(email: str) -> dict[str, str | bool]:
     }
 
 
-def login(email: str, password: str) -> bool:
+def login(email: str, password: str,) -> Tuple[bool, int]:
     """logs in a user with the given email and password"""
     for user in users:
         if user == email:
             if user.check_password(password):
                 user.logged_in = True
-                return True
+                print(user.logged_in)
+                return True, 200
                 # generate a session token - disabled for now
                 # token = "".join(
                 #     random.choices(string.ascii_letters + string.digits, k=16)
@@ -40,8 +41,8 @@ def login(email: str, password: str) -> bool:
                 # user.session_tokens.append(token)
                 # print(user.session_tokens)
                 # return token
-            return False
-    return False
+            return False, 403
+    return False, 404
 
 
 users = []

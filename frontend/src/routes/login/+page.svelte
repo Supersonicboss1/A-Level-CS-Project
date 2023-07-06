@@ -3,11 +3,11 @@
 	let signInResponse = '';
 	let formData = {
 		// this is the data which will be sent to the API upon submission
-		username: '',
+		email: '',
 		password: ''
 	};
 	function validateFormItem() {
-		if (formData.username === '' || formData.password === '') {
+		if (formData.email === '' || formData.password === '') {
 			signInResponse = 'Please fill in all fields';
 		} else if (formData.password.length < 8) {
 			signInResponse = 'Password must be at least 8 characters';
@@ -32,14 +32,14 @@
 </svelte:head>
 <form on:submit|preventDefault={() => submitForm()}>
 	<h2>Login</h2>
-	<sup>or <a href="/signup" title="sign up coming soon to a website near you!">sign up</a></sup>
-	<label for="username">Email Address</label>
+	<sup>or <a href="/signup">sign up</a></sup>
+	<label for="email">Email Address</label>
 	<input
 		type="text"
-		name="username"
-		id="username"
+		name="email"
+		id="email"
 		placeholder="omar@hotmail.co.uk"
-		bind:value={formData.username}
+		bind:value={formData.email}
 	/>
 	<label for="password">Password</label>
 	<input
@@ -49,8 +49,7 @@
 		placeholder="••••••••"
 		bind:value={formData.password}
 	/>
-	<button type="submit" on:click={() => submitForm()} disabled={signInResponse === ''}>Login</button
-	>
+	<button type="submit" on:click={() => submitForm()}>Login</button>
 	Forgot your password?
 	<a href="/forgot" title="ok, maybe this doesn't exist right now...">Reset it</a>
 	<p>{signInResponse}</p>

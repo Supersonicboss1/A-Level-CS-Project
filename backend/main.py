@@ -21,13 +21,13 @@ app.add_middleware(
 #! user authentication
 @app.post("/api/auth/register", status_code=201)
 def register(data: SignupData, response: Response) -> bool:
-    # check both username and password are not empty
+    # check both email and password are not empty
     if data.email == "" or data.password == "":
         response.status_code = 400
         return False
     elif len(data.password) < 8:
         return False
-    # check if username is already taken
+    # check if email is already taken
     for user in auth.users:
         if user == data.email:
             response.status_code = 400
@@ -46,19 +46,21 @@ def register(data: SignupData, response: Response) -> bool:
 
 
 @app.post("/api/auth/login")
-def login(data: LoginData) -> bool:
-    return auth.login(data.username, data.password)
+def login(data: LoginData, response: Response) -> bool:
+    login = auth.login(data.email, data.password)
+    response.status_code = login[1]
+    return login[0]
 
 
 @app.get("/api/auth/info", response_model=UserInfoResponse)
-def get_user_info(username: str, response: Response) -> dict[str, str | bool]:
-    print(username)
-    info = auth.get_user_info(username)
+def get_user_info(email: str, response: Response) -> dict[str, str | bool]:
+    print(email)
+    info = auth.get_user_info(email)
     if info:
         return info
     response.status_code = 403
     return {
-        "username": "",
+        "email": "",
         "user_id": "",
         "logged_in": False,
     }

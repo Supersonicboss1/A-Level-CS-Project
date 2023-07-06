@@ -4,7 +4,7 @@ from pydantic import BaseModel
 class UserInfoResponse(BaseModel):
     """Class to provide types for the response of the /api/auth/info endpoint"""
 
-    username: str
+    email: str
     user_id: str
     logged_in: bool
 
@@ -12,7 +12,7 @@ class UserInfoResponse(BaseModel):
 class LoginData(BaseModel):
     """Class to provide types for logging in and registering an account"""
 
-    username: str
+    email: str
     password: str
 
 class SignupData(BaseModel):
