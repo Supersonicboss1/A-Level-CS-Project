@@ -3,14 +3,14 @@
 	let signInResponse = '';
 	let confirmPassword = '';
 	let DoBString = '';
-	$: formData.dob = new Date(DoBString).getTime();
+	$: formData.dob = new Date(DoBString).getTime().toString();
 
 	let formData = {
 		password: '',
 		email: '',
 		firstName: '',
 		lastName: '',
-		dob: 0
+		dob: ''
 	};
 	function validateDate() {
 		// get current date in milliseconds
