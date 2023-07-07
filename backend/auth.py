@@ -1,7 +1,6 @@
 """Handles safely storing and checking user passwords, and the User class"""
 import random
 from typing import Tuple, Union
-
 import bcrypt
 
 

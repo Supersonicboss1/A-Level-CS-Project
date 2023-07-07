@@ -18,9 +18,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-#! user authentication
+
+# ! user authentication
 @app.post("/api/auth/register", status_code=201)
-def register(data: SignupData, response: Response) -> bool:
+def register(data: SignupData, response: Response) -> bool | tuple[bool, int]:
     # check both email and password are not empty
     if data.email == "" or data.password == "":
         response.status_code = 400
@@ -47,9 +48,9 @@ def register(data: SignupData, response: Response) -> bool:
 
 @app.post("/api/auth/login")
 def login(data: LoginData, response: Response) -> bool:
-    login = auth.login(data.email, data.password)
-    response.status_code = login[1]
-    return login[0]
+    login_val = auth.login(data.email, data.password)
+    response.status_code = login_val[1]
+    return login_val[0]
 
 
 @app.get("/api/auth/info", response_model=UserInfoResponse)

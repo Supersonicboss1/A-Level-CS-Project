@@ -15,9 +15,10 @@ class LoginData(BaseModel):
     email: str
     password: str
 
+
 class SignupData(BaseModel):
     email: str
     password: str
     firstName: str
     lastName: str
-    dob: str # unix timestamp for DoB
+    dob: str  # unix timestamp for DoB
