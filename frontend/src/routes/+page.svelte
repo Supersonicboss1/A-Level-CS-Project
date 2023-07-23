@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { DefaultService } from '$lib/api';
 </script>
 
 <svelte:head>

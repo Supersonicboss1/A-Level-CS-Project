@@ -1,6 +1,7 @@
 """Handles safely storing and checking user passwords, and the User class"""
 import random
 from typing import Tuple, Union
+
 import bcrypt
 
 
@@ -50,7 +51,7 @@ users = []
 class User:
     """Class which represents a basic user."""
 
-    def __init__(self, firstName: str, password: str, 
+    def __init__(self, firstName: str, password: str,
                  lastName: str, dob: str, email: str):
         self.user_id = self.generate_random_id()
         self.email = email
