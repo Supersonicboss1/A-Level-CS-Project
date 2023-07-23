@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Exo:400,700');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap');
 
 :root {
 	--primary-color: #ffffff;
@@ -29,8 +29,15 @@
 	padding: 0px;
 }
 
+h1 {
+	font-family: 'Ubuntu', sans-serif;
+	font-size: 32px;
+	color: var(--primary-color);
+}
+
 body {
-	font-family: 'Exo', sans-serif;
+	font-family: 'Ubuntu', sans-serif;
+	font-size: 16px;
 	color: var(--primary-color);
 	background-repeat: no-repeat;
 	background-attachment: fixed;
@@ -72,6 +79,8 @@ button {
 	border-radius: 5px;
 	box-sizing: border-box;
 	transition: all 0.1s ease-in-out;
+	/* centre placeholder text */
+	text-align: center;
 
 	&:hover {
 		outline: 3px solid #8b0597;
@@ -82,4 +91,14 @@ button {
 		transition: all 0.05s ease-in-out;
 		background-color: #8b0597;
 	}
+}
+
+.error {
+	/* red outlined error box */
+	border: 2px solid rgb(177, 22, 22);
+	background-color: rgba(177, 22, 22, 0.2);
+	border-radius: 8px;
+	padding: 5px;
+	margin: 10px;
+	transform: translateX(-10px);
 }
