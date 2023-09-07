@@ -13,7 +13,7 @@ export class API {
     static async register(email: string, password: string, name: string, dob: string): Promise<boolean> {
         const firstName = name.split(' ')[0]
         const lastName = name.split(' ')[1]
-        const response = await fetch(formAPIString('/register'), {
+        const response = await fetch(formAPIString('/api/auth/register'), {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

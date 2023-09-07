@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { API } from '$lib/api';
 	let response = '';
 	let success = true;
 	let DoBString = '';
@@ -7,8 +8,7 @@
 	let formData = {
 		password: '',
 		email: '',
-		firstName: '',
-		lastName: '',
+		name: '',
 		dob: ''
 	};
 </script>
@@ -17,28 +17,21 @@
 	<title>Login</title>
 	<meta name="description" content="Login to the app" />
 </svelte:head>
-<form>
+<form
+	on:submit|preventDefault={() =>
+		API.register(formData.email, formData.password, formData.name, formData.dob)}
+>
 	<h2>Sign Up</h2>
 	<sup>or <a href="/auth/login">log in</a></sup>
-	<label for="namegrid">Name</label>
-	<div class="namegrid">
-		<input
-			type="text"
-			name="fname"
-			id="fname"
-			placeholder="First Name"
-			aria-label="First Name"
-			bind:value={formData.firstName}
-		/>
-		<input
-			type="text"
-			name="lname"
-			id="lname"
-			placeholder="Last Name"
-			aria-label="Last Name"
-			bind:value={formData.lastName}
-		/>
-	</div>
+	<label for="name">Name</label>
+	<input
+		type="text"
+		name="name"
+		id="name"
+		placeholder="Name"
+		aria-label="Name"
+		bind:value={formData.name}
+	/>
 	<label for="dob">Date of Birth</label>
 	<input type="date" name="dob" id="dob" placeholder="24" bind:value={DoBString} />
 	<label for="email">Email Address</label>
@@ -60,8 +53,8 @@
 	/>
 	<input
 		type="password"
-		name="password"
-		id="password"
+		name="confirmpassword"
+		id="confirmpassword"
 		placeholder="Confirm Password"
 		autocomplete="new-password"
 		bind:value={confirmPassword}
@@ -83,12 +76,6 @@
 </form>
 
 <style lang="scss">
-	.namegrid {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		grid-gap: 5px;
-		grid-row: 2;
-	}
 	* {
 		transition: all;
 	}
