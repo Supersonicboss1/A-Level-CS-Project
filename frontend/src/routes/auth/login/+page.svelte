@@ -1,16 +1,9 @@
 <script lang="ts">
-	    import type { PageData, ActionData } from './$types';
-    
-    export let data: PageData;
-    
-    export let form: ActionData;
 	let formData = {
 		// this is the data which will be sent to the API upon submission
 		email: '',
 		password: ''
 	};
-
-	
 </script>
 
 <svelte:head>
@@ -39,11 +32,6 @@
 	<button type="submit">Login</button>
 	Forgot your password?
 	<a href="/forgot">Reset it</a>
-	{#if form?.success}
-    <!-- this message is ephemeral; it exists because the page was rendered in
-           response to a form submission. it will vanish if the user reloads -->
-    <p>Successfully logged in! Welcome back, {data.user.name}</p>
-{/if}
 </form>
 
 <style lang="scss">
