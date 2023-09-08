@@ -8,7 +8,7 @@
 
 <svelte:head>
 	<title>Login</title>
-	<meta name="description" content="Login to the app" />
+	<meta name="description" content="Sign into the app" />
 </svelte:head>
 <form method="post">
 	<h2>Login</h2>
