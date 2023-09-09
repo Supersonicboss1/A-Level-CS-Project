@@ -1,11 +1,12 @@
 <script lang="ts">
+	import '../app.postcss';
 	import Header from '../lib/Header.svelte';
 	import './styles.scss';
 </script>
 
 <div class="app">
 	<Header />
-	<main class="">
+	<main class>
 		<slot />
 	</main>
 </div>
