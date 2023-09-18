@@ -2,6 +2,11 @@
 	import { page } from '$app/stores';
 	import { Button } from "$lib/components/ui/button";
 	import * as Popover from "$lib/components/ui/popover";
+	import { ExternalLink, Moon, Sun, UserCircle2 } from 'lucide-svelte';
+	import Switch from './components/ui/switch/switch.svelte';
+	import { isDarkMode } from './stores';
+	import * as Avatar from "$lib/components/ui/avatar";
+	import AvatarFallback from './components/ui/avatar/avatar-fallback.svelte';
 </script>
 
 <header>
@@ -19,11 +24,34 @@
 		</svg>
 	</nav>
 		<Popover.Root>
-			<Popover.Trigger class="bg-transparent w-16 h-16 mt-2 mr-2 bg-slate-600 rounded-full"><svg class="translate-x-[0.4rem] -translate-y-0.5" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...$$props}><path fill="currentColor" d="M12 12q-1.65 0-2.825-1.175T8 8q0-1.65 1.175-2.825T12 4q1.65 0 2.825 1.175T16 8q0 1.65-1.175 2.825T12 12Zm-8 8v-2.8q0-.85.438-1.563T5.6 14.55q1.55-.775 3.15-1.163T12 13q1.65 0 3.25.388t3.15 1.162q.725.375 1.163 1.088T20 17.2V20H4Z"/></svg></Popover.Trigger>
-			<Popover.Content>
-				<Button>
-					Log In
+			<Popover.Trigger class="m-5 bg-secondary rounded-full"><Avatar.Root>
+				<Avatar.Fallback><UserCircle2/></Avatar.Fallback> <!--Add if statement, if logged in show initials, otherwise  user icon-->
+			  </Avatar.Root></Popover.Trigger> 
+			<Popover.Content class="grid">
+				<Button href="/auth/account" class="m-2">
+					Log In <ExternalLink class=" ml-2 w-5 text-secondary invert" />
+
 				</Button>
+				<br/>
+				<div class="flex w-32">
+				<Sun class="wr-5 flex-1 " />
+				<!-- svelte-ignore a11y-missing-attribute -->
+				<!-- svelte-ignore a11y-no-static-element-interactions -->
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<a class="flex-1" on:click={
+					() => {
+						$isDarkMode = !$isDarkMode;
+						localStorage.theme = $isDarkMode ? 'dark' : 'light';
+						document.documentElement.classList.toggle('dark');
+					}
+				}>
+
+				<Switch
+				checked={$isDarkMode}
+				/>
+</a>
+<Moon class="w-5 flex-1" />
+</div>
 			</Popover.Content>
 		  </Popover.Root>
 </header>

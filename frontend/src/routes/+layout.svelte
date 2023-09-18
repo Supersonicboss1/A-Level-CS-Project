@@ -1,12 +1,24 @@
 <script lang="ts">
+	import { isDarkMode } from '$lib/stores';
+	import { onMount } from 'svelte';
 	import '../app.postcss';
 	import Header from '../lib/Header.svelte';
 	import './styles.scss';
+	onMount(() => {
+			if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+			document.documentElement.classList.add('dark')
+			$isDarkMode = true;
+			} else {
+			document.documentElement.classList.remove('dark')
+			$isDarkMode = false;
+			}
+
+		})
 </script>
 
 <div class="app">
 	<Header />
-	<main class>
+	<main>
 		<slot />
 	</main>
 </div>

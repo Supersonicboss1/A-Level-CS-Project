@@ -1,32 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap');
 
-:root {
-	--primary-color: #ffffff;
-	--secondary-color: #000000;
-	--primary-button-color: #b3c2ff;
-	--secondary-button-color: #1d1622;
-	--accent-color: #11236f;
-}
 
 /* Primary Button */
 
 /* Text Styles */
-.primary-text {
-	color: var(--primary-color);
-}
 
-.secondary-text {
-	color: var(--secondary-color);
-}
-
-.accent-text {
-	color: var(--accent-color);
-}
 
 * {
 	transition: all 0.15s ease-in-out;
 	margin: 0px;
 	padding: 0px;
+	@apply text-secondary-foreground;
 }
 
 h1 {
@@ -45,60 +29,4 @@ body {
 	background-position: top;
 	background-image: url(https://raw.githubusercontent.com/Vanilla-OS/vanilla-backgrounds/main/backgrounds/vanilla-dark.svg);
 	backdrop-filter: blur(10px);
-}
-
-input[type='text'],
-input[type='number'],
-input[type='date'],
-input[type='password'] {
-	width: 100%;
-	padding: 20px;
-	margin-bottom: 20px;
-	border: 0;
-	outline: 0;
-	border-radius: 5px;
-	box-sizing: border-box;
-	outline-color: #8b0597;
-	background-color: #222222;
-	color: #ffffff;
-	transition: all 0.05s ease-in-out;
-	transition: background-color 0s;
-
-	&:focus {
-		outline: 2px solid #8b0597;
-		transition: all 0.05s ease-in-out;
-	}
-}
-
-button {
-	all: unset;
-	width: 100%;
-	padding: 10px;
-	margin-bottom: 20px;
-	background-color: #222222;
-	border-radius: 5px;
-	box-sizing: border-box;
-	transition: all 0.1s ease-in-out;
-	/* centre placeholder text */
-	text-align: center;
-
-	&:hover {
-		outline: 3px solid #8b0597;
-		transition: all 0.1s ease-in-out;
-	}
-
-	&:active {
-		transition: all 0.05s ease-in-out;
-		background-color: #8b0597;
-	}
-}
-
-.error {
-	/* red outlined error box */
-	border: 2px solid rgb(177, 22, 22);
-	background-color: rgba(177, 22, 22, 0.2);
-	border-radius: 8px;
-	padding: 5px;
-	margin: 10px;
-	transform: translateX(-10px);
 }
