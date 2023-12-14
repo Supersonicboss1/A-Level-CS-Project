@@ -3,7 +3,7 @@
 	import '../app.pcss';
 </script>
 
-<div class="dark bg-background w-full h-screen text-foreground">
+<div class="dark bg-background w-full min-h-screen text-foreground">
 	<slot />
 	<Toaster theme="dark" position="bottom-right" />
 </div>
