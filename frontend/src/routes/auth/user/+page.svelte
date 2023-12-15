@@ -10,7 +10,7 @@
 	<title>Login</title>
 	<meta name="description" content="Login to the app" />
 </svelte:head>
-
+<div class="flex justify-center items-center h-screen">
 <Tabs.Root value="account" class="w-[650px] self-center rounded-xl">
 	<Tabs.List class="grid w-full grid-cols-2">
 		<Tabs.Trigger value="account">Log in</Tabs.Trigger>
@@ -69,4 +69,8 @@
 			</Card.Footer>
 		</Card.Root>
 	</Tabs.Content>
+	<Tabs.Content value='employee'>
+		Employee?
+	</Tabs.Content>
 </Tabs.Root>
+</div>
