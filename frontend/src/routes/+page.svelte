@@ -18,12 +18,14 @@
 			<InfiniteCarousel />
 
 			<div>
-				<Button
-					class="transform hover:-translate-y-1 hover:scale-105 hover:rotate-2 active:bg-orange-300 active:rotate-2 active:scale-110 transition-all"
-				>
-					Get Started
-					<ChevronRight />
-				</Button>
+				<a href="/auth/user">
+					<Button
+						class="transform hover:-translate-y-1 hover:scale-105 hover:rotate-2 active:bg-orange-300 active:rotate-2 active:scale-110 transition-all"
+					>
+						Get Started
+						<ChevronRight />
+					</Button>
+				</a>
 			</div>
 		</div>
 	</div>
