@@ -12,7 +12,7 @@
 	<HoverCard.Trigger>
 		<img alt="movie poster" class="carousel-image" src={info.posterURL} />
 	</HoverCard.Trigger>
-	<HoverCard.Content>
+	<HoverCard.Content class="pointer-events-none">
 		<div class="flex flex-col items-start justify-center">
 			<h1 class="text-xl font-bold">{info.title}</h1>
 

@@ -21,7 +21,7 @@ export const movies: MovieList = [{
     posterURL: "https://upload.wikimedia.org/wikipedia/en/8/81/ShawshankRedemptionMoviePoster.jpg",
     year: 1994,
     rating: 9.3,
-    description: "a documentary about a world where people cannot afford umbrellas",
+    description: "a world where people cannot afford umbrellas",
     genres: ["Drama"],
     actors: ["Tim Robbins", "Morgan Freeman", "Bob Gunton", "William Sadler", "Clancy Brown", "Gil Bellows", "James Whitmore"]
 },
@@ -102,7 +102,7 @@ export const movies: MovieList = [{
     posterURL: "https://lumiere-a.akamaihd.net/v1/images/image_2c6cb554.jpeg",
     year: 2019,
     rating: 7.4,
-    description: "generic disney movie #300,001 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALALALALAL",
+    description: "generic disney movie #300,001",
     genres: ["Drama", "Fantasy"],
     actors: ["Will Smith", "Mena Massoud", "Naomi Scott", "Marwan Kenzari", "Navid Negahban", "Nasim Pedrad", "Billy Magnussen", "Jordan A. Nash"]
 },
