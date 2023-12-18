@@ -1,7 +1,7 @@
 <script lang="ts">
-	import UserSignUp from './UserSignUp.svelte';
+	import AdminSignUp from './AdminSignUp.svelte';
 
-	import UserSignIn from './UserSignIn.svelte';
+	import AdminSignIn from './AdminSignIn.svelte';
 
 	import * as Tabs from '$lib/components/ui/tabs';
 </script>
@@ -16,15 +16,15 @@
 			<Tabs.Trigger value="login">Log in</Tabs.Trigger>
 			<Tabs.Trigger value="signup">Sign Up</Tabs.Trigger>
 
-			<Tabs.Trigger value="employee" on:click={() => (window.location.href = '/auth/admin')}
-				>Employee</Tabs.Trigger
+			<Tabs.Trigger value="employee" on:click={() => (window.location.href = '/auth/user')}
+				>User</Tabs.Trigger
 			>
 		</Tabs.List>
 		<Tabs.Content value="login">
-			<UserSignIn />
+			<AdminSignIn />
 		</Tabs.Content>
 		<Tabs.Content value="signup">
-			<UserSignUp />
+			<AdminSignUp />
 		</Tabs.Content>
 	</Tabs.Root>
 </div>

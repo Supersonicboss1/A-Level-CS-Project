@@ -45,6 +45,6 @@
 		}
 	}
 	.carousel-container {
-		@apply my-6 flex min-h-[50px] flex-none translate-x-96 items-center justify-center gap-4 overflow-x-hidden py-16 pb-24 pt-8 transition-all duration-500;
+		@apply flex min-h-[50px] flex-none translate-x-96 items-center justify-center gap-4 overflow-x-hidden pb-12 pt-4 transition-all duration-500;
 	}
 </style>

@@ -5,7 +5,6 @@
 	import { Separator } from '../ui/separator';
 
 	export let info: Movie;
-	let mouseOnImage = false;
 </script>
 
 <HoverCard.Root>
@@ -19,9 +18,8 @@
 			<h2 class="text-lg font-semibold flex-none flex">
 				<Calendar class={'w-5 mr-1'} />
 				{info.year}
-			</h2>
-			<h2 class="flex flex-none">
-				<Dna class={'w-5 mr-1'} />
+
+				<Dna class={'w-5 ml-2 mr-1'} />
 				{info.genres[0]}
 			</h2>
 			<Separator />
@@ -32,6 +30,6 @@
 
 <style lang="postcss">
 	.carousel-image {
-		@apply h-[450px] w-[300px] max-w-xs flex-none rounded-xl bg-cover bg-center bg-no-repeat opacity-30 transition-all duration-150 hover:scale-105 hover:rounded-3xl hover:opacity-100 hover:shadow-xl hover:shadow-neutral-200;
+		@apply h-[450px] w-[300px] max-w-xs flex-none rounded-xl bg-cover bg-center bg-no-repeat opacity-30 transition-all duration-150 hover:scale-105 hover:rounded-3xl hover:opacity-100 hover:shadow-lg hover:shadow-neutral-200;
 	}
 </style>
