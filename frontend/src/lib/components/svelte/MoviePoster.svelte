@@ -8,7 +8,7 @@
 </script>
 
 <HoverCard.Root>
-	<HoverCard.Trigger>
+	<HoverCard.Trigger class='cursor-pointer'>
 		<img alt="movie poster" class="carousel-image" src={info.posterURL} />
 	</HoverCard.Trigger>
 	<HoverCard.Content class="pointer-events-none">

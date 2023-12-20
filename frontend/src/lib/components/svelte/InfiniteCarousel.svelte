@@ -47,4 +47,7 @@
 	.carousel-container {
 		@apply flex min-h-[50px] flex-none translate-x-96 items-center justify-center gap-4 overflow-x-hidden pb-12 pt-4 transition-all duration-500;
 	}
+	.carousel-container {
+		translate: y(10px);
+	}
 </style>
