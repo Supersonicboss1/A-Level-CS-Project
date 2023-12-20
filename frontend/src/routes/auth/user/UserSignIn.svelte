@@ -20,6 +20,6 @@
 		</div>
 	</Card.Content>
 	<Card.Footer>
-		<Button>Save changes</Button>
+		<Button>Sign In</Button>
 	</Card.Footer>
 </Card.Root>

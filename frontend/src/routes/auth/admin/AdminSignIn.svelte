@@ -12,7 +12,7 @@
 	<Card.Content class="space-y-2">
 		<div class="space-y-1">
 			<Label for="email">Cineverse Employee Email Address</Label>
-			<Input id="email" placeholder="omar@hotmail.co.uk" />
+			<Input id="email" placeholder="omarfromLeonardCOM@cineverse.com" />
 		</div>
 		<div class="space-y-1">
 			<Label for="password">Password</Label>
@@ -20,6 +20,6 @@
 		</div>
 	</Card.Content>
 	<Card.Footer>
-		<Button>Save changes</Button>
+		<Button>Log In</Button>
 	</Card.Footer>
 </Card.Root>

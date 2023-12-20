@@ -12,22 +12,22 @@
 	<Card.Content class="space-y-2">
 		<div class="space-y-1">
 			<Label for="name">Full Name</Label>
-			<Input id="name" type="text" />
+			<Input id="name" type="text" placeholder='Muhammed "NEET" Islam' />
 		</div>
 		<div class="space-y-1">
 			<Label for="email">Email Address</Label>
-			<Input id="email" type="email" />
+			<Input id="email" type="email" placeholder='muaazmotors@cineverse.com' />
 		</div>
 		<div class="space-y-1">
-			<Label for="password">Confirm Password</Label>
+			<Label for="password">Password</Label>
 			<Input id="password" type="password" />
 		</div>
-		<div>
-			<Label for="dob">Date of Birth</Label>
-			<Input id="dob" type="date" />
+		<div class="space-y-1">
+			<Label for="adminkey">Admin Key</Label>
+			<Input id="adminkey" type="text" placeholder='LEONARD + ((-4e^(πi) * (cos^2x + sin^2x) + 1) / (lim (x → 0) ((e^x - 1) / x)))' />
 		</div>
 	</Card.Content>
 	<Card.Footer>
-		<Button>Save password</Button>
+		<Button>Create Account</Button>
 	</Card.Footer>
 </Card.Root>

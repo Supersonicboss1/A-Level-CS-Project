@@ -13,7 +13,7 @@
 	<Card.Content class="space-y-2">
 		<div class="space-y-1">
 			<Label for="name">Full Name</Label>
-			<Input id="name" type="text" />
+			<Input id="name" type="text" placeholder='' />
 		</div>
 		<div class="space-y-1">
 			<Label for="email">Email Address</Label>
@@ -25,11 +25,10 @@
 		</div>
 		<div class="space-y-1">
 			<Label for="dob">Date of Birth</Label>
-			<br />
 			<DatePickerButton />
 		</div>
 	</Card.Content>
 	<Card.Footer>
-		<Button>Save password</Button>
+		<Button>Create Account</Button>
 	</Card.Footer>
 </Card.Root>
