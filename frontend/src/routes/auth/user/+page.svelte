@@ -4,6 +4,7 @@
 	import UserSignIn from './UserSignIn.svelte';
 
 	import * as Tabs from '$lib/components/ui/tabs';
+	import { Lock } from 'lucide-svelte';
 </script>
 
 <svelte:head>
@@ -16,8 +17,10 @@
 			<Tabs.Trigger value="login">Log in</Tabs.Trigger>
 			<Tabs.Trigger value="signup">Sign Up</Tabs.Trigger>
 
-			<Tabs.Trigger value="employee" on:click={() => (window.location.href = '/auth/admin')}
-				>Employee</Tabs.Trigger
+			<a
+				href="/auth/admin"
+				class="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+				><Lock class='w-4 mr-2'/>Employee?</a
 			>
 		</Tabs.List>
 		<Tabs.Content value="login">
