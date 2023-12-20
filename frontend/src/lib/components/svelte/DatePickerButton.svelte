@@ -10,7 +10,7 @@
 		dateStyle: 'long'
 	});
 
-	let value: DateValue | undefined = undefined;
+	export let value: DateValue | undefined = undefined;
 </script>
 
 <Popover.Root>
@@ -25,6 +25,6 @@
 		</Button>
 	</Popover.Trigger>
 	<Popover.Content class="w-auto p-0">
-		<MonthDayPicker />
+		<MonthDayPicker bind:value={value} />
 	</Popover.Content>
 </Popover.Root>
