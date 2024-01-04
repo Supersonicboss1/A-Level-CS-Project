@@ -8,7 +8,8 @@ def init_databases() -> sqlite3.Connection:
     cursor.execute(
         """CREATE TABLE IF NOT EXISTS user (
             id INTEGER PRIMARY KEY,
-            name TEXT,
+            firstName TEXT,
+            lastName TEXT,
             email TEXT,
             dob TEXT,
             password TEXT,
@@ -18,6 +19,8 @@ def init_databases() -> sqlite3.Connection:
     cursor.execute(
         """CREATE TABLE IF NOT EXISTS admin (
         id INTEGER PRIMARY KEY,
+        firstName TEXT,
+        lastName TEXT,
         email TEXT,
         password TEXT,
         token TEXT)"""
@@ -27,21 +30,22 @@ def init_databases() -> sqlite3.Connection:
     if not cursor.fetchone():
         print("Creating default admin")
         cursor.execute(
-            "INSERT INTO admin (id, email, password, token) VALUES (?, ?, ?, ?)",
-            (10000000000000, "email", "password", "token"),
+            "INSERT INTO admin (id, firstName, lastName, email, password, token) VALUES (?, ?, ?, ?, ?, ?)",
+            (10000000000000, "Omar", "Ismail", "email", "password", "token"),
         )
     cursor.execute("SELECT * FROM user")
     if not cursor.fetchone():
         print("Creating default user")
         cursor.execute(
             """INSERT INTO user (
-                name,
+                firstName,
+                lastName,
                 email,
                 dob,
                 password,
                 token)
-                VALUES (?, ?, ?, ?, ?)""",
-            ("name", "email", "dob", "password", "token"),
+                VALUES (?, ?, ?, ?, ?, ?)""",
+            ("firstName", "lastName", "email", "dob", "password", "token"),
         )
     conn.commit()
     return conn
@@ -58,10 +62,11 @@ def get_info_about_self(user_id, token):
     if base_user[5] == token:
         return 200, {
             "id": base_user[0],
-            "name": base_user[1],
-            "email": base_user[2],
-            "dob": base_user[3],
-            "token": base_user[4],
+            "firstName": base_user[1],
+            "lastName": base_user[2],
+            "email": base_user[3],
+            "dob": base_user[4],
+            "token": base_user[5],
         }
     else:
         return 403, "Invalid token"
@@ -77,10 +82,11 @@ def get_info_about_user(requester_id, requester_token, user_id):
         if base_user:
             return 200, {
                 "id": base_user[0],
-                "name": base_user[1],
-                "email": base_user[2],
-                "dob": base_user[3],
-                "token": base_user[4],
+                "firstName": base_user[1],
+                "lastName": base_user[2],
+                "email": base_user[3],
+                "dob": base_user[4],
+                "token": base_user[5],
             }
         else:
             return 404, "User not found"
@@ -99,10 +105,11 @@ def get_info_about_all_users(requester_id, requester_token):
             return 200, [
                 {
                     "id": base_user[0],
-                    "name": base_user[1],
-                    "email": base_user[2],
-                    "dob": base_user[3],
-                    "token": base_user[4],
+                    "firstName": base_user[1],
+                    "lastName": base_user[2],
+                    "email": base_user[3],
+                    "dob": base_user[4],
+                    "token": base_user[5],
                 }
                 for base_user in base_users
             ]

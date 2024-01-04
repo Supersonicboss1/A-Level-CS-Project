@@ -1,12 +1,10 @@
-
-
-
 from ninja import Schema
 
 
 class UserInfoSchema(Schema):
     id: int
-    name: str
+    firstName: str
+    lastName: str
     email: str
     dob: str
     token: str
