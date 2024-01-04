@@ -31,7 +31,7 @@ def init_databases() -> sqlite3.Connection:
         print("Creating default admin")
         cursor.execute(
             "INSERT INTO admin (id, firstName, lastName, email, password, token) VALUES (?, ?, ?, ?, ?, ?)",
-            (10000000000000, "Omar", "Ismail", "email", "password", "token"),
+            (0, "Omar", "Ismail", "email", "password", "token"),
         )
     cursor.execute("SELECT * FROM user")
     if not cursor.fetchone():
