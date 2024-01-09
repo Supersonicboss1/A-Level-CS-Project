@@ -13,8 +13,9 @@
 	<Card.Header>
 		<Card.Title>Sign Up</Card.Title>
 	</Card.Header>
-	<Card.Content class="space-y-2">
-		<Form.Root let:config schema={formSchema} {form}>
+
+	<Form.Root let:config schema={formSchema} {form}>
+		<Card.Content class="space-y-2">
 			<Form.Field {config} name="firstName">
 				<Form.Item class="space-y-1">
 					<Form.Label>First Name</Form.Label>
@@ -45,9 +46,9 @@
 					<DatePickerButton bind:input={form.data.dob} />
 				</Form.Item>
 			</Form.Field>
-		</Form.Root>
-	</Card.Content>
-	<Card.Footer>
-		<Button>Create Account</Button>
-	</Card.Footer>
+		</Card.Content>
+		<Card.Footer>
+			<Button>Create Account</Button>
+		</Card.Footer>
+	</Form.Root>
 </Card.Root>
