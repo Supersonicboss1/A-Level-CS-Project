@@ -26,8 +26,8 @@ def create_user_account(request, data: UserRegistrationSchema):
     # insert new user into database
     token = str(uuid4())
     cursor.execute(
-        "INSERT INTO user (name, email, dob, password, token) VALUES (?, ?, ?, ?, ?)",
-        (data.name, data.email, data.dob, hash_password(data.password), token),
+        "INSERT INTO user (firstName, lastName, email, dob, password, token) VALUES (?, ?, ?, ?, ?, ?)",
+        (data.firstName, data.lastName, data.email, data.dob, hash_password(data.password), token),
     )
     conn.commit()
     return 200, {"token": token, "id": cursor.lastrowid}
@@ -48,8 +48,8 @@ def create_admin_account(request, data: AdminRegistrationSchema):
     # insert new user into database
     token = str(uuid4())
     cursor.execute(
-        "INSERT INTO admin (email, password, token) VALUES (?, ?, ?)",
-        (data.email, hash_password(data.password), token),
+        "INSERT INTO admin (firstName, lastName, email, password, token) VALUES (?, ?, ?, ?, ?)",
+        (data.firstName, data.lastName, data.email, hash_password(data.password), token),
     )
     conn.commit()
     return 200, {

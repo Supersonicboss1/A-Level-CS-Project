@@ -4,10 +4,11 @@ from ninja import Schema
 class BaseRegistrationSchema(Schema):
     email: str
     password: str
+    firstName: str
+    lastName: str
 
 
 class UserRegistrationSchema(BaseRegistrationSchema):
-    name: str
     dob: str
 
 
@@ -18,4 +19,3 @@ class AdminRegistrationSchema(BaseRegistrationSchema):
 class CreateUserReturnSchema(Schema):
     token: str
     id: int
-    
