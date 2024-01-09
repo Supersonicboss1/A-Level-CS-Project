@@ -12,6 +12,8 @@ def hash_password(password: str) -> str:
     hashed_password = bcrypt.hashpw(password.encode("utf-8"), salt)
     return str(hashed_password)
 
+admin_key = uuid4()
+print(f'Admin key: {admin_key}')
 router = Router()
 conn = sqlite3.connect("backend/db/accounts.sqlite", check_same_thread=False)
 
