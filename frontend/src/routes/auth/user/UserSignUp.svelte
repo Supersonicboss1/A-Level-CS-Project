@@ -42,7 +42,7 @@
 			<Form.Field {config} name="dob">
 				<Form.Item class="space-y-1">
 					<Form.Label for="dob">Date of Birth</Form.Label>
-					<DatePickerButton />
+					<DatePickerButton bind:input={form.data.dob} />
 				</Form.Item>
 			</Form.Field>
 		</Form.Root>

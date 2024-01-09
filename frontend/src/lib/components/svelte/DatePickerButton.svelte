@@ -10,7 +10,9 @@
 		dateStyle: 'long'
 	});
 
-	export let value: DateValue | undefined = undefined;
+	let value: DateValue | undefined = undefined;
+	export let input = new Date();
+	$: input = value?.toDate(getLocalTimeZone()) ?? new Date();
 </script>
 
 <Popover.Root>
@@ -25,6 +27,6 @@
 		</Button>
 	</Popover.Trigger>
 	<Popover.Content class="w-auto p-0">
-		<MonthDayPicker bind:value={value} />
+		<MonthDayPicker bind:value />
 	</Popover.Content>
 </Popover.Root>
