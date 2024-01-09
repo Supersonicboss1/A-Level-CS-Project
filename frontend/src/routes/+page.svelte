@@ -1,5 +1,5 @@
 <script lang="ts">
-	export const prerender = true;
+	
 	import InfiniteCarousel from '$lib/components/svelte/InfiniteCarousel.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { ChevronRight } from 'lucide-svelte';
