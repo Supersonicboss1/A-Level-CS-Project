@@ -1,25 +1,36 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/button/button.svelte';
 	import * as Card from '$lib/components/ui/card';
-	import { Input } from '$lib/components/ui/input';
-	import { Label } from '$lib/components/ui/label';
+	import * as Form from '$lib/components/ui/form';
+	import type { SuperValidated } from 'sveltekit-superforms';
+	import { signInFormSchema, type SignInFormSchema } from './schema';
+	export let form: SuperValidated<SignInFormSchema>;
 </script>
 
 <Card.Root>
 	<Card.Header>
 		<Card.Title>Sign In</Card.Title>
 	</Card.Header>
-	<Card.Content class="space-y-2">
-		<div class="space-y-1">
-			<Label for="email">Email Address</Label>
-			<Input id="email" placeholder="omar@hotmail.co.uk" />
-		</div>
-		<div class="space-y-1">
-			<Label for="password">Password</Label>
-			<Input id="password" type="password" />
-		</div>
-	</Card.Content>
-	<Card.Footer>
-		<Button>Sign In</Button>
-	</Card.Footer>
+	<Form.Root schema={signInFormSchema} {form} let:config method="POST" action="?/signIn">
+		<Card.Content class="space-y-2">
+			<Form.Field name="email" {config}>
+				<Form.Item class="space-y-1">
+					<Form.Label for="email">Email Address</Form.Label>
+					<Form.Input placeholder="omar@hotmail.co.uk" />
+					<Form.Validation />
+				</Form.Item>
+			</Form.Field>
+
+			<Form.Field name="password" {config}>
+				<Form.Item class="space-y-1">
+					<Form.Label for="password">Password</Form.Label>
+					<Form.Input type="password" placeholder="hunter2" />
+					<Form.Validation />
+				</Form.Item>
+			</Form.Field>
+		</Card.Content>
+		<Card.Footer>
+			<Button>Sign In</Button>
+		</Card.Footer>
+	</Form.Root>
 </Card.Root>
