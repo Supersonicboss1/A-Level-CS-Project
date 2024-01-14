@@ -23,11 +23,13 @@ export const actions: Actions = {
     },
     register: async (event) => {
         const registerForm = await superValidate(event, registerFormSchema);
+        console.log(registerForm);
         if (!registerForm.valid) {
             return fail(400, {
                 registerForm
             });
         }
+
         return {
             registerForm
         };

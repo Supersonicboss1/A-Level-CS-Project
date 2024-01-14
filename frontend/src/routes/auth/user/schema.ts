@@ -18,11 +18,12 @@ export const registerFormSchema = z.object({
     lastName: z.string().min(1, { message: "Last name is required" }),
     email: z.string().email({ message: "Invalid email address" }),
     password: passwordSchema,
-    dob: z.date().refine((date) => {
+    dob: z.string().refine((date) => {
+        const dob = new Date(date);
         const now = new Date();
-        const age = now.getFullYear() - date.getFullYear();
+        const age = now.getFullYear() - dob.getFullYear();
         return age >= 18;
-    })
+    }, { message: "You must be at least 18 years old" })
 });
 export const signInFormSchema = z.object({
     email: z.string().email({ message: "Invalid email address" }),
