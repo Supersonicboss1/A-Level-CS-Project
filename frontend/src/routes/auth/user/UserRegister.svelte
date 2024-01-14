@@ -45,10 +45,10 @@
 					<Form.Validation />
 				</Form.Item>
 			</Form.Field>
-			<Form.Field {config} name="dob">
+			<Form.Field {config} name="dob" let:attrs let:handlers>
 				<Form.Item class="space-y-1">
 					<Form.Label for="dob">Date of Birth</Form.Label>
-					<DatePickerButton bind:input={form.data.dob} />
+					<DatePickerButton bind:input={form.data.dob} {...attrs.input} on:click={handlers.input} />
 					<Form.Validation />
 				</Form.Item>
 			</Form.Field>

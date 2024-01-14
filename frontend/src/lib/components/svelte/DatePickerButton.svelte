@@ -18,6 +18,7 @@
 <Popover.Root>
 	<Popover.Trigger asChild let:builder>
 		<Button
+			on:click
 			variant="outline"
 			class={cn('w-full justify-start text-left font-normal', !value && 'text-muted-foreground')}
 			builders={[builder]}
@@ -27,6 +28,6 @@
 		</Button>
 	</Popover.Trigger>
 	<Popover.Content class="w-auto p-0">
-		<MonthDayPicker bind:value />
+		<MonthDayPicker bind:value {...$$restProps} />
 	</Popover.Content>
 </Popover.Root>
