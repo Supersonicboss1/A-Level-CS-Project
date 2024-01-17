@@ -1,7 +1,9 @@
 import { z } from "zod";
+let passwordValue = ""
 const passwordSchema = z.string()
     .min(8, { message: " Password must be at least 8 characters long" })
     .refine((password) => {
+        passwordValue = password;
         const hasNumber = /\d/.test(password);
         return hasNumber;
     }, { message: " Password must contain a number" })
@@ -18,6 +20,9 @@ export const registerFormSchema = z.object({
     lastName: z.string().min(1, { message: "Last name is required" }),
     email: z.string().email({ message: "Invalid email address" }),
     password: passwordSchema,
+    confirmPassword: z.string().refine((confirmPassword) => {
+        return confirmPassword === passwordValue; // this implementation sucks but whatever ig
+    }, { message: "Passwords must match" }),
     dob: z.string().refine((date) => {
         const dob = new Date(date);
         const now = new Date();

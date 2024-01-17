@@ -44,6 +44,13 @@
 					<Form.Validation />
 				</Form.Item>
 			</Form.Field>
+			<Form.Field {config} name="confirmPassword">
+				<Form.Item class="space-y-1">
+					<Form.Label for="password">Confirm Password</Form.Label>
+					<Form.Input type="password" />
+					<Form.Validation />
+				</Form.Item>
+			</Form.Field>
 			<Form.Field {config} name="dob" let:attrs let:handlers>
 				<Form.Item class="space-y-1">
 					<Form.Label for="dob">Date of Birth</Form.Label>
