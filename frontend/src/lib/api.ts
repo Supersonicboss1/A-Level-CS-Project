@@ -8,7 +8,7 @@ class API {
         const response = await fetch(`${this.API_URL}${url}`);
         return response.json();
     }
-    async post(url: string, body: any): Promise<Response> {
+    async post(url: string, body: object): Promise<Response> {
         console.log(this.API_URL + url);
         if (url[0] !== "/") {
             url = `/${url}`;
@@ -35,13 +35,15 @@ class API {
     async registerUser(
         email: string,
         password: string,
-        name: string,
+        firstName: string,
+        lastName: string,
         dob: string
     ) {
-        return this.post("/user/register", {
+        return this.post("/auth/user/register", {
             email: email,
             password: password,
-            name: name,
+            firstName: firstName,
+            lastName: lastName,
             dob: dob,
         });
     }
@@ -51,11 +53,13 @@ class API {
             {}
         );
     }
-    async registerAdmin(email: string, password: string, adminKey: string) {
-        return this.post("/admin/register", {
+    async registerAdmin(email: string, password: string, adminKey: string, firstName: string, lastName: string) {
+        return this.post("/auth/admin/register", {
             email: email,
             password: password,
             admin_key: adminKey,
+            first_name: firstName,
+            last_name: lastName
         });
     }
     //login api has not been implemented yet, so no frontend either
