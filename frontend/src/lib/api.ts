@@ -58,8 +58,8 @@ class API {
             email: email,
             password: password,
             admin_key: adminKey,
-            first_name: firstName,
-            last_name: lastName
+            firstName: firstName,
+            lastName: lastName
         });
     }
     //login api has not been implemented yet, so no frontend either
