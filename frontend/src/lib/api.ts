@@ -49,6 +49,18 @@ class Auth extends API {
             lastName: lastName
         });
     }
+    async loginUser(email: string, password: string) {
+        return this.post("/auth/user/login", { // TODO: implement on api
+            email: email,
+            password: password,
+        });
+    }
+    async loginAdmin(email: string, password: string) {
+        return this.post("/auth/admin/login", { // TODO: implement on api
+            email: email,
+            password: password,
+        });
+    }
 }
 
 class UserData extends API {

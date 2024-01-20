@@ -1,10 +1,18 @@
 import sqlite3
-from ninja import Router
-
-from .schemas import AdminRegistrationSchema, CreateUserReturnSchema, UserRegistrationSchema
 from uuid import uuid4
 
 import bcrypt
+from ninja import Router
+
+from backend.userdata.schemas import AdminInfoSchema, UserInfoSchema
+
+from .schemas import (
+    AdminRegistrationSchema,
+    CreateUserReturnSchema,
+    LoginSchema,
+    UserRegistrationSchema,
+)
+
 
 def hash_password(password: str) -> str:
     """Hash a password for storing."""
@@ -12,10 +20,12 @@ def hash_password(password: str) -> str:
     hashed_password = bcrypt.hashpw(password.encode("utf-8"), salt)
     return str(hashed_password)
 
+
 admin_key = uuid4()
-print(f'Admin key: {admin_key}')
+print(f"Admin key: {admin_key}")
 router = Router()
 conn = sqlite3.connect("backend/db/accounts.sqlite", check_same_thread=False)
+
 
 @router.post("/user/register", response={200: CreateUserReturnSchema, 409: str})
 def create_user_account(request, data: UserRegistrationSchema):
@@ -29,7 +39,14 @@ def create_user_account(request, data: UserRegistrationSchema):
     token = str(uuid4())
     cursor.execute(
         "INSERT INTO user (firstName, lastName, email, dob, password, token) VALUES (?, ?, ?, ?, ?, ?)",
-        (data.firstName, data.lastName, data.email, data.dob, hash_password(data.password), token),
+        (
+            data.firstName,
+            data.lastName,
+            data.email,
+            data.dob,
+            hash_password(data.password),
+            token,
+        ),
     )
     conn.commit()
     return 200, {"token": token, "id": cursor.lastrowid}
@@ -51,10 +68,53 @@ def create_admin_account(request, data: AdminRegistrationSchema):
     token = str(uuid4())
     cursor.execute(
         "INSERT INTO admin (firstName, lastName, email, password, token) VALUES (?, ?, ?, ?, ?)",
-        (data.firstName, data.lastName, data.email, hash_password(data.password), token),
+        (
+            data.firstName,
+            data.lastName,
+            data.email,
+            hash_password(data.password),
+            token,
+        ),
     )
     conn.commit()
     return 200, {
         "token": token,
         "id": cursor.lastrowid,
+    }
+
+
+@router.post("/user/login", response={200: UserInfoSchema, 403: str})
+def login_user_account(request, data: LoginSchema):
+    cursor = conn.cursor()
+    # check if email already exists
+    cursor.execute("SELECT * FROM user WHERE email=?", (data.email,))
+    user = cursor.fetchone()
+    if not user or not bcrypt.checkpw(data.password.encode("utf-8"), user[5]):
+        return 403, "Invalid email or password"
+
+    return 200, {
+        "id": user[0],
+        "firstName": user[1],
+        "lastName": user[2],
+        "email": user[3],
+        "dob": user[4],
+        "token": user[6],
+    }
+
+
+@router.post("/admin/login", response={200: AdminInfoSchema, 403: str})
+def login_admin_account(request, data: LoginSchema):
+    cursor = conn.cursor()
+    # check if email already exists
+    cursor.execute("SELECT * FROM admin WHERE email=?", (data.email,))
+    user = cursor.fetchone()
+    if not user or not bcrypt.checkpw(data.password.encode("utf-8"), user[5]):
+        return 403, "Invalid email or password"
+
+    return 200, {
+        "id": user[0],
+        "firstName": user[1],
+        "lastName": user[2],
+        "email": user[3],
+        "token": user[5],
     }

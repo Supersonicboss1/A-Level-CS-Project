@@ -19,3 +19,8 @@ class AdminRegistrationSchema(BaseRegistrationSchema):
 class CreateUserReturnSchema(Schema):
     token: str
     id: int
+
+
+class LoginSchema(Schema):
+    email: str
+    password: str

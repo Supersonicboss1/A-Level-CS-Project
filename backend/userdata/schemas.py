@@ -8,3 +8,11 @@ class UserInfoSchema(Schema):
     email: str
     dob: str
     token: str
+
+
+class AdminInfoSchema(Schema):
+    id: int
+    firstName: str
+    lastName: str
+    email: str
+    token: str
