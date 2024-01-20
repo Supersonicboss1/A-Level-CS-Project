@@ -1,6 +1,6 @@
 class API {
     API_URL = "http://localhost:8000/api";
-    async get(url: string) {
+    public async get(url: string) {
         console.log(this.API_URL + url);
         if (url[0] !== "/") {
             url = `/${url}`;
@@ -8,7 +8,7 @@ class API {
         const response = await fetch(`${this.API_URL}${url}`);
         return response.json();
     }
-    async post(url: string, body: object): Promise<Response> {
+    public async post(url: string, body: object): Promise<Response> {
         console.log(this.API_URL + url);
         if (url[0] !== "/") {
             url = `/${url}`;
@@ -22,16 +22,9 @@ class API {
         });
         return response;
     }
-    async getUserData(userID: number, requesterID: number, token: string) {
-        return this.get(
-            `/userdata/users/${userID}?requester_user_id=${requesterID}&token=${token}`
-        );
-    }
-    async getAllUsers(requesterID: number, token: string) {
-        return this.get(
-            `/userdata/all?requester_user_id=${requesterID}&token=${token}`
-        );
-    }
+}
+
+class Auth extends API {
     async registerUser(
         email: string,
         password: string,
@@ -47,12 +40,6 @@ class API {
             dob: dob,
         });
     }
-    async deleteUser(userID: number, requesterID: number, token: string) {
-        return this.post(
-            `/userdata/delete/${userID}?requester_user_id=${requesterID}&token=${token}`,
-            {}
-        );
-    }
     async registerAdmin(email: string, password: string, adminKey: string, firstName: string, lastName: string) {
         return this.post("/auth/admin/register", {
             email: email,
@@ -62,6 +49,28 @@ class API {
             lastName: lastName
         });
     }
-    //login api has not been implemented yet, so no frontend either
 }
-export default new API();
+
+class UserData extends API {
+    async getUserData(userID: number, requesterID: number, token: string) {
+        return this.get(
+            `/userdata/users/${userID}?requester_user_id=${requesterID}&token=${token}`
+        );
+    }
+    async getAllUsers(requesterID: number, token: string) {
+        return this.get(
+            `/userdata/all?requester_user_id=${requesterID}&token=${token}`
+        );
+    }
+    async deleteUser(userID: number, requesterID: number, token: string) {
+        return this.post(
+            `/userdata/delete/${userID}?requester_user_id=${requesterID}&token=${token}`,
+            {}
+        );
+    }
+}
+const api = {
+    auth: new Auth(),
+    userdata: new UserData(),
+};
+export default api;

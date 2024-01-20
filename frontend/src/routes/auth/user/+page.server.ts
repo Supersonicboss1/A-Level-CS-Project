@@ -1,8 +1,8 @@
+import api from "$lib/api";
 import { fail } from "@sveltejs/kit";
 import { superValidate } from "sveltekit-superforms/server";
 import type { Actions, PageServerLoad } from "./$types";
 import { registerFormSchema, signInFormSchema } from "./schema";
-import api from "$lib/api";
 export const load: PageServerLoad = async () => {
     return {
         registerForm: await superValidate(registerFormSchema),
@@ -30,10 +30,10 @@ export const actions: Actions = {
                 registerForm
             });
         }
-        api.registerUser(registerForm.data.email, registerForm.data.password, registerForm.data.firstName, registerForm.data.lastName, registerForm.data.dob);
+        api.auth.registerUser(registerForm.data.email, registerForm.data.password, registerForm.data.firstName, registerForm.data.lastName, registerForm.data.dob);
         return {
             registerForm
         };
-        
+
     }
 };
