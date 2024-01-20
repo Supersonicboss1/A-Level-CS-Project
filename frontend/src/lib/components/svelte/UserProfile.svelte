@@ -13,9 +13,7 @@
 			</Avatar>
 		</Popover.Trigger>
 		<Popover.Content>
-			<a href={'/settings'}>
-				<Button>Settings</Button>
-			</a>
+			<Button>Sign Out</Button>
 		</Popover.Content>
 	</Popover.Root>
 </div>
