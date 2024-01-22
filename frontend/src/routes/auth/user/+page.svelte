@@ -1,7 +1,7 @@
 <script lang="ts">
 	import UserRegister from './UserRegister.svelte';
 
-	import UserSignIn from './UserSignIn.svelte';
+	import UserLogin from './UserLogin.svelte';
 
 	import * as Tabs from '$lib/components/ui/tabs';
 	import { Lock } from 'lucide-svelte';
@@ -26,7 +26,7 @@
 			>
 		</Tabs.List>
 		<Tabs.Content value="login">
-			<UserSignIn form={data.signInForm} />
+			<UserLogin form={data.loginForm} />
 		</Tabs.Content>
 		<Tabs.Content value="signup">
 			<UserRegister form={data.registerForm} />

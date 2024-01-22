@@ -3,15 +3,15 @@
 	import * as Card from '$lib/components/ui/card';
 	import * as Form from '$lib/components/ui/form';
 	import type { SuperValidated } from 'sveltekit-superforms';
-	import { signInFormSchema, type SignInFormSchema } from './schema';
-	export let form: SuperValidated<SignInFormSchema>;
+	import { loginFormSchema, type LoginFormSchema } from './schema';
+	export let form: SuperValidated<LoginFormSchema>;
 </script>
 
 <Card.Root>
 	<Card.Header>
 		<Card.Title>Sign In</Card.Title>
 	</Card.Header>
-	<Form.Root schema={signInFormSchema} {form} let:config method="POST" action="?/signIn">
+	<Form.Root schema={loginFormSchema} {form} let:config method="POST" action="?/login">
 		<Card.Content class="space-y-2">
 			<Form.Field name="email" {config}>
 				<Form.Item class="space-y-1">

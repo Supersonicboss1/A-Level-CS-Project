@@ -2,24 +2,25 @@ import api from "$lib/api";
 import { fail } from "@sveltejs/kit";
 import { superValidate } from "sveltekit-superforms/server";
 import type { Actions, PageServerLoad } from "./$types";
-import { registerFormSchema, signInFormSchema } from "./schema";
+import { loginFormSchema, registerFormSchema } from "./schema";
 export const load: PageServerLoad = async () => {
     return {
         registerForm: await superValidate(registerFormSchema),
-        signInForm: await superValidate(signInFormSchema)
+        loginForm: await superValidate(loginFormSchema)
     };
 };
 
 export const actions: Actions = {
-    signIn: async (event) => {
-        const signInForm = await superValidate(event, signInFormSchema);
-        if (!signInForm.valid) {
+    login: async (event) => {
+        const loginForm = await superValidate(event, loginFormSchema);
+        if (!loginForm.valid) {
             return fail(400, {
-                signInForm
+                loginForm
             });
         }
+        api.auth.loginUser(loginForm.data.email, loginForm.data.password);
         return {
-            signInForm
+            loginForm
         };
     },
     register: async (event) => {

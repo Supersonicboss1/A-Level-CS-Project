@@ -51,7 +51,7 @@
 					<Form.Validation />
 				</Form.Item>
 			</Form.Field>
-			<Form.Field {config} name="dob" let:attrs let:handlers>
+			<Form.Field {config} name="dob">
 				<Form.Item class="space-y-1">
 					<Form.Label for="dob">Date of Birth</Form.Label>
 					<Form.Input type="date" on:change />

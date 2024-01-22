@@ -30,9 +30,9 @@ export const registerFormSchema = z.object({
         return age >= 18;
     }, { message: "You must be at least 18 years old" })
 });
-export const signInFormSchema = z.object({
+export const loginFormSchema = z.object({
     email: z.string().email({ message: "Invalid email address" }),
     password: passwordSchema
 });
 export type RegisterFormSchema = typeof registerFormSchema;
-export type SignInFormSchema = typeof signInFormSchema;
+export type LoginFormSchema = typeof loginFormSchema;
