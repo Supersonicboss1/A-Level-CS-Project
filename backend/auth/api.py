@@ -4,7 +4,7 @@ from uuid import uuid4
 import bcrypt
 from ninja import Router
 
-from backend.userdata.schemas import AdminInfoSchema, UserInfoSchema
+from userdata.schemas import AdminInfoSchema, UserInfoSchema
 
 from .schemas import (
     AdminRegistrationSchema,
@@ -21,7 +21,7 @@ def hash_password(password: str) -> str:
     return str(hashed_password)
 
 
-admin_key = uuid4()
+admin_key = str(uuid4())
 print(f"Admin key: {admin_key}")
 router = Router()
 conn = sqlite3.connect("backend/db/accounts.sqlite", check_same_thread=False)
@@ -62,7 +62,8 @@ def create_admin_account(request, data: AdminRegistrationSchema):
     if cursor.fetchone():
         return 409, "A user with that email already exists"
     # check if admin key is correct
-    if data.admin_key != "LEONARD5":
+    print(data.admin_key, admin_key)
+    if data.admin_key != admin_key:
         return 403, "Invalid admin key"
     # insert new user into database
     token = str(uuid4())
