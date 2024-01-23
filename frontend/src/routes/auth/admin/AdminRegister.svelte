@@ -60,7 +60,7 @@
 			</Form.Field>
 		</Card.Content>
 		<Card.Footer>
-			<Button type="submit">Create Account</Button>
+			<Button type="submit">Sign Up</Button>
 		</Card.Footer>
 	</Form.Root>
 </Card.Root>

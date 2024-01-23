@@ -1,6 +1,8 @@
+import type { User } from "./stores";
+
 class API {
     API_URL = "http://localhost:8000/api";
-    public async get(url: string) {
+    public async get(url: string): Promise<Response> {
         console.log(this.API_URL + url);
         if (url[0] !== "/") {
             url = `/${url}`;
@@ -31,35 +33,51 @@ class Auth extends API {
         firstName: string,
         lastName: string,
         dob: string
-    ) {
-        return this.post("/auth/user/register", {
+    ): Promise<User> {
+        const response = this.post("/auth/user/register", {
             email: email,
             password: password,
             firstName: firstName,
             lastName: lastName,
             dob: dob,
         });
+        return (await response).json().then((data) => {
+            console.log(data);
+            return data;
+        })
     }
-    async registerAdmin(email: string, password: string, adminKey: string, firstName: string, lastName: string) {
-        return this.post("/auth/admin/register", {
+    async registerAdmin(email: string, password: string, adminKey: string, firstName: string, lastName: string): Promise<User> {
+        const response = this.post("/auth/admin/register", {
             email: email,
             password: password,
             admin_key: adminKey,
             firstName: firstName,
             lastName: lastName
         });
+        return (await response).json().then((data) => {
+            console.log(data);
+            return data;
+        })
     }
-    async loginUser(email: string, password: string) {
-        return this.post("/auth/user/login", { // TODO: implement on api
+    async loginUser(email: string, password: string): Promise<User> {
+        const response = this.post("/auth/user/login", {
             email: email,
             password: password,
         });
+        return (await response).json().then((data) => {
+            console.log(data);
+            return data;
+        })
     }
-    async loginAdmin(email: string, password: string) {
-        return this.post("/auth/admin/login", { // TODO: implement on api
+    async loginAdmin(email: string, password: string): Promise<User> {
+        const response = this.post("/auth/admin/login", {
             email: email,
             password: password,
         });
+        return (await response).json().then((data) => {
+            console.log(data);
+            return data;
+        })
     }
 }
 

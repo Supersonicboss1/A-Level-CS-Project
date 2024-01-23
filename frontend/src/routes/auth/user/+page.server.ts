@@ -3,6 +3,7 @@ import { fail } from "@sveltejs/kit";
 import { superValidate } from "sveltekit-superforms/server";
 import type { Actions, PageServerLoad } from "./$types";
 import { loginFormSchema, registerFormSchema } from "./schema";
+import { userStore } from "$lib/stores";
 export const load: PageServerLoad = async () => {
     return {
         registerForm: await superValidate(registerFormSchema),
@@ -18,7 +19,8 @@ export const actions: Actions = {
                 loginForm
             });
         }
-        api.auth.loginUser(loginForm.data.email, loginForm.data.password);
+        const user = await api.auth.loginUser(loginForm.data.email, loginForm.data.password);
+        userStore.set(user);
         return {
             loginForm
         };
@@ -31,7 +33,9 @@ export const actions: Actions = {
                 registerForm
             });
         }
-        api.auth.registerUser(registerForm.data.email, registerForm.data.password, registerForm.data.firstName, registerForm.data.lastName, registerForm.data.dob);
+        const user = await api.auth.registerUser(registerForm.data.email, registerForm.data.password, registerForm.data.firstName, registerForm.data.lastName, registerForm.data.dob);
+        userStore.set(user);
+        
         return {
             registerForm
         };
