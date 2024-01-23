@@ -25,28 +25,6 @@ def init_databases() -> sqlite3.Connection:
         password TEXT,
         token TEXT)"""
     )
-    # check if admin table is empty
-    cursor.execute("SELECT * FROM admin")
-    if not cursor.fetchone():
-        print("Creating default admin")
-        cursor.execute(
-            "INSERT INTO admin (id, firstName, lastName, email, password, token) VALUES (?, ?, ?, ?, ?, ?)",
-            (0, "Omar", "Ismail", "email", "password", "token"),
-        )
-    cursor.execute("SELECT * FROM user")
-    if not cursor.fetchone():
-        print("Creating default user")
-        cursor.execute(
-            """INSERT INTO user (
-                firstName,
-                lastName,
-                email,
-                dob,
-                password,
-                token)
-                VALUES (?, ?, ?, ?, ?, ?)""",
-            ("firstName", "lastName", "email", "dob", "password", "token"),
-        )
     conn.commit()
     return conn
 
