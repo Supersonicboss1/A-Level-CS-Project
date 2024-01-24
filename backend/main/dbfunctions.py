@@ -37,16 +37,20 @@ def get_info_about_self(user_id, token):
     if not base_user:
         return 404, "User not found"
     print(base_user)
-    if base_user[5] == token:
+    
+    if base_user[6] == token:
         return 200, {
             "id": base_user[0],
             "firstName": base_user[1],
             "lastName": base_user[2],
             "email": base_user[3],
             "dob": base_user[4],
-            "token": base_user[5],
+            # "password": base_user[5], we don't want to return the password
+            "token": base_user[6],
         }
     else:
+        print(f"Token: {token}")
+        print(f"User token: {base_user[6]}")
         return 403, "Invalid token"
 
 
@@ -64,7 +68,8 @@ def get_info_about_user(requester_id, requester_token, user_id):
                 "lastName": base_user[2],
                 "email": base_user[3],
                 "dob": base_user[4],
-                "token": base_user[5],
+                # "password": base_user[5], we don't want to return the password
+                "token": base_user[6],
             }
         else:
             return 404, "User not found"

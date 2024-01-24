@@ -90,8 +90,11 @@ def login_user_account(request, data: LoginSchema):
     # check if email already exists
     cursor.execute("SELECT * FROM user WHERE email=?", (data.email,))
     user = cursor.fetchone()
+    if not user:
+        return 403, "Invalid email or password"
     print(data.password.encode("utf-8"), user[5].encode("utf-8"))
-    if not user or not bcrypt.checkpw(data.password.encode("utf-8"), user[5].encode("utf-8")):
+    
+    if not bcrypt.checkpw(data.password.encode("utf-8"), user[5].encode("utf-8")):
         return 403, "Invalid email or password"
 
     return 200, {
