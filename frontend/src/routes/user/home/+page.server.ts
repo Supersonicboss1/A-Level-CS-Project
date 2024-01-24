@@ -6,7 +6,6 @@ export const load: PageServerLoad = async ({ cookies }) => {
         token: cookies.get('token')
     };
     if (cookie.id && cookie.token) {
-        console.log('fetching user data');
         const response = await api.userdata.getUserData(cookie.id, cookie.token);
         return response;
     }

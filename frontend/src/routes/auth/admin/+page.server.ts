@@ -3,7 +3,6 @@ import { fail, type RequestEvent } from "@sveltejs/kit";
 import { superValidate } from "sveltekit-superforms/server";
 import type { Actions, PageServerLoad } from "./$types";
 import { loginFormSchema, registerFormSchema } from "./schema";
-import { userStore } from "$lib/stores";
 export const load: PageServerLoad = async () => {
     return {
         registerForm: await superValidate(registerFormSchema),
@@ -19,7 +18,24 @@ export const actions: Actions = {
             });
         }
         const user = await api.auth.loginAdmin(loginForm.data.email, loginForm.data.password);
-        userStore.set(user);
+        event.cookies.set("id", String(user.id), {
+            maxAge: 60 * 60 * 24 * 7,
+            secure: false,
+            path: "/"
+
+        });
+        event.cookies.set("token", user.token, {
+            maxAge: 60 * 60 * 24 * 7,
+            secure: false,
+            path: "/"
+
+        });
+        event.cookies.set("isAdmin", "true", {
+            maxAge: 60 * 60 * 24 * 7,
+            secure: false,
+            path: "/"
+
+        });
         return {
             loginForm
         };
@@ -33,7 +49,24 @@ export const actions: Actions = {
             });
         }
         const user = await api.auth.registerAdmin(registerForm.data.email, registerForm.data.password, registerForm.data.adminKey, registerForm.data.firstName, registerForm.data.lastName);
-        userStore.set(user);
+        event.cookies.set("id", String(user.id), {
+            maxAge: 60 * 60 * 24 * 7,
+            secure: false,
+            path: "/"
+
+        });
+        event.cookies.set("token", user.token, {
+            maxAge: 60 * 60 * 24 * 7,
+            secure: false,
+            path: "/"
+
+        });
+        event.cookies.set("isAdmin", "true", {
+            maxAge: 60 * 60 * 24 * 7,
+            secure: false,
+            path: "/"
+
+        });
         return {
             registerForm
         };

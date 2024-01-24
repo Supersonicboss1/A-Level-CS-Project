@@ -1,5 +1,3 @@
-import { writable } from 'svelte/store';
-
 export interface User {
     id: number;
     firstName: string;
@@ -9,5 +7,3 @@ export interface User {
     token: string;
     isAdmin: boolean;
 }
-
-export const userStore = writable<User | null>(null);

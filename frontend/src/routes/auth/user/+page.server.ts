@@ -29,7 +29,13 @@ export const actions: Actions = {
             maxAge: 60 * 60 * 24 * 7,
             secure: false,
             path: "/"
-        
+
+        });
+        event.cookies.set("isAdmin", "false", {
+            maxAge: 60 * 60 * 24 * 7,
+            secure: false,
+            path: "/"
+
         });
         redirect(303, "/user/home");
     },
@@ -52,7 +58,7 @@ export const actions: Actions = {
             maxAge: 60 * 60 * 24 * 7,
             secure: false,
             path: "/"
-        
+
         });
         redirect(303, "/user/home");
 
