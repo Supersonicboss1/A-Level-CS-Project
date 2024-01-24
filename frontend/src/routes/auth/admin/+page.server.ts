@@ -1,8 +1,9 @@
 import api from "$lib/api";
-import { fail, type RequestEvent } from "@sveltejs/kit";
+import { fail, redirect, type RequestEvent } from "@sveltejs/kit";
 import { superValidate } from "sveltekit-superforms/server";
 import type { Actions, PageServerLoad } from "./$types";
 import { loginFormSchema, registerFormSchema } from "./schema";
+
 export const load: PageServerLoad = async () => {
     return {
         registerForm: await superValidate(registerFormSchema),
@@ -18,6 +19,7 @@ export const actions: Actions = {
             });
         }
         const user = await api.auth.loginAdmin(loginForm.data.email, loginForm.data.password);
+
         event.cookies.set("id", String(user.id), {
             maxAge: 60 * 60 * 24 * 7,
             secure: false,
@@ -36,9 +38,14 @@ export const actions: Actions = {
             path: "/"
 
         });
-        return {
-            loginForm
-        };
+        if (typeof (user) === "object") {
+            redirect(303, "/admin/home");
+        }
+        else {
+            return fail(400, {
+                loginForm
+            });
+        }
     },
     register: async (event: RequestEvent) => {
         const registerForm = await superValidate(event, registerFormSchema);
@@ -67,9 +74,14 @@ export const actions: Actions = {
             path: "/"
 
         });
-        return {
-            registerForm
-        };
+        if (typeof (user) === "object") {
+            redirect(303, "/admin/home");
+        }
+        else {
+            return fail(400, {
+                registerForm
+            });
+        }
 
     }
 };

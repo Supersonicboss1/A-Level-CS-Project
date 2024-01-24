@@ -30,7 +30,7 @@
 			</Form.Field>
 		</Card.Content>
 		<Card.Footer>
-			<Button>Sign In</Button>
+			<Button type="submit">Sign In</Button>
 		</Card.Footer>
 	</Form.Root>
 </Card.Root>

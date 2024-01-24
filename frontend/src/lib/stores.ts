@@ -5,5 +5,4 @@ export interface User {
     email: string;
     dob: string | undefined;
     token: string;
-    isAdmin: boolean;
 }

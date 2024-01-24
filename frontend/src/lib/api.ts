@@ -1,6 +1,6 @@
 import type { User } from "./stores";
 
-class API {
+class API { // The entire API kind of just assumes there are no errors ever
     private API_URL = "http://localhost:8000/api";
     async get(url: string): Promise<Response> {
         console.log(this.API_URL + url);

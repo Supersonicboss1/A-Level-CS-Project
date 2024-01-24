@@ -53,9 +53,7 @@ def create_user_account(request, data: UserRegistrationSchema):
     return 200, {"token": token, "id": cursor.lastrowid}
 
 
-@router.post(
-    "/admin/register", response={200: CreateUserReturnSchema, 403: str, 409: str}
-)
+@router.post("/admin/register", response={200: AdminInfoSchema, 403: str, 409: str})
 def create_admin_account(request, data: AdminRegistrationSchema):
     cursor = conn.cursor()
     # check if email already exists
@@ -83,8 +81,11 @@ def create_admin_account(request, data: AdminRegistrationSchema):
     conn.commit()
     print(f"Created admin with email {data.email}")
     return 200, {
-        "token": token,
         "id": cursor.lastrowid,
+        "firstName": data.firstName,
+        "lastName": data.lastName,
+        "email": data.email,
+        "token": token,
     }
 
 
@@ -122,7 +123,8 @@ def login_admin_account(request, data: LoginSchema):
     if not user:
         print(f"Admin with email {data.email} does not exist")
         return 403, "Invalid email or password"
-    if not bcrypt.checkpw(data.password.encode("utf-8"), user[5].encode("utf-8")):
+    print(data.password.encode("utf-8"), user[5].encode("utf-8"))
+    if not bcrypt.checkpw(data.password.encode("utf-8"), user[4].encode("utf-8")):
         print(f"Invalid password for admin with email {data.email}")
         return 403, "Invalid email or password"
     print(f"Logged in admin with email {data.email}")

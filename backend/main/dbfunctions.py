@@ -85,7 +85,7 @@ def get_info_about_all_users(requester_id, requester_token):
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM admin WHERE id=?", (requester_id,))
     admin_user = cursor.fetchone()
-    if admin_user[3] == requester_token:
+    if admin_user[5] == requester_token:
         cursor.execute("SELECT * FROM user")
         base_users = cursor.fetchall()
         if base_users:
