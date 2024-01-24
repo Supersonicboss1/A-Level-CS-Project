@@ -1,9 +1,8 @@
 import api from "$lib/api";
-import { fail } from "@sveltejs/kit";
+import { fail, redirect } from "@sveltejs/kit";
 import { superValidate } from "sveltekit-superforms/server";
 import type { Actions, PageServerLoad } from "./$types";
 import { loginFormSchema, registerFormSchema } from "./schema";
-import { userStore } from "$lib/stores";
 export const load: PageServerLoad = async () => {
     return {
         registerForm: await superValidate(registerFormSchema),
@@ -20,10 +19,19 @@ export const actions: Actions = {
             });
         }
         const user = await api.auth.loginUser(loginForm.data.email, loginForm.data.password);
-        userStore.set(user);
-        return {
-            loginForm
-        };
+        console.log(user);
+        event.cookies.set("id", user.id.toString(), {
+            maxAge: 60 * 60 * 24 * 7,
+            secure: false,
+            path: "/"
+        });
+        event.cookies.set("token", user.token, {
+            maxAge: 60 * 60 * 24 * 7,
+            secure: false,
+            path: "/"
+        
+        });
+        redirect(303, "/user/home");
     },
     register: async (event) => {
         const registerForm = await superValidate(event, registerFormSchema);
@@ -34,11 +42,19 @@ export const actions: Actions = {
             });
         }
         const user = await api.auth.registerUser(registerForm.data.email, registerForm.data.password, registerForm.data.firstName, registerForm.data.lastName, registerForm.data.dob);
-        userStore.set(user);
+        console.log(user);
+        event.cookies.set("id", user.id.toString(), {
+            maxAge: 60 * 60 * 24 * 7,
+            secure: false,
+            path: "/"
+        });
+        event.cookies.set("token", user.token, {
+            maxAge: 60 * 60 * 24 * 7,
+            secure: false,
+            path: "/"
         
-        return {
-            registerForm
-        };
+        });
+        redirect(303, "/user/home");
 
     }
 };
