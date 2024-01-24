@@ -1,14 +1,14 @@
 import type { User } from "./stores";
 
 class API {
-    API_URL = "http://localhost:8000/api";
-    public async get(url: string): Promise<Response> {
+    private API_URL = "http://localhost:8000/api";
+    async get(url: string): Promise<Response> {
         console.log(this.API_URL + url);
         if (url[0] !== "/") {
             url = `/${url}`;
         }
         const response = await fetch(`${this.API_URL}${url}`);
-        return response.json();
+        return response;
     }
     public async post(url: string, body: object): Promise<Response> {
         console.log(this.API_URL + url);
@@ -82,21 +82,32 @@ class Auth extends API {
 }
 
 class UserData extends API {
-    async getUserData(userID: number, requesterID: number, token: string) {
-        return this.get(
-            `/userdata/users/${userID}?requester_user_id=${requesterID}&token=${token}`
-        );
+    async getUserData(userID: number, token: string, requesterID?: number): Promise<User> {
+        const requestID: number = requesterID || userID;
+        const response = await this.get(`/userdata/users/${userID}?requester_user_id=${requestID}&token=${token}`);
+        return response.json().then((data) => {
+            console.log(data);
+            return data;
+        })
     }
-    async getAllUsers(requesterID: number, token: string) {
-        return this.get(
+    async getAllUsers(requesterID: number, token: string): Promise<User[]> {
+        const response = await this.get(
             `/userdata/all?requester_user_id=${requesterID}&token=${token}`
         );
+        return (response).json().then((data) => {
+            console.log(data);
+            return data;
+        })
     }
-    async deleteUser(userID: number, requesterID: number, token: string) {
-        return this.post(
+    async deleteUser(userID: number, requesterID: number, token: string): Promise<boolean> {
+        const response = this.post(
             `/userdata/delete/${userID}?requester_user_id=${requesterID}&token=${token}`,
             {}
         );
+        return (await response).json().then((data) => {
+            console.log(data);
+            return Boolean(data);
+        })
     }
 }
 const api = {
