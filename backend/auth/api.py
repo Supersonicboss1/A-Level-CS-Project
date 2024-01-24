@@ -3,7 +3,6 @@ from uuid import uuid4
 
 import bcrypt
 from ninja import Router
-
 from userdata.schemas import AdminInfoSchema, UserInfoSchema
 
 from .schemas import (
@@ -18,6 +17,7 @@ def hash_password(password: str) -> str:
     """Hash a password for storing."""
     salt = bcrypt.gensalt()
     hashed_password = bcrypt.hashpw(password.encode("utf-8"), salt)
+    print(f"Hashed password: {hashed_password}")
     return hashed_password.decode("utf-8")
 
 
@@ -30,10 +30,10 @@ conn = sqlite3.connect("backend/db/accounts.sqlite", check_same_thread=False)
 @router.post("/user/register", response={200: CreateUserReturnSchema, 409: str})
 def create_user_account(request, data: UserRegistrationSchema):
     cursor = conn.cursor()
-    print(data)
     # check if email already exists
     cursor.execute("SELECT * FROM user WHERE email=?", (data.email,))
     if cursor.fetchone():
+        print(f"User with email {data.email} already exists")
         return 409, "A user with that email already exists"
     # insert new user into database
     token = str(uuid4())
@@ -49,6 +49,7 @@ def create_user_account(request, data: UserRegistrationSchema):
         ),
     )
     conn.commit()
+    print(f"Created user with email {data.email}")
     return 200, {"token": token, "id": cursor.lastrowid}
 
 
@@ -60,10 +61,12 @@ def create_admin_account(request, data: AdminRegistrationSchema):
     # check if email already exists
     cursor.execute("SELECT * FROM admin WHERE email=?", (data.email,))
     if cursor.fetchone():
+        print(f"User with email {data.email} already exists")
         return 409, "A user with that email already exists"
     # check if admin key is correct
     print(data.admin_key, admin_key)
     if data.admin_key != admin_key:
+        print(f"Invalid admin key {data.admin_key}")
         return 403, "Invalid admin key"
     # insert new user into database
     token = str(uuid4())
@@ -78,6 +81,7 @@ def create_admin_account(request, data: AdminRegistrationSchema):
         ),
     )
     conn.commit()
+    print(f"Created admin with email {data.email}")
     return 200, {
         "token": token,
         "id": cursor.lastrowid,
@@ -91,12 +95,14 @@ def login_user_account(request, data: LoginSchema):
     cursor.execute("SELECT * FROM user WHERE email=?", (data.email,))
     user = cursor.fetchone()
     if not user:
+        print(f"User with email {data.email} does not exist")
         return 403, "Invalid email or password"
     print(data.password.encode("utf-8"), user[5].encode("utf-8"))
-    
-    if not bcrypt.checkpw(data.password.encode("utf-8"), user[5].encode("utf-8")):
-        return 403, "Invalid email or password"
 
+    if not bcrypt.checkpw(data.password.encode("utf-8"), user[5].encode("utf-8")):
+        print(f"Invalid password for user with email {data.email}")
+        return 403, "Invalid email or password"
+    print(f"Logged in user with email {data.email}")
     return 200, {
         "id": user[0],
         "firstName": user[1],
@@ -113,9 +119,13 @@ def login_admin_account(request, data: LoginSchema):
     # check if email already exists
     cursor.execute("SELECT * FROM admin WHERE email=?", (data.email,))
     user = cursor.fetchone()
-    if not user or not bcrypt.checkpw(data.password.encode("utf-8"), user[5].encode("utf-8")): 
+    if not user:
+        print(f"Admin with email {data.email} does not exist")
         return 403, "Invalid email or password"
-
+    if not bcrypt.checkpw(data.password.encode("utf-8"), user[5].encode("utf-8")):
+        print(f"Invalid password for admin with email {data.email}")
+        return 403, "Invalid email or password"
+    print(f"Logged in admin with email {data.email}")
     return 200, {
         "id": user[0],
         "firstName": user[1],
