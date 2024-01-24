@@ -18,7 +18,7 @@ def hash_password(password: str) -> str:
     """Hash a password for storing."""
     salt = bcrypt.gensalt()
     hashed_password = bcrypt.hashpw(password.encode("utf-8"), salt)
-    return str(hashed_password)
+    return hashed_password.decode("utf-8")
 
 
 admin_key = str(uuid4())
@@ -90,7 +90,8 @@ def login_user_account(request, data: LoginSchema):
     # check if email already exists
     cursor.execute("SELECT * FROM user WHERE email=?", (data.email,))
     user = cursor.fetchone()
-    if not user or not bcrypt.checkpw(data.password.encode("utf-8"), user[5]):
+    print(data.password.encode("utf-8"), user[5].encode("utf-8"))
+    if not user or not bcrypt.checkpw(data.password.encode("utf-8"), user[5].encode("utf-8")):
         return 403, "Invalid email or password"
 
     return 200, {
@@ -109,7 +110,7 @@ def login_admin_account(request, data: LoginSchema):
     # check if email already exists
     cursor.execute("SELECT * FROM admin WHERE email=?", (data.email,))
     user = cursor.fetchone()
-    if not user or not bcrypt.checkpw(data.password.encode("utf-8"), user[5]):
+    if not user or not bcrypt.checkpw(data.password.encode("utf-8"), user[5].encode("utf-8")): 
         return 403, "Invalid email or password"
 
     return 200, {
