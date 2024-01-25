@@ -9,5 +9,4 @@ export const load: PageServerLoad = async ({ cookies }) => {
         const response = await api.userdata.getUserData(cookie.id, cookie.token);
         return response;
     }
-
 };
