@@ -57,9 +57,11 @@ def get_info_about_self(user_id, token):
 
 def get_info_about_user(requester_id, requester_token, user_id):
     cursor = conn.cursor()
+    print(f'SELECT * FROM admin WHERE id={requester_id}')
     cursor.execute("SELECT * FROM admin WHERE id=?", (requester_id,))
     admin_user = cursor.fetchone()
-    if admin_user[3] == requester_token:
+    print(admin_user)
+    if admin_user[5] == requester_token:
         cursor.execute("SELECT * FROM user WHERE id=?", (user_id,))
         base_user = cursor.fetchone()
         if base_user:
@@ -114,7 +116,7 @@ def delete_user(user_id, requester_user_id, token):
     # check if requester is admin, or if requester is user and user is self
     cursor.execute("SELECT * FROM admin WHERE id=?", (requester_user_id,))
     admin_user = cursor.fetchone()
-    if admin_user[3] == token:
+    if admin_user[5] == token:
         print(f"Admin with email {admin_user[3]} deleted user with id {user_id}")
         cursor.execute("DELETE FROM user WHERE id=?", (user_id,))
         conn.commit()

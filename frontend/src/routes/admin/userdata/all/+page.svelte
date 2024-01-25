@@ -1,11 +1,18 @@
 <script lang="ts">
+	import type { User } from '$lib/stores';
 	import type { PageData } from './$types';
 	import DataTable from './data-table.svelte';
 
 	export let data: PageData;
-	const users = data.users || [];
+	const users = data.users as User[];
 </script>
-
+{#if data.error}
+	<h1 class="text-4xl font-bold tracking-tight lg:text-5xl">
+		{data.error}
+	</h1>
+{:else}
 <div class="container mx-auto py-10">
 	<DataTable {users} />
 </div>
+{/if}
+
