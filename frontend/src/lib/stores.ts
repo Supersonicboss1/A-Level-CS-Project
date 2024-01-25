@@ -1,8 +1,16 @@
-export interface User {
+ interface BaseUser {
     id: number;
     firstName: string;
     lastName: string;
     email: string;
-    dob: string | undefined;
     token: string;
+}
+
+export interface User extends BaseUser {
+    dob: string;
+    isAdmin: false;
+}
+
+export interface Admin extends BaseUser {
+    isAdmin: true;
 }

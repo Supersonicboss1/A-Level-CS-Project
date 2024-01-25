@@ -1,4 +1,4 @@
-import type { User } from "./stores";
+import type { Admin, User } from "./stores";
 
 class API { // The entire API kind of just assumes there are no errors ever
     private API_URL = "http://localhost:8000/api";
@@ -43,10 +43,13 @@ class Auth extends API {
         });
         return (await response).json().then((data) => {
             console.log(data);
-            return data;
+            return data.map((user: User) => {
+                user.isAdmin = false;
+                return user;
+            });
         })
     }
-    async registerAdmin(email: string, password: string, adminKey: string, firstName: string, lastName: string): Promise<User> {
+    async registerAdmin(email: string, password: string, adminKey: string, firstName: string, lastName: string): Promise<Admin> {
         const response = this.post("/auth/admin/register", {
             email: email,
             password: password,
@@ -56,7 +59,10 @@ class Auth extends API {
         });
         return (await response).json().then((data) => {
             console.log(data);
-            return data;
+            return data.map((admin: Admin) => {
+                admin.isAdmin = true;
+                return admin;
+            });
         })
     }
     async loginUser(email: string, password: string): Promise<User> {
@@ -66,17 +72,23 @@ class Auth extends API {
         });
         return (await response).json().then((data) => {
             console.log(data);
-            return data;
+            return data.map((user: User) => {
+                user.isAdmin = false;
+                return user;
+            })
         })
     }
-    async loginAdmin(email: string, password: string): Promise<User> {
+    async loginAdmin(email: string, password: string): Promise<Admin> {
         const response = this.post("/auth/admin/login", {
             email: email,
             password: password,
         });
         return (await response).json().then((data) => {
             console.log(data);
-            return data;
+            return data.map((admin: Admin) => {
+                admin.isAdmin = true;
+                return admin;
+            })
         })
     }
 }
