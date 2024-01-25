@@ -1,18 +1,18 @@
 <script lang="ts">
 	import type { Movie } from '$lib/data/movies';
 	import { Calendar, Dna } from 'lucide-svelte';
-	import * as HoverCard from '../ui/hover-card';
+	import * as Dialog from '../ui/dialog';
 	import { Separator } from '../ui/separator';
 
 	export let info: Movie;
 </script>
 
-<HoverCard.Root>
-	<HoverCard.Trigger class='cursor-pointer'>
+<Dialog.Root>
+	<Dialog.Trigger class='cursor-pointer'>
 		<img alt="movie poster" class="carousel-image" src={info.posterURL} />
-	</HoverCard.Trigger>
-	<HoverCard.Content class="pointer-events-none">
-		<div class="flex flex-col items-start justify-center">
+	</Dialog.Trigger>
+	<Dialog.Content class="">
+		<div class="">
 			<h1 class="text-xl font-bold">{info.title}</h1>
 
 			<h2 class="text-lg font-semibold flex-none flex">
@@ -23,10 +23,10 @@
 				{info.genres[0]}
 			</h2>
 			<Separator />
-			<p class="text-md text-ellipsis overflow-hidden max-w-[200px]">{info.description}</p>
+			<p class="text-md text-ellipsis overflow-hidden mt-2">{info.description}</p>
 		</div>
-	</HoverCard.Content>
-</HoverCard.Root>
+	</Dialog.Content>
+</Dialog.Root>
 
 <style lang="postcss">
 	.carousel-image {

@@ -7,15 +7,13 @@
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
 	class="flex flex-none overflow-x-hidden"
-	on:mouseenter={() => (isHovering = true)}
-	on:mouseleave={() => (isHovering = false)}
 >
-	<div class="carousel-container scroll" class:pause={isHovering}>
+	<div class="carousel-container scroll">
 		{#each movies as movie}
 			<MoviePoster info={movie} />
 		{/each}
 	</div>
-	<div class="carousel-container scroll" class:pause={isHovering}>
+	<div class="carousel-container scroll">
 		{#each movies as movie}
 			<MoviePoster info={movie} />
 		{/each}
@@ -31,9 +29,6 @@
 		-webkit-overflow-scrolling: touch;
 		animation: scrollAnimation 200s linear infinite;
 		animation-fill-mode: forwards;
-	}
-	.pause {
-		animation-play-state: paused;
 	}
 	@keyframes scrollAnimation {
 		0% {
