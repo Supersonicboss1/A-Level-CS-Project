@@ -9,10 +9,10 @@
 	class="justify-center bg-radial-gradient bg-opacity-50 backdrop-filter backdrop-blur-lg min-h-screen overflow-x-hidden"
 >
 	<div class="flex flex-col items-center">
-		<h1 class="text-8xl">
+		<center><h1 class="text-8xl">
 			Cineverse
 			<span class="text-orange-500">Radar</span>
-		</h1>
+		</h1></center>
 		<div
 			class="flex flex-wrap justify-center items-center min-h-[50px] gap-4 my-10 -translate-x-20"
 		>
@@ -20,12 +20,12 @@
 
 			<div>
 				<a href="/auth/user">
-					<Button
+					<center ><Button
 						class="transform hover:-translate-y-1 hover:scale-105 hover:rotate-2 active:bg-orange-300 active:rotate-2 active:scale-110 transition-all"
 					>
 						Get Started
 						<ChevronRight />
-					</Button>
+					</Button></center>
 				</a>
 			</div>
 		</div>
