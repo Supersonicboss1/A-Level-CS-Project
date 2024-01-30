@@ -1,8 +1,15 @@
 <script lang="ts">
+	import DeleteAccount from '$lib/components/svelte/DeleteAccount/DeleteAccount.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import { MoreHorizontal } from 'lucide-svelte';
 	export let id: number;
+	let open: boolean;
+	function setOpen() {
+		// wha??? why??? why does this work??? why does this fix the bug???
+		open = false;
+		open = true;
+	}
 </script>
 
 <DropdownMenu.Root>
@@ -20,7 +27,9 @@
 			</DropdownMenu.Item>
 		</DropdownMenu.Group>
 		<DropdownMenu.Separator />
-		<DropdownMenu.Item>Change user details</DropdownMenu.Item>
-		<DropdownMenu.Item>Delete user</DropdownMenu.Item>
+		<DropdownMenu.Item class="text-blue-400">Change user details</DropdownMenu.Item>
+
+		<DropdownMenu.Item on:click={setOpen} class="text-red-500">Delete account</DropdownMenu.Item>
 	</DropdownMenu.Content>
 </DropdownMenu.Root>
+<DeleteAccount userID={id} {open} customOpen={true} />
