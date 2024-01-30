@@ -85,10 +85,7 @@ class Auth extends API {
         });
         return (await response).json().then((data) => {
             console.log(data);
-            return data.map((admin: Admin) => {
-                admin.isAdmin = true;
-                return admin;
-            })
+            return data
         })
     }
 }
