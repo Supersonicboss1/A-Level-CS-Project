@@ -1,4 +1,4 @@
-import type { Admin, User } from "./stores";
+import type { Admin, User } from "./types";
 
 class API { // The entire API kind of just assumes there are no errors ever
     private API_URL = "http://localhost:8000/api";
@@ -100,7 +100,7 @@ class UserData extends API {
         })
     }
     async getAdminData(token: string, userID?: number): Promise<User> {
-        const response = await this.get(`/userdata/users/${userID}?token=${token}`);
+        const response = await this.get(`/userdata/admins/${userID}?token=${token}`);
         return response.json().then((data) => {
             console.log(data);
             return data;

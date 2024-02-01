@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { User } from '$lib/stores';
+	import type { User } from '$lib/types';
 	import type { PageData } from './$types';
 	import DataTable from './data-table.svelte';
 
