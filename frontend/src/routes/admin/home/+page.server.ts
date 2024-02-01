@@ -10,7 +10,7 @@ export const load: PageServerLoad = async ({ cookies }) => {
     console.table(cookie);
     if (cookie.id && cookie.token && cookie.isAdmin) {
         const response = await api.userdata.getAdminData(cookie.token, cookie.id);
-        if (response instanceof Array) {
+        if (response instanceof Object) {
             return {
                 user: response,
                 status: 200

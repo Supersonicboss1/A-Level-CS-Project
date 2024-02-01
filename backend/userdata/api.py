@@ -1,7 +1,7 @@
 from ninja import Router
 
 from main import dbfunctions
-from userdata.schemas import UserInfoSchema
+from userdata.schemas import AdminInfoSchema, UserInfoSchema
 router = Router()
 
 @router.get(
@@ -14,7 +14,7 @@ def get_user_info(request, user_id: int, requester_user_id: int, token: str):
         return dbfunctions.get_info_about_user(requester_user_id, token, user_id)
 
 @router.get(
-    "/admins/{user_id}", response={200: UserInfoSchema, 403: str, 404: str}
+    "/admins/{user_id}", response={200: AdminInfoSchema, 403: str, 404: str}
 )
 def get_admin_user_info(request, user_id: int, token: str):
     return dbfunctions.get_info_about_admin(user_id, token)
