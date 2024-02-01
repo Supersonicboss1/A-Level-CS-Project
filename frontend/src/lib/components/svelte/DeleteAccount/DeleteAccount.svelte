@@ -1,10 +1,10 @@
 <script lang="ts">
-	import * as Dialog from '$lib/components/ui/dialog';
+	import * as Dialog from '$lib/components/ui/alert-dialog';
 	import { toast } from 'svelte-sonner';
 	import { Button, buttonVariants } from '../../ui/button';
 	export let userID: number;
-	export let open: boolean;
-	export let customOpen: boolean; // if the user wants to open the dialog from a different component - if this is false, avoid setting the value of open
+	export let open: boolean = false;
+	export let customOpen: boolean = false; // if the user wants to open the dialog from a different component - if this is false, avoid setting the value of open
 	const handleDelete = () => {
 		fetch(`/kitAPI/deleteAccount`, {
 			method: 'POST',
@@ -43,6 +43,9 @@
 			</Dialog.Description>
 		</Dialog.Header>
 		<Dialog.Footer>
+			<Button variant="secondary" on:click={() => (customOpen ? (open = false) : null)}>
+				Cancel
+			</Button>
 			<Button variant="destructive" on:click={handleDelete}>Delete Account</Button>
 		</Dialog.Footer>
 	</Dialog.Content>

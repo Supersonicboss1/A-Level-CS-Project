@@ -1,6 +1,7 @@
 <script lang="ts">
+    export let pageData;
 </script>
 
-<div>
-    
-</div>
+<h1>
+
+</h1>

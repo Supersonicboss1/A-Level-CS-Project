@@ -1,8 +1,7 @@
 import sqlite3
-from pprint import pprint
 
 
-def init_databases() -> sqlite3.Connection:
+def init_databases() -> sqlite3.Connection: # i'm not sure when this is called first
     global conn
     conn = sqlite3.connect("backend/db/accounts.sqlite", check_same_thread=False)
     cursor = conn.cursor()
@@ -81,7 +80,29 @@ def get_info_about_user(requester_id, requester_token, user_id):
     else:
         print(f"Invalid token for admin with email {admin_user[3]}")
         return 403, "Invalid token"
-
+# realistically, it would be better to make user fetching more generic but whatever ig
+def get_info_about_admin(requester_id, requester_token): 
+    cursor = conn.cursor()
+    print(f'SELECT * FROM admin WHERE id={requester_id}')
+    cursor.execute("SELECT * FROM admin WHERE id=?", (requester_id,))
+    admin_user = cursor.fetchone()
+    print(admin_user)
+    if not admin_user:
+        print("User not found")
+        return 404, "User not found"
+    if admin_user[5] == requester_token:
+            print(f"Found user with email {admin_user[3]}")
+            return 200, {
+                "id": admin_user[0],
+                "firstName": admin_user[1],
+                "lastName": admin_user[2],
+                "email": admin_user[3],
+                # "password": admin_user[4], we don't want to return the password
+                "token": admin_user[5],
+            }
+    else:
+        print(f"Invalid token for admin with email {admin_user[3]}")
+        return 403, "Invalid token"
 
 def get_info_about_all_users(requester_id, requester_token):
     cursor = conn.cursor()
@@ -131,3 +152,5 @@ def delete_user(user_id, requester_user_id, token):
             return 200, True
         else:
             return 403, "Invalid token"
+
+        

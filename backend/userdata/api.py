@@ -13,7 +13,11 @@ def get_user_info(request, user_id: int, requester_user_id: int, token: str):
     else:
         return dbfunctions.get_info_about_user(requester_user_id, token, user_id)
 
-
+@router.get(
+    "/admins/{user_id}", response={200: UserInfoSchema, 403: str, 404: str}
+)
+def get_admin_user_info(request, user_id: int, token: str):
+    return dbfunctions.get_info_about_admin(user_id, token)
 
 
 

@@ -99,6 +99,13 @@ class UserData extends API {
             return data;
         })
     }
+    async getAdminData(token: string, userID?: number): Promise<User> {
+        const response = await this.get(`/userdata/users/${userID}?token=${token}`);
+        return response.json().then((data) => {
+            console.log(data);
+            return data;
+        })
+    }
     async getAllUsers(requesterID: number, token: string): Promise<User[]> {
         const response = await this.get(
             `/userdata/all?requester_user_id=${requesterID}&token=${token}`
