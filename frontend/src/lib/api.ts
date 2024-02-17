@@ -43,10 +43,7 @@ class Auth extends API {
         });
         return (await response).json().then((data) => {
             console.log(data);
-            return data.map((user: User) => {
-                user.isAdmin = false;
-                return user;
-            });
+            return data
         })
     }
     async registerAdmin(email: string, password: string, adminKey: string, firstName: string, lastName: string): Promise<Admin> {
@@ -59,10 +56,7 @@ class Auth extends API {
         });
         return (await response).json().then((data) => {
             console.log(data);
-            return data.map((admin: Admin) => {
-                admin.isAdmin = true;
-                return admin;
-            });
+            return data
         })
     }
     async loginUser(email: string, password: string): Promise<User> {
@@ -72,10 +66,8 @@ class Auth extends API {
         });
         return (await response).json().then((data) => {
             console.log(data);
-            return data.map((user: User) => {
-                user.isAdmin = false;
-                return user;
-            })
+            return data
+
         })
     }
     async loginAdmin(email: string, password: string): Promise<Admin> {
@@ -99,7 +91,7 @@ class UserData extends API {
             return data;
         })
     }
-    async getAdminData(token: string, userID?: number): Promise<User> {
+    async getAdminData(token: string, userID?: number): Promise<Admin> {
         const response = await this.get(`/userdata/admins/${userID}?token=${token}`);
         return response.json().then((data) => {
             console.log(data);

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import CSSclasses from '$lib/CSSclasses';
 	import type { Movie } from '$lib/data/movies';
 	import { Calendar, Dna } from 'lucide-svelte';
 	import * as Dialog from '../ui/dialog';
@@ -8,22 +9,22 @@
 </script>
 
 <Dialog.Root>
-	<Dialog.Trigger class='cursor-pointer'>
+	<Dialog.Trigger class="cursor-pointer">
 		<img alt="movie poster" class="carousel-image" src={info.posterURL} />
 	</Dialog.Trigger>
 	<Dialog.Content class="">
 		<div class="">
-			<h1 class="text-xl font-bold">{info.title}</h1>
+			<h3 class={CSSclasses.h3}>{info.title}</h3>
 
-			<h2 class="text-lg font-semibold flex-none flex">
+			<h4 class={` flex-none flex ${CSSclasses.h4}`}>
 				<Calendar class={'w-5 mr-1'} />
 				{info.year}
 
 				<Dna class={'w-5 ml-2 mr-1'} />
 				{info.genres[0]}
-			</h2>
+			</h4>
 			<Separator />
-			<p class="text-md text-ellipsis overflow-hidden mt-2">{info.description}</p>
+			<p class={CSSclasses.p}>{info.description}</p>
 		</div>
 	</Dialog.Content>
 </Dialog.Root>

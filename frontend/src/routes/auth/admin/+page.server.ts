@@ -4,7 +4,7 @@ import { superValidate } from "sveltekit-superforms/server";
 import type { Actions, PageServerLoad } from "./$types";
 import { loginFormSchema, registerFormSchema } from "./schema";
 
-export const load: PageServerLoad = async ({cookies}) => {
+export const load: PageServerLoad = async ({ cookies }) => {
     if (cookies.get("isAdmin") === "true") {
         redirect(303, "/admin/home");
     }
@@ -62,6 +62,11 @@ export const actions: Actions = {
             });
         }
         const user = await api.auth.registerAdmin(registerForm.data.email, registerForm.data.password, registerForm.data.adminKey, registerForm.data.firstName, registerForm.data.lastName);
+        if (isNaN(user.id)) {
+            return fail(400, {
+                registerForm,
+            });
+        }
         event.cookies.set("id", String(user.id), {
             maxAge: 60 * 60 * 24 * 7,
             secure: false,

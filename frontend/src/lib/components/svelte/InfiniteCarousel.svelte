@@ -5,9 +5,7 @@
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<div
-	class="flex flex-none overflow-x-hidden"
->
+<div class="flex flex-none overflow-x-hidden">
 	<div class="carousel-container scroll">
 		{#each movies as movie}
 			<MoviePoster info={movie} />

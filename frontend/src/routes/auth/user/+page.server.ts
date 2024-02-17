@@ -3,7 +3,7 @@ import { fail, redirect } from "@sveltejs/kit";
 import { superValidate } from "sveltekit-superforms/server";
 import type { Actions, PageServerLoad } from "./$types";
 import { loginFormSchema, registerFormSchema } from "./schema";
-export const load: PageServerLoad = async ({cookies}) => {
+export const load: PageServerLoad = async ({ cookies }) => {
     if (cookies.get("isAdmin") === "true") {
         redirect(303, "/admin/home");
     }
