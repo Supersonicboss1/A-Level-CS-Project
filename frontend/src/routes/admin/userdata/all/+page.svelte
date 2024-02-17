@@ -1,4 +1,5 @@
 <script lang="ts">
+	import CSSclasses from '$lib/CSSclasses';
 	import type { User } from '$lib/types';
 	import type { PageData } from './$types';
 	import DataTable from './data-table.svelte';
@@ -8,7 +9,7 @@
 </script>
 
 {#if data.error}
-	<h1 class="text-4xl font-bold tracking-tight lg:text-5xl">
+	<h1 class={CSSclasses.h1}>
 		{data.error}
 	</h1>
 {:else}
