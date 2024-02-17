@@ -1,5 +1,6 @@
 import api from '$lib/api';
-import { fail } from '@sveltejs/kit';
+import { faker } from '@faker-js/faker';
+import { fail, type Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 export const load: PageServerLoad = async ({ cookies }) => {
     const cookie = {
@@ -19,7 +20,7 @@ export const load: PageServerLoad = async ({ cookies }) => {
         else {
             return fail(403, {
                 error: "You are not authorized to view this page"
-            
+
             })
         }
 
@@ -32,3 +33,22 @@ export const load: PageServerLoad = async ({ cookies }) => {
         };
     }
 }
+
+export const actions = {
+    default: async () => {
+        // create 10 random users
+        for (let i = 0; i < 10; i++) {
+            const user = {
+                email: faker.internet.email(),
+                password: faker.internet.password(),
+                firstName: faker.person.firstName(),
+                lastName: faker.person.lastName(),
+                birthdate: faker.date.birthdate().toUTCString()
+            }
+            await api.auth.registerUser(user.email, user.password, user.firstName, user.lastName, user.birthdate);
+        }
+        return {
+            status: 200
+        }
+    }
+} satisfies Actions;

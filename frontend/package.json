@@ -35,6 +35,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@faker-js/faker": "^8.4.0",
 		"@internationalized/date": "^3.5.1",
 		"bits-ui": "^0.11.8",
 		"clsx": "^2.1.0",
