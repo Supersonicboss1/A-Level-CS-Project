@@ -137,3 +137,29 @@ export const movies: MovieList = [{
     actors: ["Sylvester Stallone", "Talia Shire", "Burt Young", "Carl Weathers", "Burgess Meredith", "Thayer David", "Joe Spinell", "Jimmy Gambina"]
 }
 ]
+
+export const genres = [
+    "Action",
+    "Adventure",
+    "Animation",
+    "Biography",
+    "Comedy",
+    "Crime",
+    "Documentary",
+    "Drama",
+    "Family",
+    "Fantasy",
+    "Film-Noir",
+    "History",
+    "Horror",
+    "Music",
+    "Musical",
+    "Mystery",
+    "Romance",
+    "Sci-Fi",
+    "Sport",
+    "Thriller",
+    "War",
+    "Western",
+];
+export const ageRatings = ["U", "PG", "12A", "12", "15", "18"];
