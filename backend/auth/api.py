@@ -5,12 +5,8 @@ import bcrypt
 from ninja import Router
 from userdata.schemas import AdminInfoSchema, UserInfoSchema
 
-from .schemas import (
-    AdminRegistrationSchema,
-    CreateUserReturnSchema,
-    LoginSchema,
-    UserRegistrationSchema,
-)
+from .schemas import (AdminRegistrationSchema, CreateUserReturnSchema,
+                      LoginSchema, UserRegistrationSchema)
 
 
 def hash_password(password: str) -> str:

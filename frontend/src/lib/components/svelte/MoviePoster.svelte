@@ -5,9 +5,12 @@
 	import * as Dialog from '../ui/dialog';
 	import { Separator } from '../ui/separator';
 
-	export let info: Movie;
-</script>
+	export let info: Movie | undefined = undefined;
 
+</script>
+{#if info == undefined}
+<div class='carousel-image bg-muted'/>
+{:else}
 <Dialog.Root>
 	<Dialog.Trigger class="cursor-pointer">
 		<img alt="movie poster" class="carousel-image" src={info.posterURL} />
@@ -28,9 +31,10 @@
 		</div>
 	</Dialog.Content>
 </Dialog.Root>
-
+{/if}
 <style lang="postcss">
 	.carousel-image {
-		@apply h-[450px] w-[300px] max-w-xs flex-none rounded-xl bg-cover bg-center bg-no-repeat opacity-30 transition-all duration-150 hover:scale-105 hover:rounded-3xl hover:opacity-100 hover:shadow-lg hover:shadow-neutral-200;
+		/* @ts-ignore */
+		@apply h-[450px] w-[300px] max-w-xs flex-none rounded-xl bg-cover bg-center bg-no-repeat opacity-30 transition-all duration-150 hover:rounded-3xl hover:opacity-100 hover:shadow-lg;
 	}
 </style>

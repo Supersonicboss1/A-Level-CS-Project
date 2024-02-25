@@ -139,9 +139,9 @@ export const movies: MovieList = [{
 ]
 
 export const genres = [
+    "Any",
     "Action",
     "Adventure",
-    "Animation",
     "Biography",
     "Comedy",
     "Crime",
@@ -149,12 +149,8 @@ export const genres = [
     "Drama",
     "Family",
     "Fantasy",
-    "Film-Noir",
-    "History",
     "Horror",
-    "Music",
     "Musical",
-    "Mystery",
     "Romance",
     "Sci-Fi",
     "Sport",
@@ -162,4 +158,4 @@ export const genres = [
     "War",
     "Western",
 ];
-export const ageRatings = ["U", "PG", "12A", "12", "15", "18"];
+export const ageRatings = ["Any", "U", "PG", "12A", "12", "15", "18"];
