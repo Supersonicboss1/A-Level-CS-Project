@@ -10,6 +10,13 @@ class UserInfoSchema(Schema):
     token: str
 
 
+class ReplaceUserInfoSchema(Schema):
+    firstName: str
+    lastName: str
+    email: str
+    dob: str
+
+
 class AdminInfoSchema(Schema):
     id: int
     firstName: str

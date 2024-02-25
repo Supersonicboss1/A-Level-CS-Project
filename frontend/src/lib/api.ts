@@ -1,6 +1,7 @@
-import type { Admin, User } from "./types";
+import type { Admin, EditUser, User } from "./types";
 
 class API { // The entire API kind of just assumes there are no errors ever
+    // Note to self: Python is not good for APIs, it makes it FAR too easy to be lazy and have bad code organisation!
     private API_URL = "http://localhost:8000/api";
     async get(url: string): Promise<Response> {
         console.log(this.API_URL + url);
@@ -110,7 +111,20 @@ class UserData extends API {
     async deleteUser(userID: number, requesterID: number, token: string): Promise<boolean> {
         const response = this.post(
             `/userdata/delete/${userID}?requester_user_id=${requesterID}&token=${token}`,
-            {}
+            {
+            }
+        );
+        return (await response).json().then((data) => {
+            console.log(data);
+            return Boolean(data);
+        })
+    }
+    async editUser(userInfo: EditUser, requesterID: number, token: string): Promise<boolean> {
+        const response = this.post(
+            `/userdata/delete/${userInfo.id}?requester_user_id=${requesterID}&token=${token}`,
+            {
+                new_info: userInfo
+            }
         );
         return (await response).json().then((data) => {
             console.log(data);

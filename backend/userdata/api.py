@@ -1,7 +1,7 @@
-from ninja import Router
-
 from main import dbfunctions
-from userdata.schemas import AdminInfoSchema, UserInfoSchema
+from ninja import Router
+from userdata.schemas import (AdminInfoSchema, ReplaceUserInfoSchema,
+                              UserInfoSchema)
 router = Router()
 
 @router.get(
@@ -20,10 +20,15 @@ def get_admin_user_info(request, user_id: int, token: str):
     return dbfunctions.get_info_about_admin(user_id, token)
 
 
-
-@router.post("/delete/{user_id}", response={200: bool, 409: str})
+@router.post("/delete/{user_id}", response={200: bool, 403: str})
 def delete_user_account(request, user_id, requester_user_id: int, token: str):
     return dbfunctions.delete_user(user_id, requester_user_id, token)
+
+
+@router.post("/delete/{user_id}", response={200: bool, 403: str})
+def edit_user_account(request, user_id, requester_user_id: int,
+                      token: str, new_info: ReplaceUserInfoSchema):
+    return dbfunctions.edit_user_account(user_id, requester_user_id, token, new_info)
 
 
 @router.get("/all", response={200: list[UserInfoSchema], 403: str, 404: str})

@@ -81,7 +81,7 @@ def get_info_about_user(requester_id, requester_token, user_id):
         print(f"Invalid token for admin with email {admin_user[3]}")
         return 403, "Invalid token"
 # realistically, it would be better to make user fetching more generic but whatever ig
-def get_info_about_admin(requester_id, requester_token): 
+def get_info_about_admin(requester_id, requester_token):
     cursor = conn.cursor()
     print(f'SELECT * FROM admin WHERE id={requester_id}')
     cursor.execute("SELECT * FROM admin WHERE id=?", (requester_id,))
@@ -153,4 +153,23 @@ def delete_user(user_id, requester_user_id, token):
         else:
             return 403, "Invalid token"
 
-        
+def edit_user_account(user_id, requester_user_id, token, new_info):
+    cursor = conn.cursor()
+    # check if requester is admin, or if requester is user and user is self
+    cursor.execute("SELECT * FROM admin WHERE id=?", (requester_user_id,))
+    admin_user = cursor.fetchone()
+    if admin_user[5] == token:
+        print(f"Admin with email {admin_user[3]} edited user with id {user_id}")
+        cursor.execute("UPDATE user SET firstName=?, lastName=?, email=?, dob=?, password=? WHERE id=?", (new_info['firstName'], new_info['lastName'], new_info['email'], new_info['dob'], new_info['password'], user_id))
+        conn.commit()
+        return 200, True
+    else:
+        print(f"User with id {requester_user_id} is not an admin")
+        cursor.execute("SELECT * FROM user WHERE id=?", (requester_user_id,))
+        base_user = cursor.fetchone()
+        if base_user[4] == token:
+            cursor.execute("UPDATE user SET firstName=?, lastName=?, email=?, dob=?, password=? WHERE id=?", (new_info['firstName'], new_info['lastName'], new_info['email'], new_info['dob'], new_info['password'], user_id))
+            conn.commit()
+            return 200, True
+        else:
+            return 403, "Invalid token"

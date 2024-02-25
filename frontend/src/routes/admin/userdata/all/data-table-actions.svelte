@@ -1,11 +1,14 @@
 <script lang="ts">
 	import DeleteAccount from '$lib/components/svelte/DeleteAccount/DeleteAccount.svelte';
+	import EditAccount from '$lib/components/svelte/EditAccount/EditAccount.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
+	import type { User } from '$lib/types';
 	import { MoreHorizontal } from 'lucide-svelte';
-	export let id: number;
-	let open: boolean;
-	function setOpen() {
+	export let userData: User;
+	let openDelete: boolean;
+	let openEdit: boolean;
+	function setOpen(open: boolean) {
 		// wha??? why??? why does this work??? why does this fix the bug???
 		open = false;
 		open = true;
@@ -22,14 +25,22 @@
 	<DropdownMenu.Content>
 		<DropdownMenu.Group>
 			<DropdownMenu.Label>Actions</DropdownMenu.Label>
-			<DropdownMenu.Item on:click={() => navigator.clipboard.writeText(String(id))}>
+			<DropdownMenu.Item on:click={() => navigator.clipboard.writeText(String(userData.id))}>
 				Copy user ID
 			</DropdownMenu.Item>
 		</DropdownMenu.Group>
 		<DropdownMenu.Separator />
-		<DropdownMenu.Item class="text-blue-400">Change user details</DropdownMenu.Item>
+		<DropdownMenu.Item on:click={() => setOpen(openEdit)} class="text-blue-500">Edit account details</DropdownMenu.Item>
 
-		<DropdownMenu.Item on:click={setOpen} class="text-red-500">Delete account</DropdownMenu.Item>
+		<DropdownMenu.Item on:click={() => setOpen(openDelete)} class="text-red-500">Delete account</DropdownMenu.Item>
 	</DropdownMenu.Content>
 </DropdownMenu.Root>
-<DeleteAccount userID={id} {open} customOpen={true} />
+<DeleteAccount userID={userData.id} open={openDelete} customOpen={true} />
+<EditAccount userInfo={{
+	firstName: userData.firstName,
+	lastName: userData.lastName,
+	email: userData.email,
+	dob: userData.dob,
+	id: userData.id,
+	token: userData.token
+}} open={openEdit} customOpen={true} />

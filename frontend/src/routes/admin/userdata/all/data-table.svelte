@@ -52,10 +52,10 @@
 			}
 		}),
 		table.column({
-			accessor: ({ id }) => id,
+			accessor: (data) => data,
 			header: 'Actions',
 			cell: ({ value }) => {
-				return createRender(DataTableActions, { id: value });
+				return createRender(DataTableActions, { userData: value });
 			},
 			plugins: {
 				sort: {
