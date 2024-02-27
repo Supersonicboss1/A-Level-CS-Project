@@ -43,9 +43,9 @@ export const actions = {
                 password: faker.internet.password(),
                 firstName: faker.person.firstName(),
                 lastName: faker.person.lastName(),
-                birthdate: faker.date.birthdate().toUTCString()
+                dob: faker.date.birthdate().toUTCString()
             }
-            await api.auth.registerUser(user.email, user.password, user.firstName, user.lastName, user.birthdate);
+            await api.auth.registerUser(user);
         }
         return {
             status: 200

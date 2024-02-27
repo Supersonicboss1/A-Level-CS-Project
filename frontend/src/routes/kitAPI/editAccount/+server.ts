@@ -1,4 +1,5 @@
 import api from "$lib/api";
+import type { User } from "$lib/types";
 import type { RequestEvent } from "@sveltejs/kit";
 
 
@@ -9,7 +10,7 @@ export const POST = async (event: RequestEvent) => {
         isAdmin: event.cookies.get("isAdmin") ?? false
     }
     if (!cookie.isAdmin) return new Response("", { status: 401 })
-    let body;
+    let body: User;
     try {
         body = await event.request.json();
     } catch (error) {

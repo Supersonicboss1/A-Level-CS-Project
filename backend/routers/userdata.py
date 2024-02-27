@@ -33,7 +33,7 @@ def get_admin_user_info(user_id: int, token: str):
         return admin
 
 
-@router.post("/delete/{user_id}")
+@router.delete("/users/{user_id}", response_model=bool)
 def delete_user_account(user_id: int, requester_user_id: int, token: str) -> Literal[True]:
     with Session(engine) as session:
         user = session.get(User, user_id)
@@ -52,7 +52,7 @@ def delete_user_account(user_id: int, requester_user_id: int, token: str) -> Lit
         return True
 
 
-@router.post("/delete/{user_id}")
+@router.put("/users/{user_id}")
 def edit_user_account(user_id: int, requester_user_id: int,
                       token: str, new_info: User) -> Literal[True]:
     with Session(engine) as session:

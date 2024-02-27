@@ -53,7 +53,7 @@ export const actions: Actions = {
                 registerForm
             });
         }
-        const user = await api.auth.registerUser(registerForm.data.email, registerForm.data.password, registerForm.data.firstName, registerForm.data.lastName, registerForm.data.dob);
+        const user = await api.auth.registerUser(registerForm.data);
         console.log(user);
         event.cookies.set("id", user.id.toString(), {
             maxAge: 60 * 60 * 24 * 7,

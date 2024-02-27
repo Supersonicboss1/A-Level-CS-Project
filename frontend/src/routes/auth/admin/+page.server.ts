@@ -3,6 +3,7 @@ import { fail, redirect, type RequestEvent } from "@sveltejs/kit";
 import { superValidate } from "sveltekit-superforms/server";
 import type { Actions, PageServerLoad } from "./$types";
 import { loginFormSchema, registerFormSchema } from "./schema";
+import type { AdminCreate } from "$lib/types";
 
 export const load: PageServerLoad = async ({ cookies }) => {
     if (cookies.get("isAdmin") === "true") {
@@ -61,7 +62,14 @@ export const actions: Actions = {
                 registerForm
             });
         }
-        const user = await api.auth.registerAdmin(registerForm.data.email, registerForm.data.password, registerForm.data.adminKey, registerForm.data.firstName, registerForm.data.lastName);
+        const data: AdminCreate = {
+            email: registerForm.data.email,
+            password: registerForm.data.password,
+            firstName: registerForm.data.firstName,
+            lastName: registerForm.data.lastName,
+            admin_key: registerForm.data.adminKey
+        }
+        const user = await api.auth.registerAdmin(data);
         if (isNaN(user.id)) {
             return fail(400, {
                 registerForm,

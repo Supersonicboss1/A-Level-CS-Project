@@ -1,3 +1,4 @@
+import json
 from fastapi import FastAPI
 from fastapi.concurrency import asynccontextmanager
 from routers.auth import router as auth_router
@@ -10,6 +11,9 @@ from .db import SQLModel, engine  # noqa: F401
 @asynccontextmanager
 async def lifespan(api: FastAPI):
     # before start
+    spec = api.openapi()
+    with open("openapi.json", "w") as f:
+        f.write(json.dumps(spec, indent=2))
     print("Creating database and tables")
     create_db_and_tables()
     yield
