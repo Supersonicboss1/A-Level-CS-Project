@@ -1,18 +1,9 @@
-interface BaseUser {
-    id: number;
-    firstName: string;
-    lastName: string;
-    email: string;
-    token: string;
-}
+import type { components } from "./types/api";
 
-export interface User extends BaseUser {
-    dob: string;
-}
+export type UserRead = components["schemas"]["UserRead"];
+export type AdminRead = components["schemas"]["AdminRead"];
 
-export interface EditUser extends User {
-    password: string;
-}
+export type UserCreate = components["schemas"]["UserCreate"];
+export type AdminCreate = components["schemas"]["AdminCreate"];
 
-export interface Admin extends BaseUser {
-}
+export type User = components["schemas"]["User"];

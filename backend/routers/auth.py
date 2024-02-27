@@ -7,7 +7,7 @@ from fastapi import APIRouter, HTTPException
 from main.db import engine
 from main.schemas import (Admin, AdminCreate, AdminLogin, AdminRead, User,
                           UserCreate, UserLogin, UserRead)
-from sqlmodel import Session
+from sqlmodel import Session, select
 
 # admin_key = str(uuid4()) # https://i.kym-cdn.com/entries/icons/original/000/041/237/cover2.jpg
 admin_key = "123"  # security is my passion
@@ -24,7 +24,7 @@ def hash_password(password: str) -> str:
 @router.post("/user/register", response_model=UserRead)
 def create_user_account(data: UserCreate):
     with Session(engine) as session:
-        existing_user = session.get(User, data.email)
+        existing_user = session.scalar(select(User).where(User.email == data.email))
         if existing_user is not None:
             print(f"User with email {data.email} already exists")
             raise HTTPException(
@@ -50,7 +50,7 @@ def create_admin_account(data: AdminCreate):
         print(f"Invalid admin key: {data.admin_key}")
         raise HTTPException(status_code=403, detail="Invalid admin key")
     with Session(engine) as session:
-        existing_admin = session.get(Admin, data.email)
+        existing_admin = session.scalar(select(Admin).where(Admin.email == data.email))
         if existing_admin is not None:
             print(f"Admin with email {data.email} already exists")
             raise HTTPException(
@@ -71,8 +71,10 @@ def create_admin_account(data: AdminCreate):
 
 @router.post("/user/login", response_model=UserRead)
 def login_user_account(data: UserLogin):
+    print(data)
     with Session(engine) as session:
-        user = session.get(User, data.email)
+        user = session.scalar(select(User).where(User.email == data.email))
+        print(user)
         if not user:
             print(f"User with email {data.email} does not exist")
             raise HTTPException(status_code=403, detail="Invalid email or password")
@@ -81,13 +83,12 @@ def login_user_account(data: UserLogin):
         ):
             print(f"Invalid password for user with email {data.email}")
             raise HTTPException(status_code=403, detail="Invalid email or password")
-        session.commit()
         return user
 
 @router.post("/admin/login", response_model=AdminRead)
 def login_admin_account(data: AdminLogin):
     with Session(engine) as session:
-        admin = session.get(Admin, data.email)
+        admin = session.scalar(select(Admin).where(Admin.email == data.email))
         if not admin:
             print(f"Admin with email {data.email} does not exist")
             raise HTTPException(status_code=403, detail="Invalid email or password")
@@ -96,5 +97,5 @@ def login_admin_account(data: AdminLogin):
         ):
             print(f"Invalid password for admin with email {data.email}")
             raise HTTPException(status_code=403, detail="Invalid email or password")
-        session.commit()
+
         return admin
