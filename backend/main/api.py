@@ -1,13 +1,29 @@
-from ninja import NinjaAPI
-from auth.api import router as auth_router
-from userdata.api import router as userdata_router
-from main import dbfunctions
+from fastapi import FastAPI
+from fastapi.concurrency import asynccontextmanager
+from routers.auth import router as auth_router
+from routers.userdata import router as userdata_router
 
 
-api = NinjaAPI()
-# intitialize user database
-conn = dbfunctions.init_databases()
+from .db import SQLModel, engine  # noqa: F401
 
 
-api.add_router("/auth", auth_router)
-api.add_router("/userdata", userdata_router)
+@asynccontextmanager
+async def lifespan(api: FastAPI):
+    # before start
+    print("Creating database and tables")
+    create_db_and_tables()
+    yield
+    # after end
+
+api = FastAPI(lifespan=lifespan) # noqa: E305
+
+
+api.include_router(auth_router, prefix="/auth")
+api.include_router(
+    userdata_router,
+    prefix="/userdata",)
+
+
+
+def create_db_and_tables():
+    SQLModel.metadata.create_all(engine)
