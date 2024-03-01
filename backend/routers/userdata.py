@@ -3,7 +3,7 @@ from typing import List, Literal
 from fastapi import APIRouter, HTTPException
 from main.db import engine
 from main.schemas import Admin, AdminRead, User, UserRead
-from sqlmodel import Session
+from sqlmodel import Session, select
 
 router = APIRouter()
 
@@ -82,5 +82,5 @@ def get_all_users(requester_user_id: int, token: str):
         admin = session.get(Admin, requester_user_id)
         if admin is None or admin.token != token:
             raise HTTPException(status_code=403, detail="Forbidden")
-        users = session.scalars(User).all()
+        users = session.exec(select(User)).all()
         return users # TODO: check if this works
