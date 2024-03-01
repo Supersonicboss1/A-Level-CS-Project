@@ -5,12 +5,20 @@ from uuid import uuid4
 import bcrypt
 from fastapi import APIRouter, HTTPException
 from main.db import engine
-from main.schemas import (Admin, AdminCreate, AdminLogin, AdminRead, User,
-                          UserCreate, UserLogin, UserRead)
+from main.schemas import (
+    Admin,
+    AdminCreate,
+    AdminLogin,
+    AdminRead,
+    User,
+    UserCreate,
+    UserLogin,
+    UserRead,
+)
 from sqlmodel import Session, select
 
-# admin_key = str(uuid4()) # https://i.kym-cdn.com/entries/icons/original/000/041/237/cover2.jpg
-admin_key = "123"  # security is my passion
+#admin_key = str(uuid4()) # https://i.kym-cdn.com/entries/icons/original/000/041/237/cover2.jpg
+admin_key = 'd2a0c3ad-210d-4e21-aa54-398520b53f57'
 print(f"Admin key: {admin_key}")
 router = APIRouter()
 
