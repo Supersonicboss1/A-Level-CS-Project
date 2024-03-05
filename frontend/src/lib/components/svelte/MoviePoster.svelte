@@ -4,6 +4,7 @@
 	import { Calendar, Dna } from 'lucide-svelte';
 	import * as Dialog from '../ui/dialog';
 	import { Separator } from '../ui/separator';
+	import FavouriteFilm from './FavouriteFilm.svelte';
 
 	export let info: Movie | undefined = undefined;
 
@@ -29,12 +30,12 @@
 			<Separator />
 			<p class={CSSclasses.p}>{info.description}</p>
 		</div>
+		<FavouriteFilm id={info.id}/>
 	</Dialog.Content>
 </Dialog.Root>
 {/if}
 <style lang="postcss">
 	.carousel-image {
-		/* @ts-ignore */
 		@apply h-[450px] w-[300px] max-w-xs flex-none rounded-xl bg-cover bg-center bg-no-repeat opacity-30 transition-all duration-150 hover:rounded-3xl hover:opacity-100 hover:shadow-lg;
 	}
 </style>

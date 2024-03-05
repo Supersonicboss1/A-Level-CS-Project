@@ -103,13 +103,7 @@
 	</Form.Root>
 </Card.Root>
 <div class="grid-flow-col grid w-min m-3">
-{#if form?.data == null}
-{#each Array(3) as _}
-	<div class="m-3">
-		<MoviePoster />
-	</div>
-{/each}
-{:else}
+{#if form?.data != null}
 	{#each form.data as movie}
 	<div class="m-3">
 		<MoviePoster info={movie} />
