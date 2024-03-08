@@ -1,6 +1,6 @@
 import createClient from "openapi-fetch";
-import type { paths } from "./types/api";
 import type { AdminCreate, AdminRead, User, UserCreate, UserRead } from "./types";
+import type { paths } from "./types/api";
 class API { // The entire API kind of just assumes there are no errors ever
     public client = createClient<paths>({ baseUrl: "http://localhost:8000/" });
 }
@@ -57,6 +57,33 @@ class Auth extends API {
         });
         if (response.data === undefined) {
             throw new Error("Failed to login admin");
+        }
+        return response.data;
+    }
+    async sendResetEmail(email: string): Promise<true> {
+        const response = await this.client.POST('/auth/user/reset/email', {
+            params: {
+                query: {
+                    email: email
+                }
+            }
+        });
+        if (response.data === undefined) {
+            throw new Error("Failed to send email");
+        }
+        return response.data;
+    }
+    async resetPassword(resetToken: string, newPassword: string): Promise<true> {
+        const response = await this.client.POST('/auth/user/reset/set', {
+            params: {
+                query: {
+                    reset_token: resetToken,
+                    new_password: newPassword
+                }
+            }
+        });
+        if (response.data === undefined) {
+            throw new Error("Failed to send email");
         }
         return response.data;
     }
@@ -138,7 +165,7 @@ class UserData extends API {
                     requester_user_id: requesterID,
                     token: token
                 },
-                
+
             },
             body: userInfo
         });

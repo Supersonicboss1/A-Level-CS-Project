@@ -21,6 +21,14 @@ export interface paths {
     /** Login Admin Account */
     post: operations["login_admin_account_auth_admin_login_post"];
   };
+  "/auth/user/reset/email": {
+    /** Send Reset Email */
+    post: operations["send_reset_email_auth_user_reset_email_post"];
+  };
+  "/auth/user/reset/set": {
+    /** Reset Password */
+    post: operations["reset_password_auth_user_reset_set_post"];
+  };
   "/userdata/users/{user_id}": {
     /** Get User Info */
     get: operations["get_user_info_userdata_users__user_id__get"];
@@ -234,6 +242,51 @@ export interface operations {
       200: {
         content: {
           "application/json": components["schemas"]["AdminRead"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  /** Send Reset Email */
+  send_reset_email_auth_user_reset_email_post: {
+    parameters: {
+      query: {
+        email: string;
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      200: {
+        content: {
+          "application/json": true;
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  /** Reset Password */
+  reset_password_auth_user_reset_set_post: {
+    parameters: {
+      query: {
+        reset_token: string;
+        new_password: string;
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      200: {
+        content: {
+          "application/json": true;
         };
       };
       /** @description Validation Error */
