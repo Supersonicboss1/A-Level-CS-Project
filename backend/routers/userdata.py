@@ -2,7 +2,8 @@ from typing import List, Literal
 
 from fastapi import APIRouter, HTTPException
 from main.db import engine
-from main.schemas import Admin, AdminRead, User, UserRead
+from main.schemas.admin import Admin, AdminRead
+from main.schemas.user import User, UserRead
 from sqlmodel import Session, select
 
 router = APIRouter()

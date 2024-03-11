@@ -45,6 +45,20 @@ export interface paths {
     /** Get All Users */
     get: operations["get_all_users_userdata_all_get"];
   };
+  "/movies/add": {
+    /** Add Movie */
+    post: operations["add_movie_movies_add_post"];
+  };
+  "/movies/movie/{movie_id}": {
+    /** Get Movie By Id */
+    get: operations["get_movie_by_id_movies_movie__movie_id__get"];
+    /** Delete Movie */
+    delete: operations["delete_movie_movies_movie__movie_id__delete"];
+  };
+  "/movies/all": {
+    /** Get All Movies */
+    get: operations["get_all_movies_movies_all_get"];
+  };
 }
 
 export type webhooks = Record<string, never>;
@@ -88,6 +102,48 @@ export interface components {
     HTTPValidationError: {
       /** Detail */
       detail?: components["schemas"]["ValidationError"][];
+    };
+    /** MovieCreate */
+    MovieCreate: {
+      /** Id */
+      id?: null;
+      /** Title */
+      title: string;
+      /** Description */
+      description: string;
+      /** Poster Url */
+      poster_url: string;
+      /** Year */
+      year: number;
+      /** Rating */
+      rating: number;
+      /** Genre */
+      genre: string;
+      /** Actors */
+      actors: string[];
+      /** Tags */
+      tags: string[];
+    };
+    /** MovieRead */
+    MovieRead: {
+      /** Id */
+      id: number;
+      /** Title */
+      title: string;
+      /** Description */
+      description: string;
+      /** Poster Url */
+      poster_url: string;
+      /** Year */
+      year: number;
+      /** Rating */
+      rating: number;
+      /** Genre */
+      genre: string;
+      /** Actors */
+      actors: string[];
+      /** Tags */
+      tags: string[];
     };
     /** User */
     User: {
@@ -424,6 +480,93 @@ export interface operations {
       422: {
         content: {
           "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  /** Add Movie */
+  add_movie_movies_add_post: {
+    parameters: {
+      query: {
+        id: number;
+        token: string;
+      };
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["MovieCreate"];
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      200: {
+        content: {
+          "application/json": true;
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  /** Get Movie By Id */
+  get_movie_by_id_movies_movie__movie_id__get: {
+    parameters: {
+      path: {
+        movie_id: number;
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      200: {
+        content: {
+          "application/json": components["schemas"]["MovieRead"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  /** Delete Movie */
+  delete_movie_movies_movie__movie_id__delete: {
+    parameters: {
+      query: {
+        id: number;
+        token: string;
+      };
+      path: {
+        movie_id: number;
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      200: {
+        content: {
+          "application/json": true;
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  /** Get All Movies */
+  get_all_movies_movies_all_get: {
+    responses: {
+      /** @description Successful Response */
+      200: {
+        content: {
+          "application/json": components["schemas"]["MovieRead"][];
         };
       };
     };

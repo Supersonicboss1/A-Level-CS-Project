@@ -1,9 +1,11 @@
 import json
-import subprocess
 import os
+import subprocess
+
 from fastapi import FastAPI
 from fastapi.concurrency import asynccontextmanager
 from routers.auth import router as auth_router
+from routers.movies import router as movies_router
 from routers.userdata import router as userdata_router
 
 from .db import SQLModel, engine
@@ -28,6 +30,7 @@ api.include_router(auth_router, prefix="/auth")
 api.include_router(
     userdata_router,
     prefix="/userdata",)
+api.include_router(movies_router, prefix="/movies")
 
 def gen_types():
     # change cwd to ../frontend
