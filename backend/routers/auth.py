@@ -18,10 +18,10 @@ from main.schemas.admin import (
     AdminRead,
 )
 from main.schemas.user import (
-        User,
-        UserCreate,
-        UserLogin,
-        UserRead,
+    User,
+    UserCreate,
+    UserLogin,
+    UserRead,
 )
 from main.sensitive_info import email_user
 from sqlmodel import Session, select
@@ -41,23 +41,26 @@ def send_email(to_addr, subject, body):
         server.sendmail(email_user["username"], to_addr, em.as_string())
 
 
-#admin_key = str(uuid4()) # https://i.kym-cdn.com/entries/icons/original/000/041/237/cover2.jpg
-admin_key = 'd2a0c3ad-210d-4e21-aa54-398520b53f57'
+# admin_key = str(uuid4()) # https://i.kym-cdn.com/entries/icons/original/000/041/237/cover2.jpg
+admin_key = "d2a0c3ad-210d-4e21-aa54-398520b53f57"
 print(f"Admin key: {admin_key}")
 router = APIRouter()
 active_tokens = {
     # EXAMPLE
     # tokenValue: {
-        #email: "example@example.com"
-        #expiry: 1234567890 // Unix timestamp
+    # email: "example@example.com"
+    # expiry: 1234567890 // Unix timestamp
     # }
 }
+
+
 def hash_password(password: str) -> str:
     """Hash a password for storing."""
     salt = bcrypt.gensalt()
     hashed_password = bcrypt.hashpw(password.encode("utf-8"), salt)
     print(f"Hashed password: {hashed_password}")
     return hashed_password.decode("utf-8")
+
 
 @router.post("/user/register", response_model=UserRead)
 def create_user_account(data: UserCreate):
@@ -107,6 +110,7 @@ def create_admin_account(data: AdminCreate):
         session.refresh(admin)
         return admin
 
+
 @router.post("/user/login", response_model=UserRead)
 def login_user_account(data: UserLogin):
     print(data)
@@ -123,6 +127,7 @@ def login_user_account(data: UserLogin):
             raise HTTPException(status_code=403, detail="Invalid email or password")
         return user
 
+
 @router.post("/admin/login", response_model=AdminRead)
 def login_admin_account(data: AdminLogin):
     with Session(engine) as session:
@@ -138,7 +143,8 @@ def login_admin_account(data: AdminLogin):
 
         return admin
 
-@router.post("/user/reset/email", response_model=Literal[True])
+
+@router.get("/user/reset/email", response_model=Literal[True])
 def send_reset_email(email: str):
     with Session(engine) as session:
         user = session.scalar(select(User).where(User.email == email))
@@ -148,16 +154,17 @@ def send_reset_email(email: str):
         reset_token = str(uuid4())
         active_tokens[reset_token] = {
             "email": email,
-            "expiry": int(time.time()) + 1800 # 30 minutes
+            "expiry": int(time.time()) + 1800,  # 30 minutes
         }
-        send_email(email, "Password reset", f"Your password reset token is: {reset_token}")
+        send_email(
+            email, "Password reset", f"Your password reset token is: {reset_token}"
+        )
         return True
 
 
-
 # ffic uend xfad rwzy -> Google app password
-@router.post("/user/reset/set", response_model=Literal[True])
-def reset_password(reset_token: str, new_password: str):
+@router.patch("/user/reset/set", response_model=Literal[True])
+def set_new_password(reset_token: str, new_password: str):
     if reset_token not in active_tokens:
         print(f"Invalid token: {reset_token}")
         raise HTTPException(status_code=403, detail="Invalid token")
@@ -168,7 +175,9 @@ def reset_password(reset_token: str, new_password: str):
     with Session(engine) as session:
         user = session.scalar(select(User).where(User.email == token_data["email"]))
         if not user:
-            print(f"User with email {token_data['email']} does not exist") # this should never happen
+            print(
+                f"User with email {token_data['email']} does not exist"
+            )  # this should never happen
             raise HTTPException(status_code=403, detail="Invalid email")
         user.password = hash_password(new_password)
         session.commit()

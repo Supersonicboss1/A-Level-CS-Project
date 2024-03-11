@@ -54,7 +54,9 @@ def get_genre_scores(liked_movies: List[Movie]) -> dict[str, int]:
 
 
 @router.get("/{user_id}", response_model=list[Movie])
-def get_recommendations(user_id: int, token: str, genre: str, age_rating: AgeRatings, min_runtime: int):
+def get_recommendations(
+    user_id: int, token: str, genre: str, age_rating: AgeRatings, min_runtime: int
+):
     with Session(engine) as session:
         info = session.get(User, user_id)
         if info is None or info.token != token:  # for security
@@ -64,7 +66,12 @@ def get_recommendations(user_id: int, token: str, genre: str, age_rating: AgeRat
         actor_scores = get_actor_scores(liked_movies)
         genre_scores = get_genre_scores(liked_movies)
         # get list of all movies
-        movies = session.exec(select(Movie).where(Movie.genre == genre.title()).where(Movie.age_rating == age_rating).where(Movie.runtime <= min_runtime)).all()
+        movies = session.exec(
+            select(Movie)
+            .where(Movie.genre == genre.title())
+            .where(Movie.age_rating == age_rating)
+            .where(Movie.runtime <= min_runtime)
+        ).all()
         movies_scored = []
         for movie in movies:
             if movie.id is not None:

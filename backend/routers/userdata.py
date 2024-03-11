@@ -1,13 +1,14 @@
 from typing import List, Literal
 
 from fastapi import APIRouter, HTTPException
-from main.schemas.movies import Movie
 from main.db import engine
 from main.schemas.admin import Admin, AdminRead
+from main.schemas.movies import Movie
 from main.schemas.user import User, UserRead
 from sqlmodel import Session, select
 
 router = APIRouter()
+
 
 @router.get("/users/{user_id}", response_model=UserRead)
 def get_user_info(user_id: int, requester_user_id: int, token: str):
@@ -22,9 +23,8 @@ def get_user_info(user_id: int, requester_user_id: int, token: str):
         if admin is None or admin.token != token:
             raise HTTPException(status_code=403, detail="Forbidden")
 
-@router.get(
-    "/admins/{user_id}", response_model=AdminRead
-)
+
+@router.get("/admins/{user_id}", response_model=AdminRead)
 def get_admin_user_info(user_id: int, token: str):
     with Session(engine) as session:
         admin = session.get(Admin, user_id)
@@ -36,7 +36,9 @@ def get_admin_user_info(user_id: int, token: str):
 
 
 @router.delete("/users/{user_id}", response_model=bool)
-def delete_user_account(user_id: int, requester_user_id: int, token: str) -> Literal[True]:
+def delete_user_account(
+    user_id: int, requester_user_id: int, token: str
+) -> Literal[True]:
     with Session(engine) as session:
         user = session.get(User, user_id)
         if user is None:
@@ -55,8 +57,9 @@ def delete_user_account(user_id: int, requester_user_id: int, token: str) -> Lit
 
 
 @router.put("/users/{user_id}")
-def edit_user_account(user_id: int, requester_user_id: int,
-                      token: str, new_info: User) -> Literal[True]:
+def edit_user_account(
+    user_id: int, requester_user_id: int, token: str, new_info: User
+) -> Literal[True]:
     with Session(engine) as session:
         user = session.get(User, user_id)
         if user is None:
@@ -65,7 +68,7 @@ def edit_user_account(user_id: int, requester_user_id: int,
             user.firstName = new_info.firstName
             user.lastName = new_info.lastName
             user.dob = new_info.dob
-            session.commit() # TODO: check if this works
+            session.commit()  # TODO: check if this works
             return True
         # check if user is admin
         admin = session.get(Admin, requester_user_id)
@@ -85,7 +88,8 @@ def get_all_users(requester_user_id: int, token: str):
         if admin is None or admin.token != token:
             raise HTTPException(status_code=403, detail="Forbidden")
         users = session.exec(select(User)).all()
-        return users # TODO: check if this works
+        return users  # TODO: check if this works
+
 
 @router.patch("/movies/add", response_model=Literal[True])
 def add_to_liked_movies(user_id: int, movie_id: int, token: str):
@@ -101,6 +105,7 @@ def add_to_liked_movies(user_id: int, movie_id: int, token: str):
         user.liked_movies.append(movie)
         session.commit()
     return True
+
 
 @router.patch("/movies/remove", response_model=Literal[True])
 def remove_from_liked_movies(user_id: int, movie_id: int, token: str):
