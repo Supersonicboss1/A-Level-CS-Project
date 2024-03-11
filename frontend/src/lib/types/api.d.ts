@@ -45,6 +45,14 @@ export interface paths {
     /** Get All Users */
     get: operations["get_all_users_userdata_all_get"];
   };
+  "/userdata/movies/add": {
+    /** Add To Liked Movies */
+    patch: operations["add_to_liked_movies_userdata_movies_add_patch"];
+  };
+  "/userdata/movies/remove": {
+    /** Remove From Liked Movies */
+    patch: operations["remove_from_liked_movies_userdata_movies_remove_patch"];
+  };
   "/movies/add": {
     /** Add Movie */
     post: operations["add_movie_movies_add_post"];
@@ -58,6 +66,10 @@ export interface paths {
   "/movies/all": {
     /** Get All Movies */
     get: operations["get_all_movies_movies_all_get"];
+  };
+  "/recommendations/{user_id}": {
+    /** Get Recommendations */
+    get: operations["get_recommendations_recommendations__user_id__get"];
   };
 }
 
@@ -98,10 +110,35 @@ export interface components {
       /** Token */
       token: string;
     };
+    /**
+     * AgeRatings
+     * @enum {string}
+     */
+    AgeRatings: "U" | "PG" | "12" | "12A" | "15" | "18";
     /** HTTPValidationError */
     HTTPValidationError: {
       /** Detail */
       detail?: components["schemas"]["ValidationError"][];
+    };
+    /** Movie */
+    Movie: {
+      /** Id */
+      id?: number | null;
+      /** Title */
+      title: string;
+      /** Description */
+      description: string;
+      /** Poster Url */
+      poster_url: string;
+      /** Year */
+      year: number;
+      /** Rating */
+      rating: number;
+      /** Genre */
+      genre: string;
+      /** Runtime */
+      runtime: number;
+      age_rating: components["schemas"]["AgeRatings"];
     };
     /** MovieCreate */
     MovieCreate: {
@@ -119,6 +156,9 @@ export interface components {
       rating: number;
       /** Genre */
       genre: string;
+      /** Runtime */
+      runtime: number;
+      age_rating: components["schemas"]["AgeRatings"];
       /** Actors */
       actors: string[];
       /** Tags */
@@ -140,6 +180,9 @@ export interface components {
       rating: number;
       /** Genre */
       genre: string;
+      /** Runtime */
+      runtime: number;
+      age_rating: components["schemas"]["AgeRatings"];
       /** Actors */
       actors: string[];
       /** Tags */
@@ -484,6 +527,54 @@ export interface operations {
       };
     };
   };
+  /** Add To Liked Movies */
+  add_to_liked_movies_userdata_movies_add_patch: {
+    parameters: {
+      query: {
+        user_id: number;
+        movie_id: number;
+        token: string;
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      200: {
+        content: {
+          "application/json": true;
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  /** Remove From Liked Movies */
+  remove_from_liked_movies_userdata_movies_remove_patch: {
+    parameters: {
+      query: {
+        user_id: number;
+        movie_id: number;
+        token: string;
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      200: {
+        content: {
+          "application/json": true;
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
   /** Add Movie */
   add_movie_movies_add_post: {
     parameters: {
@@ -567,6 +658,32 @@ export interface operations {
       200: {
         content: {
           "application/json": components["schemas"]["MovieRead"][];
+        };
+      };
+    };
+  };
+  /** Get Recommendations */
+  get_recommendations_recommendations__user_id__get: {
+    parameters: {
+      query: {
+        token: string;
+        genre: string;
+      };
+      path: {
+        user_id: number;
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      200: {
+        content: {
+          "application/json": components["schemas"]["Movie"][];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
         };
       };
     };

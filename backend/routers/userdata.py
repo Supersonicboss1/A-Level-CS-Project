@@ -1,6 +1,7 @@
 from typing import List, Literal
 
 from fastapi import APIRouter, HTTPException
+from main.schemas.movies import Movie
 from main.db import engine
 from main.schemas.admin import Admin, AdminRead
 from main.schemas.user import User, UserRead
@@ -85,3 +86,33 @@ def get_all_users(requester_user_id: int, token: str):
             raise HTTPException(status_code=403, detail="Forbidden")
         users = session.exec(select(User)).all()
         return users # TODO: check if this works
+
+@router.patch("/movies/add", response_model=Literal[True])
+def add_to_liked_movies(user_id: int, movie_id: int, token: str):
+    with Session(engine) as session:
+        user = session.get(User, user_id)
+        if user is None:
+            raise HTTPException(status_code=404, detail="User not found")
+        if user.token != token:
+            raise HTTPException(status_code=403, detail="Forbidden")
+        movie = session.get(Movie, movie_id)
+        if movie is None:
+            raise HTTPException(status_code=404, detail="Movie not found")
+        user.liked_movies.append(movie)
+        session.commit()
+    return True
+
+@router.patch("/movies/remove", response_model=Literal[True])
+def remove_from_liked_movies(user_id: int, movie_id: int, token: str):
+    with Session(engine) as session:
+        user = session.get(User, user_id)
+        if user is None:
+            raise HTTPException(status_code=404, detail="User not found")
+        if user.token != token:
+            raise HTTPException(status_code=403, detail="Forbidden")
+        movie = session.get(Movie, movie_id)
+        if movie is None:
+            raise HTTPException(status_code=404, detail="Movie not found")
+        user.liked_movies.remove(movie)
+        session.commit()
+    return True

@@ -1,6 +1,8 @@
-from typing import Optional
+from typing import List, Optional
 
-from sqlmodel import Field, SQLModel
+from sqlmodel import Field, Relationship, SQLModel
+
+from main.schemas.movies import Movie, UserMovieLink
 
 
 class UserBase(SQLModel):
@@ -13,6 +15,7 @@ class User(UserBase, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     password: str
     token: str
+    liked_movies: List[Movie] = Relationship(link_model=UserMovieLink)
 
 # Used when sending data to the client
 class UserRead(UserBase):
