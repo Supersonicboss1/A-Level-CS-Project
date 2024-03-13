@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { movies } from '$lib/data/movies';
+	import type { MovieRead } from '$lib/types';
+	export let movies: MovieRead[]
 	import MoviePoster from './MoviePoster.svelte';
-	let isHovering = false;
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->

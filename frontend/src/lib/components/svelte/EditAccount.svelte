@@ -2,11 +2,11 @@
 	import * as Dialog from '$lib/components/ui/alert-dialog';
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
-	import type { EditUser, User } from '$lib/types';
+	import type { User } from '$lib/types';
 	import { toast } from 'svelte-sonner';
-	import { Button, buttonVariants } from '../../ui/button';
+	import { Button, buttonVariants } from '../ui/button';
 	export let userInfo: User;
-	let editableUserInfo: EditUser
+	let editableUserInfo: User
 	$: editableUserInfo = {
 		firstName: userInfo.firstName,
 		lastName: userInfo.lastName,
@@ -16,10 +16,10 @@
 		token: userInfo.token,
 		password: '',
 	}
-	export let open: boolean = false;
-	export let customOpen: boolean = false; // if the user wants to open the dialog from a different component - if this is false, avoid setting the value of open
+	export let open = false;
+	export let customOpen = false; // if the user wants to open the dialog from a different component - if this is false, avoid setting the value of open
 	const handleEdit = () => {
-		fetch(`/kitAPI/editAccount`, {
+		fetch('/kitAPI/editAccount', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -29,14 +29,18 @@
 			.then((res) => {
 				console.log(res.ok);
 				toast.success('Account deleted successfully');
-				customOpen ? (open = false) : null;
+				if (customOpen) {
+					open = false
+				}
 				console.log('invalidating');
 				window.location.reload(); // TODO: this better
 			})
 			.catch((err) => {
 				console.log(err);
 				toast.error('Something went wrong');
-				customOpen ? (open = false) : null;
+				if (customOpen) {
+					open = false
+				}
 			});
 	};
 </script>

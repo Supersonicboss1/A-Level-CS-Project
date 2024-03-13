@@ -1,6 +1,6 @@
 <script lang="ts">
-	import DeleteAccount from '$lib/components/svelte/DeleteAccount/DeleteAccount.svelte';
-	import EditAccount from '$lib/components/svelte/EditAccount/EditAccount.svelte';
+	import DeleteAccount from '$lib/components/svelte/DeleteAccount.svelte';
+	import EditAccount from '$lib/components/svelte/EditAccount.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import type { User } from '$lib/types';
@@ -42,5 +42,6 @@
 	email: userData.email,
 	dob: userData.dob,
 	id: userData.id,
-	token: userData.token
+	token: userData.token,
+	password: '',
 }} open={openEdit} customOpen={true} />

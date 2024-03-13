@@ -4,6 +4,10 @@
 	import InfiniteCarousel from '$lib/components/svelte/InfiniteCarousel.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { ChevronRight } from 'lucide-svelte';
+	import type { PageData } from './$types';
+	import type { MovieRead } from '$lib/types';
+	export let data: PageData; 
+	const movies: MovieRead[] = data.movies ? data.movies : [];
 </script>
 
 <div
@@ -19,7 +23,7 @@
 		<div
 			class="flex flex-wrap justify-center items-center min-h-[50px] gap-4 my-10 -translate-x-20"
 		>
-			<InfiniteCarousel />
+			<InfiniteCarousel {movies} />
 
 			<div>
 				<a href="/auth/user">

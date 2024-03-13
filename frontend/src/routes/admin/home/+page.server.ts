@@ -15,23 +15,25 @@ export const load: PageServerLoad = async ({ cookies }) => {
             return {
                 user: response,
                 status: 200
+
             };
         }
-        else {
+
+        
             return fail(403, {
                 error: "You are not authorized to view this page"
 
             })
-        }
+        
 
     }
-    else {
+
         return {
             users: [],
             error: "You are not authorized to view this page",
             status: 403
         };
-    }
+    
 }
 
 export const actions = {

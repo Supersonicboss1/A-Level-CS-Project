@@ -1,12 +1,11 @@
 <script lang="ts">
 	import CSSclasses from '$lib/CSSclasses';
-	import type { Movie } from '$lib/data/movies';
 	import { Calendar, Dna } from 'lucide-svelte';
 	import * as Dialog from '../ui/dialog';
 	import { Separator } from '../ui/separator';
 	import FavouriteFilm from './FavouriteFilm.svelte';
-
-	export let info: Movie | undefined = undefined;
+	import type { MovieRead } from '$lib/types';
+	export let info: MovieRead | undefined = undefined;
 
 </script>
 {#if info == undefined}
@@ -14,7 +13,7 @@
 {:else}
 <Dialog.Root>
 	<Dialog.Trigger class="cursor-pointer">
-		<img alt="movie poster" class="carousel-image" src={info.posterURL} />
+		<img alt="movie poster" class="carousel-image" src={info.poster_url} />
 	</Dialog.Trigger>
 	<Dialog.Content class="">
 		<div class="">
@@ -25,7 +24,7 @@
 				{info.year}
 
 				<Dna class={'w-5 ml-2 mr-1'} />
-				{info.genres[0]}
+				{info.genre}
 			</h4>
 			<Separator />
 			<p class={CSSclasses.p}>{info.description}</p>

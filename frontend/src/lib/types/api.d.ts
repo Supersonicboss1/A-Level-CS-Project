@@ -23,11 +23,11 @@ export interface paths {
   };
   "/auth/user/reset/email": {
     /** Send Reset Email */
-    post: operations["send_reset_email_auth_user_reset_email_post"];
+    get: operations["send_reset_email_auth_user_reset_email_get"];
   };
   "/auth/user/reset/set": {
-    /** Reset Password */
-    post: operations["reset_password_auth_user_reset_set_post"];
+    /** Set New Password */
+    patch: operations["set_new_password_auth_user_reset_set_patch"];
   };
   "/userdata/users/{user_id}": {
     /** Get User Info */
@@ -114,31 +114,11 @@ export interface components {
      * AgeRatings
      * @enum {string}
      */
-    AgeRatings: "U" | "PG" | "12" | "12A" | "15" | "18";
+    AgeRatings: "Any" | "U" | "PG" | "12" | "12A" | "15" | "18";
     /** HTTPValidationError */
     HTTPValidationError: {
       /** Detail */
       detail?: components["schemas"]["ValidationError"][];
-    };
-    /** Movie */
-    Movie: {
-      /** Id */
-      id?: number | null;
-      /** Title */
-      title: string;
-      /** Description */
-      description: string;
-      /** Poster Url */
-      poster_url: string;
-      /** Year */
-      year: number;
-      /** Rating */
-      rating: number;
-      /** Genre */
-      genre: string;
-      /** Runtime */
-      runtime: number;
-      age_rating: components["schemas"]["AgeRatings"];
     };
     /** MovieCreate */
     MovieCreate: {
@@ -352,7 +332,7 @@ export interface operations {
     };
   };
   /** Send Reset Email */
-  send_reset_email_auth_user_reset_email_post: {
+  send_reset_email_auth_user_reset_email_get: {
     parameters: {
       query: {
         email: string;
@@ -373,8 +353,8 @@ export interface operations {
       };
     };
   };
-  /** Reset Password */
-  reset_password_auth_user_reset_set_post: {
+  /** Set New Password */
+  set_new_password_auth_user_reset_set_patch: {
     parameters: {
       query: {
         reset_token: string;
@@ -668,6 +648,8 @@ export interface operations {
       query: {
         token: string;
         genre: string;
+        age_rating: components["schemas"]["AgeRatings"];
+        min_runtime: number;
       };
       path: {
         user_id: number;
@@ -677,7 +659,7 @@ export interface operations {
       /** @description Successful Response */
       200: {
         content: {
-          "application/json": components["schemas"]["Movie"][];
+          "application/json": components["schemas"]["MovieRead"][];
         };
       };
       /** @description Validation Error */

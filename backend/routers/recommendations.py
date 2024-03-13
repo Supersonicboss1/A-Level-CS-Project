@@ -11,7 +11,7 @@ from typing import List
 
 from fastapi import APIRouter, HTTPException
 from main.db import engine
-from main.schemas.movies import AgeRatings, Movie, MovieWithScore
+from main.schemas.movies import AgeRatings, Movie, MovieRead, MovieWithScore
 from main.schemas.user import User
 from sqlmodel import Session, select
 
@@ -53,7 +53,7 @@ def get_genre_scores(liked_movies: List[Movie]) -> dict[str, int]:
     return genre_scores
 
 
-@router.get("/{user_id}", response_model=list[Movie])
+@router.get("/{user_id}", response_model=list[MovieRead])
 def get_recommendations(
     user_id: int, token: str, genre: str, age_rating: AgeRatings, min_runtime: int
 ):
@@ -68,9 +68,9 @@ def get_recommendations(
         # get list of all movies
         movies = session.exec(
             select(Movie)
-            .where(Movie.genre == genre.title())
-            .where(Movie.age_rating == age_rating)
-            .where(Movie.runtime <= min_runtime)
+            .where(Movie.genre == genre.title() if genre != "" else True)
+            .where(Movie.age_rating == age_rating if age_rating != "Any" else True)
+            .where(Movie.runtime <= min_runtime if min_runtime != 0 else True)
         ).all()
         movies_scored = []
         for movie in movies:

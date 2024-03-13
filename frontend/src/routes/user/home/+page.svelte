@@ -1,28 +1,11 @@
 <script lang="ts">
-	export const runtimeOptions = [
-				{
-			label: 'Any',
-			value: "0-Infinity"
-		},
-		{
-			label: 'Under 90 minutes',
-			value: '0-90'
-		},
-		{
-			label: '90 - 120 minutes',
-			value: '91-120'
-		},
-		{
-			label: 'Over 120 minutes',
-			value: '121-Infinity'
-		}
-	];
+
 	import CSSclasses from '$lib/CSSclasses';
 	import MoviePoster from '$lib/components/svelte/MoviePoster.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import * as Card from '$lib/components/ui/card';
 	import * as Form from '$lib/components/ui/form';
-	import { ageRatings, genres } from '$lib/data/movies';
+	import { ageRatings } from '$lib/types';
 	import type { SuperValidated } from 'sveltekit-superforms';
 	import type { ActionData, PageData } from './$types';
 	import { recommendFormSchema, type RecommendFormSchema } from './schema';
@@ -50,39 +33,21 @@
 			<Form.Field name="genre" {config}>
 				<Form.Item class="space-y-1 w-1/2">
 					<Form.Label for="genre">Genre</Form.Label>
-					<Form.Select >
-						<Form.SelectTrigger placeholder='What genre do you want to watch?'/>
-						<Form.SelectContent>
-							{#each genres as genre}
-								<Form.SelectItem value={genre} label={genre} >
-									{genre}
-								</Form.SelectItem>
-							{/each}
-						</Form.SelectContent>
-					</Form.Select>
+					<Form.Input placeholder='Thriller' />
 					<Form.Validation />
 				</Form.Item>
 			</Form.Field>
 
 			<Form.Field name="runtime" {config}>
 				<Form.Item class="space-y-1 w-1/2">
-					<Form.Label for="runtime">Runtime</Form.Label>
-						<Form.Select >
-						<Form.SelectTrigger placeholder='How long should the film be?'/>
-						<Form.SelectContent>
-							{#each runtimeOptions as runtime}
-								<Form.SelectItem value={runtime.value} label={runtime.label} >
-									{runtime.label}
-								</Form.SelectItem>
-							{/each}
-						</Form.SelectContent>
-					</Form.Select>
+					<Form.Label for="runtime">Runtime in minutes</Form.Label>
+						<Form.Input placeholder='60min' type='number' />
 					<Form.Validation />
 				</Form.Item>
 			</Form.Field>
 			<Form.Field name="ageRating" {config}>
 				<Form.Item class="space-y-1 w-1/2">
-					<Form.Label for="ageRating">Age Rating</Form.Label>
+					<Form.Label for="ageRating">Select an age rating</Form.Label>
 					<Form.Select >
 						<Form.SelectTrigger placeholder='Any age restrictions?'/>
 						<Form.SelectContent>

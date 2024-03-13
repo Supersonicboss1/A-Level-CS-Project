@@ -10,25 +10,25 @@ export const load: PageServerLoad = async ({ cookies }) => {
     console.table(cookie);
     if (cookie.id && cookie.token && cookie.isAdmin) {
         const response = await api.userdata.getAllUsers(cookie.id, cookie.token);
-        if (response instanceof Array) {
+        if (Array.isArray(response)) {
             return {
                 users: response,
                 status: 200
             };
         }
-        else {
+
             return fail(403, {
                 error: "You are not authorized to view this page."
 
             })
-        }
+
 
     }
-    else {
+
         return {
             users: [],
             error: "You are not authorized to view this page.",
             status: 403
         };
-    }
+
 }

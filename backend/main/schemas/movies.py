@@ -22,6 +22,7 @@ class TagMovieLink(SQLModel, table=True):  # join table for tags on a movie
 
 
 class AgeRatings(Enum):
+    ANY = "Any"
     U = "U"
     PG = "PG"
     TWELVE = "12"
