@@ -7,11 +7,14 @@ export const POST = async (event: RequestEvent) => {
 		token: event.cookies.get("token") ?? "",
 		isAdmin: event.cookies.get("isAdmin") ?? false,
 	};
-	if (!cookie.isAdmin) return new Response("", { status: 401 });
+	if (cookie.isAdmin === true) {
+		console.log("Cannot like films as an admin!");
+		return new Response("", { status: 401 })}
 	let body: { id: number };
 	try {
 		body = await event.request.json();
 	} catch (error) {
+		console.log(error);
 		return new Response("", { status: 400 });
 	}
 	console.log(cookie);

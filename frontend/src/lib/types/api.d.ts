@@ -53,6 +53,10 @@ export interface paths {
     /** Remove From Liked Movies */
     patch: operations["remove_from_liked_movies_userdata_movies_remove_patch"];
   };
+  "/userdata/movies/liked/{user_id}": {
+    /** Get Liked Movies */
+    get: operations["get_liked_movies_userdata_movies_liked__user_id__get"];
+  };
   "/movies/add": {
     /** Add Movie */
     post: operations["add_movie_movies_add_post"];
@@ -119,6 +123,26 @@ export interface components {
     HTTPValidationError: {
       /** Detail */
       detail?: components["schemas"]["ValidationError"][];
+    };
+    /** Movie */
+    Movie: {
+      /** Id */
+      id?: number | null;
+      /** Title */
+      title: string;
+      /** Description */
+      description: string;
+      /** Poster Url */
+      poster_url: string;
+      /** Year */
+      year: number;
+      /** Rating */
+      rating: number;
+      /** Genre */
+      genre: string;
+      /** Runtime */
+      runtime: number;
+      age_rating: components["schemas"]["AgeRatings"];
     };
     /** MovieCreate */
     MovieCreate: {
@@ -545,6 +569,31 @@ export interface operations {
       200: {
         content: {
           "application/json": true;
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  /** Get Liked Movies */
+  get_liked_movies_userdata_movies_liked__user_id__get: {
+    parameters: {
+      query: {
+        token: string;
+      };
+      path: {
+        user_id: number;
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      200: {
+        content: {
+          "application/json": components["schemas"]["Movie"][];
         };
       };
       /** @description Validation Error */

@@ -1,13 +1,13 @@
 <script lang="ts">
+	import * as Tooltip from "$lib/components/ui/tooltip";
 	import { Heart } from "lucide-svelte";
-	import Button from "../ui/button/button.svelte";
-    import * as Tooltip from "$lib/components/ui/tooltip";
 	import { toast } from "svelte-sonner";
-    export const id: number = -1;
-    export const signedIn = false;
+	import Button from "../ui/button/button.svelte";
+    export let movie_id: number = -1;
+    export let signedIn = false;
     export let isFavourite = false;
     	const handleLike = () => {
-            if (id == -1) {
+            if (movie_id == -1) {
                 return
             }
 		fetch('/kitAPI/addLiked', {
@@ -15,7 +15,7 @@
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({ id })
+			body: JSON.stringify({ id: movie_id })
 		})
 			.catch((err) => {
 				console.log(err);
@@ -23,7 +23,7 @@
 			});
 	};
     function toggleFavourite() {
-        if (!signedIn) {
+        if (signedIn == false) {
             return;
         }
         console.log('toggling favourite');

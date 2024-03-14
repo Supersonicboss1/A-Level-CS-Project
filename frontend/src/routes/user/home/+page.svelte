@@ -12,10 +12,9 @@
 	export let data: PageData;
 	export let form: ActionData;
 </script>
-
 <div class="ml-4">
 	<h1 class={`${CSSclasses.h1} p-4`}>
-		Hello, {data.userData.firstName}!
+		Hello, {data.userData?.firstName}!
 		<div
 			class="bg-clip-text text-transparent bg-gradient-to-r from-cyan-500 to-white w-max p-2 pl-0"
 		>

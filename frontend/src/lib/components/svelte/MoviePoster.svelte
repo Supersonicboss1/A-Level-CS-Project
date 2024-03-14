@@ -38,7 +38,7 @@
 			<Separator />
 			<p class={CSSclasses.p}>{info.description}</p>
 		</div>
-		<FavouriteFilm id={info.id}/>
+		<FavouriteFilm movie_id={info.id} signedIn={true}/>
 	</Dialog.Content>
 </Dialog.Root>
 {/if}
