@@ -27,7 +27,7 @@ def add_movie(movie_data: MovieCreate, id: int, token: str):
         ]
         session.add_all(actors_class)
         tags_class: List[Tag] = [
-            Tag(name=tag) for tag in movie_data.tags
+            Tag(name=tag.lower()) for tag in movie_data.tags
         ]  # can't use title() here because of tags like "sci-fi" or WW2.
         session.add_all(tags_class)
         movie = Movie(

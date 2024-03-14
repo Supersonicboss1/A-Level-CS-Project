@@ -1,10 +1,10 @@
 <script lang="ts">
 	import CSSclasses from '$lib/CSSclasses';
-	import { Calendar, Dna } from 'lucide-svelte';
+	import type { MovieRead } from '$lib/types';
+	import { Baby, Calendar, Dna, Star, Timer } from 'lucide-svelte';
 	import * as Dialog from '../ui/dialog';
 	import { Separator } from '../ui/separator';
 	import FavouriteFilm from './FavouriteFilm.svelte';
-	import type { MovieRead } from '$lib/types';
 	export let info: MovieRead | undefined = undefined;
 
 </script>
@@ -23,8 +23,17 @@
 				<Calendar class={'w-5 mr-1'} />
 				{info.year}
 
-				<Dna class={'w-5 ml-2 mr-1'} />
+				<Dna class={'w-5 ml-3 mr-1'} />
 				{info.genre}
+
+				<Baby class={'w-5 ml-3 mr-1'} />
+				{info.age_rating}
+
+				<Timer class={'w-5 ml-3 mr-1'} />
+				{info.runtime}min
+
+				<Star class={'w-5 ml-3 mr-1'} />
+				{info.rating}
 			</h4>
 			<Separator />
 			<p class={CSSclasses.p}>{info.description}</p>
