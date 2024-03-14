@@ -1,10 +1,10 @@
-<script lang='ts'>
+<script lang="ts">
 	import { Button } from '$lib/components/ui/button';
 	import * as Card from '$lib/components/ui/card';
 	import * as Form from '$lib/components/ui/form';
 	import type { SuperValidated } from 'sveltekit-superforms';
 	import { resetFormSchema, type ResetFormSchema } from './schema';
-    export let form: SuperValidated<ResetFormSchema>;
+	export let form: SuperValidated<ResetFormSchema>;
 </script>
 
 <Card.Root>

@@ -1,5 +1,4 @@
 <script lang="ts">
-
 	import CSSclasses from '$lib/CSSclasses';
 	import MoviePoster from '$lib/components/svelte/MoviePoster.svelte';
 	import { Button } from '$lib/components/ui/button';
@@ -24,7 +23,7 @@
 		</div>
 	</h1>
 </div>
-<Card.Root class='w-1/2 self-center ml-6'>
+<Card.Root class="w-1/2 self-center ml-6">
 	<Card.Header>
 		<Card.Title>Generate Recommendations</Card.Title>
 	</Card.Header>
@@ -33,7 +32,7 @@
 			<Form.Field name="genre" {config}>
 				<Form.Item class="space-y-1 w-1/2">
 					<Form.Label for="genre">Genre</Form.Label>
-					<Form.Input placeholder='Thriller' />
+					<Form.Input placeholder="Thriller" />
 					<Form.Validation />
 				</Form.Item>
 			</Form.Field>
@@ -41,18 +40,18 @@
 			<Form.Field name="runtime" {config}>
 				<Form.Item class="space-y-1 w-1/2">
 					<Form.Label for="runtime">Runtime in minutes</Form.Label>
-						<Form.Input placeholder='60min' type='number' />
+					<Form.Input placeholder="60min" type="number" />
 					<Form.Validation />
 				</Form.Item>
 			</Form.Field>
 			<Form.Field name="ageRating" {config}>
 				<Form.Item class="space-y-1 w-1/2">
 					<Form.Label for="ageRating">Select an age rating</Form.Label>
-					<Form.Select >
-						<Form.SelectTrigger placeholder='Any age restrictions?'/>
+					<Form.Select>
+						<Form.SelectTrigger placeholder="Any age restrictions?" />
 						<Form.SelectContent>
 							{#each ageRatings as age}
-								<Form.SelectItem value={age} label={age} >
+								<Form.SelectItem value={age} label={age}>
 									{age}
 								</Form.SelectItem>
 							{/each}
@@ -68,12 +67,11 @@
 	</Form.Root>
 </Card.Root>
 <div class="grid-flow-col grid w-min m-3">
-{#if form?.data != null}
-	{#each form.data as movie}
-	<div class="m-3">
-		<MoviePoster info={movie} />
-	</div>
-	{/each}
-
-{/if}
+	{#if form?.data != null}
+		{#each form.data as movie}
+			<div class="m-3">
+				<MoviePoster info={movie} />
+			</div>
+		{/each}
+	{/if}
 </div>

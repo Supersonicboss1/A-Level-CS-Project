@@ -3,10 +3,10 @@
 
 	import InfiniteCarousel from '$lib/components/svelte/InfiniteCarousel.svelte';
 	import { Button } from '$lib/components/ui/button';
+	import type { MovieRead } from '$lib/types';
 	import { ChevronRight } from 'lucide-svelte';
 	import type { PageData } from './$types';
-	import type { MovieRead } from '$lib/types';
-	export let data: PageData; 
+	export let data: PageData;
 	const movies: MovieRead[] = data.movies ? data.movies : [];
 </script>
 

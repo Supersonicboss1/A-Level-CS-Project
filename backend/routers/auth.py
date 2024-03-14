@@ -11,18 +11,8 @@ from uuid import uuid4
 import bcrypt
 from fastapi import APIRouter, HTTPException
 from main.db import engine
-from main.schemas.admin import (
-    Admin,
-    AdminCreate,
-    AdminLogin,
-    AdminRead,
-)
-from main.schemas.user import (
-    User,
-    UserCreate,
-    UserLogin,
-    UserRead,
-)
+from main.schemas.admin import Admin, AdminCreate, AdminLogin, AdminRead
+from main.schemas.user import User, UserCreate, UserLogin, UserRead
 from main.sensitive_info import email_user
 from sqlmodel import Session, select
 

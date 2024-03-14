@@ -12,7 +12,6 @@
 	const user = data.user ? data.user : ({} as User);
 	function generateRandomNumber(minValue: number, maxValue: number) {
 		return Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue;
-
 	}
 	let complaintValue = generateRandomNumber(300, 75000);
 	onMount(() => {
@@ -21,7 +20,6 @@
 			complaintValue += generateRandomNumber(1, 5);
 		}, 500);
 	});
-
 </script>
 
 <h1 class={`${CSSclasses.h1} text-slate-200 my-2`}>
@@ -37,13 +35,18 @@
 		<h3 class={CSSclasses.h3}>Company money wasted</h3>
 		<p class={CSSclasses.p}>${generateRandomNumber(1e2, 1e8)}</p>
 	</div>
-		<div class="bg-green-800 p-4 rounded-lg">
+	<div class="bg-green-800 p-4 rounded-lg">
 		<h3 class={CSSclasses.h3}>Days from getting fired</h3>
 		<p class={CSSclasses.p}>{generateRandomNumber(1, 4)}</p>
 	</div>
 </div>
 <form method="POST">
-<Button type='submit' class='my-6 mx-2' variant='destructive' on:click={() => toast.success('10 test users created and added to the database!')}>
-	Create 10 new test users
-</Button>
+	<Button
+		type="submit"
+		class="my-6 mx-2"
+		variant="destructive"
+		on:click={() => toast.success('10 test users created and added to the database!')}
+	>
+		Create 10 new test users
+	</Button>
 </form>

@@ -11,12 +11,12 @@
 <Card.Root>
 	<Card.Header>
 		<Card.Title>Sign In</Card.Title>
-		<a href="/auth/user/reset/email" class={CSSclasses.muted + " hover:underline space-y-2"}>Forgot your password?</a>
+		<a href="/auth/user/reset/email" class={CSSclasses.muted + ' hover:underline space-y-2'}
+			>Forgot your password?</a
+		>
 	</Card.Header>
 	<Form.Root schema={loginFormSchema} {form} let:config method="POST" action="?/login">
-
 		<Card.Content class="space-y-2">
-
 			<Form.Field name="email" {config}>
 				<Form.Item class="space-y-1">
 					<Form.Label for="email">Email Address</Form.Label>

@@ -30,18 +30,26 @@
 			</DropdownMenu.Item>
 		</DropdownMenu.Group>
 		<DropdownMenu.Separator />
-		<DropdownMenu.Item on:click={() => setOpen(openEdit)} class="text-blue-500">Edit account details</DropdownMenu.Item>
+		<DropdownMenu.Item on:click={() => setOpen(openEdit)} class="text-blue-500"
+			>Edit account details</DropdownMenu.Item
+		>
 
-		<DropdownMenu.Item on:click={() => setOpen(openDelete)} class="text-red-500">Delete account</DropdownMenu.Item>
+		<DropdownMenu.Item on:click={() => setOpen(openDelete)} class="text-red-500"
+			>Delete account</DropdownMenu.Item
+		>
 	</DropdownMenu.Content>
 </DropdownMenu.Root>
 <DeleteAccount userID={userData.id} open={openDelete} customOpen={true} />
-<EditAccount userInfo={{
-	firstName: userData.firstName,
-	lastName: userData.lastName,
-	email: userData.email,
-	dob: userData.dob,
-	id: userData.id,
-	token: userData.token,
-	password: '',
-}} open={openEdit} customOpen={true} />
+<EditAccount
+	userInfo={{
+		firstName: userData.firstName,
+		lastName: userData.lastName,
+		email: userData.email,
+		dob: userData.dob,
+		id: userData.id,
+		token: userData.token,
+		password: ''
+	}}
+	open={openEdit}
+	customOpen={true}
+/>
