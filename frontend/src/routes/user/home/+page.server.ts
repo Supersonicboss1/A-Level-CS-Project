@@ -10,9 +10,11 @@ export const load: PageServerLoad = async ({ cookies }) => {
 	};
 	if (cookie.id && cookie.token) {
 		const response = await api.userdata.getUserData(cookie.id, cookie.token);
-		return response; //! Add the form schemas to the return
+		return {userData: response,
+			formSchema: await superValidate(recommendFormSchema)};
+		};
 	}
-};
+
 export const actions: Actions = {
 	default: async (event) => {
 		const cookie = {
@@ -33,10 +35,11 @@ export const actions: Actions = {
 		const recommendations = await api.recommendations.getRecommendations(
 			cookie.id,
 			cookie.token,
-			recommendForm.data.genre,
+			recommendForm.data.genre ? recommendForm.data.genre : "",
 			recommendForm.data.ageRating,
-			Number(recommendForm.data.runtime),
+			recommendForm.data.runtime ? Number(recommendForm.data.runtime) : 0,
 		);
+		console.log(recommendations);
 		return {
 			form: recommendForm,
 			success: true,

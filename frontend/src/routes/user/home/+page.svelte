@@ -15,7 +15,7 @@
 
 <div class="ml-4">
 	<h1 class={`${CSSclasses.h1} p-4`}>
-		Hello, {data.firstName}!
+		Hello, {data.userData.firstName}!
 		<div
 			class="bg-clip-text text-transparent bg-gradient-to-r from-cyan-500 to-white w-max p-2 pl-0"
 		>
@@ -39,7 +39,7 @@
 
 			<Form.Field name="runtime" {config}>
 				<Form.Item class="space-y-1 w-1/2">
-					<Form.Label for="runtime">Runtime in minutes</Form.Label>
+					<Form.Label for="runtime">Minimum runtime in minutes</Form.Label>
 					<Form.Input placeholder="60min" type="number" />
 					<Form.Validation />
 				</Form.Item>
@@ -67,6 +67,7 @@
 	</Form.Root>
 </Card.Root>
 <div class="grid-flow-col grid w-min m-3">
+
 	{#if form?.data != null}
 		{#each form.data as movie}
 			<div class="m-3">

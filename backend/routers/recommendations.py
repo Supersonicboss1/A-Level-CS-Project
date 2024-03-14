@@ -13,6 +13,7 @@ from fastapi import APIRouter, HTTPException
 from main.db import engine
 from main.schemas.movies import AgeRatings, Movie, MovieRead, MovieWithScore
 from main.schemas.user import User
+from sqlalchemy import true
 from sqlmodel import Session, select
 
 router = APIRouter()
@@ -53,6 +54,17 @@ def get_genre_scores(liked_movies: List[Movie]) -> dict[str, int]:
     return genre_scores
 
 
+def get_filters(genre: str, age_rating: AgeRatings, min_runtime: int) -> list:
+    filters = []
+    if genre != "":
+        filters.append(Movie.genre == genre.title())
+    if age_rating.value != "Any":
+        filters.append(Movie.age_rating == age_rating)
+    if min_runtime != 0:
+        filters.append(Movie.runtime <= min_runtime)
+    return filters
+
+
 @router.get("/{user_id}", response_model=list[MovieRead])
 def get_recommendations(
     user_id: int, token: str, genre: str, age_rating: AgeRatings, min_runtime: int
@@ -67,11 +79,13 @@ def get_recommendations(
         genre_scores = get_genre_scores(liked_movies)
         # get list of all movies
         movies = session.exec(
-            select(Movie)
-            .where(Movie.genre == genre.title() if genre != "" else True)
-            .where(Movie.age_rating == age_rating if age_rating != "Any" else True)
-            .where(Movie.runtime <= min_runtime if min_runtime != 0 else True)
+            select(Movie).filter(true(), *get_filters(genre, age_rating, min_runtime))
         ).all()
+        """.filter(true(), *get_filters(genre, age_rating, min_runtime)): specify the conditions for records
+        The true() function is a constant that always evaluates to True, so it doesn't filter out any records.
+        The get_filters function returns a list of additional conditions based on the genre, age_rating, and min_runtime parameters.
+        The * operator is used to unpack this list into separate arguments for the filter method."""
+        print(movies)
         movies_scored = []
         for movie in movies:
             if movie.id is not None:
@@ -103,4 +117,4 @@ def get_recommendations(
         # sort movies by score
         movies_scored.sort(key=lambda x: x.score, reverse=True)
         # return the top 5
-        return movies_scored[:5]
+        return movies_scored[:3]
