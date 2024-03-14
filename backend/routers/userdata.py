@@ -3,7 +3,7 @@ from typing import List, Literal
 from fastapi import APIRouter, HTTPException
 from main.db import engine
 from main.schemas.admin import Admin, AdminRead
-from main.schemas.movies import Movie
+from main.schemas.movies import Movie, MovieRead
 from main.schemas.user import User, UserRead
 from sqlmodel import Session, select
 
@@ -122,7 +122,7 @@ def remove_from_liked_movies(user_id: int, movie_id: int, token: str):
         session.commit()
     return True
 
-@router.get("/movies/liked/{user_id}", response_model=List[Movie])
+@router.get("/movies/liked/{user_id}", response_model=List[MovieRead])
 def get_liked_movies(user_id: int, token: str):
     with Session(engine) as session:
         user = session.get(User, user_id)

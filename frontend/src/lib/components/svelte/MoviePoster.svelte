@@ -5,15 +5,13 @@
 	import * as Dialog from '../ui/dialog';
 	import { Separator } from '../ui/separator';
 	import FavouriteFilm from './FavouriteFilm.svelte';
-	export let info: MovieRead | undefined = undefined;
+	export let info: MovieRead;
 
 </script>
-{#if info == undefined}
-<div class='carousel-image bg-muted'/>
-{:else}
+
 <Dialog.Root>
 	<Dialog.Trigger class="cursor-pointer">
-		<img alt="movie poster" class="carousel-image" src={info.poster_url} />
+		<img alt="movie poster" class="h-[450px] w-[300px] max-w-xs flex-none rounded-xl bg-cover bg-center bg-no-repeat opacity-30 transition-all duration-150 hover:rounded-3xl hover:opacity-100 hover:shadow-lg" src={info.poster_url} />
 	</Dialog.Trigger>
 	<Dialog.Content class="">
 		<div class="">
@@ -41,9 +39,3 @@
 		<FavouriteFilm movie_id={info.id} signedIn={true}/>
 	</Dialog.Content>
 </Dialog.Root>
-{/if}
-<style lang="postcss">
-	.carousel-image {
-		@apply h-[450px] w-[300px] max-w-xs flex-none rounded-xl bg-cover bg-center bg-no-repeat opacity-30 transition-all duration-150 hover:rounded-3xl hover:opacity-100 hover:shadow-lg;
-	}
-</style>

@@ -124,26 +124,6 @@ export interface components {
       /** Detail */
       detail?: components["schemas"]["ValidationError"][];
     };
-    /** Movie */
-    Movie: {
-      /** Id */
-      id?: number | null;
-      /** Title */
-      title: string;
-      /** Description */
-      description: string;
-      /** Poster Url */
-      poster_url: string;
-      /** Year */
-      year: number;
-      /** Rating */
-      rating: number;
-      /** Genre */
-      genre: string;
-      /** Runtime */
-      runtime: number;
-      age_rating: components["schemas"]["AgeRatings"];
-    };
     /** MovieCreate */
     MovieCreate: {
       /** Id */
@@ -593,7 +573,7 @@ export interface operations {
       /** @description Successful Response */
       200: {
         content: {
-          "application/json": components["schemas"]["Movie"][];
+          "application/json": components["schemas"]["MovieRead"][];
         };
       };
       /** @description Validation Error */

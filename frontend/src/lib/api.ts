@@ -1,13 +1,13 @@
 import createClient from "openapi-fetch";
 import type {
-    AdminCreate,
-    AdminRead,
-    AgeRating,
-    MovieCreate,
-    MovieRead,
-    User,
-    UserCreate,
-    UserRead,
+	AdminCreate,
+	AdminRead,
+	AgeRating,
+	MovieCreate,
+	MovieRead,
+	User,
+	UserCreate,
+	UserRead,
 } from "./types";
 import type { paths } from "./types/api";
 class API {
@@ -223,6 +223,22 @@ class UserData extends API {
 			},
 		});
 		return Boolean(response.data);
+	}
+	async getLikedMovies(userID: number, token: string): Promise<MovieRead[]> {
+		const response = await this.client.GET("/userdata/movies/liked/{user_id}", {
+			params: {
+				path: {
+					user_id: userID,
+				},
+				query: {
+					token: token,
+				},
+			},
+		});
+		if (response.data === undefined) {
+			throw new Error("Failed to get liked movies");
+		}
+		return response.data;
 	}
 }
 class Movies extends API {

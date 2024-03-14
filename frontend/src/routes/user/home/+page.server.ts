@@ -9,8 +9,10 @@ export const load: PageServerLoad = async ({ cookies }) => {
 		token: cookies.get("token"),
 	};
 	if (cookie.id && cookie.token) {
-		const response = await api.userdata.getUserData(cookie.id, cookie.token);
-		return {userData: response,
+		const userData = await api.userdata.getUserData(cookie.id, cookie.token);
+		const likedMovies = await api.userdata.getLikedMovies(cookie.id, cookie.token);
+		return {userData: userData,
+			likedMovies: likedMovies,
 			formSchema: await superValidate(recommendFormSchema)};
 		};
 	}
