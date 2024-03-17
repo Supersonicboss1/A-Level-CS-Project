@@ -3,18 +3,9 @@ import { fail, type Actions } from "@sveltejs/kit";
 import { superValidate } from "sveltekit-superforms/server";
 import type { PageServerLoad } from "./$types";
 import { recommendFormSchema } from "./schema";
-export const load: PageServerLoad = async ({ cookies }) => {
-	const cookie = {
-		id: Number(cookies.get("id")),
-		token: cookies.get("token"),
-	};
-	if (cookie.id && cookie.token) {
-		const userData = await api.userdata.getUserData(cookie.id, cookie.token);
-		const likedMovies = await api.userdata.getLikedMovies(cookie.id, cookie.token);
-		return {userData: userData,
-			likedMovies: likedMovies,
+export const load: PageServerLoad = async () => {
+		return {
 			formSchema: await superValidate(recommendFormSchema)};
-		};
 	}
 
 export const actions: Actions = {
