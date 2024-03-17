@@ -28,6 +28,7 @@
 <Card.Root class="w-1/2 self-center ml-6">
 	<Card.Header>
 		<Card.Title>Generate Recommendations</Card.Title>
+		<a class={CSSclasses.muted + " hover:underline text-blue-400"} href="/user/likedfilms">View your liked films?</a>
 	</Card.Header>
 	<Form.Root schema={recommendFormSchema} form={formSchema} let:config method="POST">
 		<Card.Content class="space-y-2">
