@@ -224,6 +224,20 @@ class UserData extends API {
 		});
 		return Boolean(response.data);
 	}
+	async resetLikedMovies(requesterUserID: number, requesterToken: string, userID: number): Promise<boolean> {
+		const response = await this.client.DELETE("/userdata/movies/liked/{user_id}", {
+			params: {
+				query: {
+					requester_user_id: requesterUserID,
+					requester_token: requesterToken,
+				},
+				path: {
+					user_id: userID,
+				}
+			},
+		});
+		return Boolean(response.data);
+	}
 	async getLikedMovies(userID: number, token: string): Promise<MovieRead[]> {
 		const response = await this.client.GET("/userdata/movies/liked/{user_id}", {
 			params: {

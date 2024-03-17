@@ -56,6 +56,8 @@ export interface paths {
   "/userdata/movies/liked/{user_id}": {
     /** Get Liked Movies */
     get: operations["get_liked_movies_userdata_movies_liked__user_id__get"];
+    /** Reset Liked Movies */
+    delete: operations["reset_liked_movies_userdata_movies_liked__user_id__delete"];
   };
   "/movies/add": {
     /** Add Movie */
@@ -574,6 +576,32 @@ export interface operations {
       200: {
         content: {
           "application/json": components["schemas"]["MovieRead"][];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  /** Reset Liked Movies */
+  reset_liked_movies_userdata_movies_liked__user_id__delete: {
+    parameters: {
+      query: {
+        requester_user_id: number;
+        requester_token: string;
+      };
+      path: {
+        user_id: number;
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      200: {
+        content: {
+          "application/json": true;
         };
       };
       /** @description Validation Error */

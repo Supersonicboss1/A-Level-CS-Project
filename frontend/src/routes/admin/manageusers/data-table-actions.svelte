@@ -5,13 +5,33 @@
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import type { User } from '$lib/types';
 	import { MoreHorizontal } from 'lucide-svelte';
+	import { toast } from 'svelte-sonner';
 	export let userData: User;
 	let openDelete: boolean;
 	let openEdit: boolean;
 	function setOpen(open: boolean) {
-		// wha??? why??? why does this work??? why does this fix the bug???
+		// This is a hack to force the dropdown to close when the user clicks on an item due to focus issues with the UI library
 		open = false;
 		open = true;
+	}
+	function resetLikedFilms() {
+		fetch('/kitAPI/resetLiked', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ id: userData.id })
+		})
+			.then((res) => {
+				if (res.ok) {
+					console.log('success');
+					toast.success('Liked films reset');
+				}
+			})
+			.catch((err) => {
+				console.log(err);
+				toast.error('Something went wrong');
+			});
 	}
 </script>
 
@@ -23,6 +43,7 @@
 		</Button>
 	</DropdownMenu.Trigger>
 	<DropdownMenu.Content>
+		{#if userData.id !== null && userData.id !== undefined}
 		<DropdownMenu.Group>
 			<DropdownMenu.Label>Actions</DropdownMenu.Label>
 			<DropdownMenu.Item on:click={() => navigator.clipboard.writeText(String(userData.id))}>
@@ -33,12 +54,18 @@
 		<DropdownMenu.Item on:click={() => setOpen(openEdit)} class="text-blue-500"
 			>Edit account details</DropdownMenu.Item
 		>
-
+				<DropdownMenu.Separator />
+		<DropdownMenu.Item on:click={resetLikedFilms} class="text-orange-500"
+			>Reset liked films</DropdownMenu.Item
+		>
 		<DropdownMenu.Item on:click={() => setOpen(openDelete)} class="text-red-500"
 			>Delete account</DropdownMenu.Item
 		>
+
+		{/if}
 	</DropdownMenu.Content>
 </DropdownMenu.Root>
+{#if userData.id !== null && userData.id !== undefined}
 <DeleteAccount userID={userData.id} open={openDelete} customOpen={true} />
 <EditAccount
 	userInfo={{
@@ -53,3 +80,4 @@
 	open={openEdit}
 	customOpen={true}
 />
+{/if}

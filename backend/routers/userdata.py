@@ -122,6 +122,19 @@ def remove_from_liked_movies(user_id: int, movie_id: int, token: str):
         session.commit()
     return True
 
+@router.delete("/movies/liked/{user_id}", response_model=Literal[True])
+def reset_liked_movies(requester_user_id: int, requester_token: str, user_id: int):
+    with Session(engine) as session:
+        admin = session.get(Admin, requester_user_id)
+        if admin is None or admin.token != requester_token:
+            raise HTTPException(status_code=403, detail="Forbidden")
+        user = session.get(User, user_id)
+        if user is None:
+            raise HTTPException(status_code=404, detail="User not found")
+        user.liked_movies = []
+        session.commit()
+    return True
+
 @router.get("/movies/liked/{user_id}", response_model=List[MovieRead])
 def get_liked_movies(user_id: int, token: str):
     with Session(engine) as session:
