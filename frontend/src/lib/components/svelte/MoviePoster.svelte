@@ -6,7 +6,7 @@
 	import { Separator } from '../ui/separator';
 	import FavouriteFilm from './FavouriteFilm.svelte';
 	export let info: MovieRead;
-
+	export let isFavourite: boolean = false;
 </script>
 
 <Dialog.Root>
@@ -36,6 +36,6 @@
 			<Separator />
 			<p class={CSSclasses.p}>{info.description}</p>
 		</div>
-		<FavouriteFilm movie_id={info.id} signedIn={true}/>
+		<FavouriteFilm movie_id={info.id} signedIn={true} {isFavourite}/>
 	</Dialog.Content>
 </Dialog.Root>

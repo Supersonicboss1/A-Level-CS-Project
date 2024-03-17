@@ -130,4 +130,26 @@ def get_liked_movies(user_id: int, token: str):
             raise HTTPException(status_code=404, detail="User not found")
         if user.token != token:
             raise HTTPException(status_code=403, detail="Forbidden")
-        return user.liked_movies
+        liked_movies = user.liked_movies
+    with Session(engine) as session:
+        movies = session.exec(select(Movie)).all()
+        returned_movies = []
+        for movie in movies:
+            if movie in liked_movies and movie.id is not None:
+                returned_movies.append(
+                    MovieRead(
+                        id=movie.id,
+                        title=movie.title,
+                        description=movie.description,
+                        poster_url=movie.poster_url,
+                        year=movie.year,
+                        rating=movie.rating,
+                        genre=movie.genre,
+                        age_rating=movie.age_rating,
+                        runtime=movie.runtime,
+                        actors=[actor.name for actor in movie.actors],
+                        tags=[tag.name for tag in movie.tags],
+                    )
+                )
+        print(returned_movies)
+        return returned_movies

@@ -11,6 +11,9 @@
 	export let formSchema: SuperValidated<RecommendFormSchema>;
 	export let data: PageData;
 	export let form: ActionData;
+	function isInFavourites(movie_id: number) {
+		return data.likedMovies?.some((movie) => movie.id === movie_id);
+	}
 </script>
 <div class="ml-4">
 	<h1 class={`${CSSclasses.h1} p-4`}>
@@ -70,7 +73,7 @@
 	{#if form?.data != null}
 		{#each form.data as movie}
 			<div class="m-3">
-				<MoviePoster info={movie} />
+				<MoviePoster info={movie} isFavourite={isInFavourites(movie.id)} />
 			</div>
 		{/each}
 	{/if}

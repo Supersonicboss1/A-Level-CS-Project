@@ -61,7 +61,7 @@ def get_filters(genre: str, age_rating: AgeRatings, min_runtime: int) -> list:
     if age_rating.value != "Any":
         filters.append(Movie.age_rating == age_rating)
     if min_runtime != 0:
-        filters.append(Movie.runtime <= min_runtime)
+        filters.append(Movie.runtime >= min_runtime) #! BUG: Condition was flipped
     return filters
 
 
