@@ -16,9 +16,9 @@
 	{greeting}, {user.firstName}
 </h1>
 <h2 class={CSSclasses.h2}>Ready to get down to business?</h2>
-<a href="/admin/manageusers">
-	<Button class=" my-2 mx-2">Manage Users</Button>
-</a>
+
+	<Button href="/admin/manageusers" class=" my-2 mx-2">Manage Users</Button>
+
 <form method="POST">
 	<Button
 		type="submit"

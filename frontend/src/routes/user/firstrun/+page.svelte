@@ -22,9 +22,8 @@
     </div>
 {/if}
 <div class="flex justify-center m-10">
-<a href="/user/home">
-<Button class={'w-56 hover:bg-orange-500 transition-all'}>
+
+<Button href="/user/home" class={'w-56 hover:bg-orange-500 transition-all'}>
     Finish
 </Button>
-</a>
 </div>

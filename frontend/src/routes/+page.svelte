@@ -26,14 +26,13 @@
 			<InfiniteCarousel {movies} />
 
 			<div>
-				<a href="/auth/user">
+
 					<center
-						><Button class="transform hover:-translate-y-1 active:bg-orange-300 transition-all">
+						><Button href="/auth/user" class="transform hover:-translate-y-1 active:bg-orange-300 transition-all">
 							Get Started
 							<ChevronRight />
 						</Button></center
 					>
-				</a>
 			</div>
 		</div>
 	</div>

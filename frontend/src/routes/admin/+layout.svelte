@@ -16,7 +16,7 @@
 <!-- Header bar with log out button-->
 
     <div class="flex justify-between items-center bg-muted text-slate-200 p-3 rounded-xl">
-        <a href="/">
+        <a href="/admin/home">
             <Radar/>
         </a>
         <Button variant='outline' on:click={logOut} >Log out</Button>
