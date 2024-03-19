@@ -40,14 +40,14 @@
 	{/if}
 	<Dialog.Content>
 		<Dialog.Header>
-			<Dialog.Title>Are you sure absolutely sure?</Dialog.Title>
+			<Dialog.Title>Are you absolutely sure?</Dialog.Title>
 			<Dialog.Description>
-				This action cannot be undone. This will permanently delete your account and remove this
+				This action cannot be undone. This will permanently delete this account and remove this
 				user's data from our servers.
 			</Dialog.Description>
 		</Dialog.Header>
 		<Dialog.Footer>
-			<Button variant="secondary" on:click={() => (customOpen ? (open = false) : null)}>
+			<Button variant="secondary" on:click={() => (open = false)}>
 				Cancel
 			</Button>
 			<Button variant="destructive" on:click={handleDelete}>Delete Account</Button>

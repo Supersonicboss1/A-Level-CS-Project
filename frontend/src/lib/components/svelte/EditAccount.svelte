@@ -47,7 +47,7 @@
 
 <Dialog.Root bind:open>
 	{#if customOpen === false}
-		<Dialog.Trigger class={buttonVariants({ variant: 'destructive' })}>Edit account</Dialog.Trigger>
+		<Dialog.Trigger class={buttonVariants({ variant: 'secondary' })}>Edit account</Dialog.Trigger>
 	{/if}
 	<Dialog.Content>
 		<Dialog.Header>
@@ -81,7 +81,7 @@
 		</div>
 
 		<Dialog.Footer>
-			<Button variant="secondary" on:click={() => (customOpen ? (open = false) : null)}>
+			<Button variant="secondary" on:click={() => (open = false)}>
 				Cancel
 			</Button>
 			<Button variant="destructive" on:click={handleEdit}>Complete Changes</Button>

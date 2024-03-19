@@ -16,10 +16,13 @@
 <!-- Header bar with log out button-->
 
     <div class="flex justify-between items-center bg-muted text-slate-200 p-3 rounded-xl">
-        <a href="/">
+        <a href="/user/home">
             <Radar/>
         </a>
+        <div>
+        <Button variant='outline' href='/user/manage' >Manage your account</Button>
         <Button variant='outline' on:click={logOut} >Log out</Button>
+        </div>
     </div>
 
 <slot/>
