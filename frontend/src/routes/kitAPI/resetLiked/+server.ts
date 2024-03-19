@@ -3,7 +3,7 @@ import type { RequestEvent } from "./$types";
 
 export const POST = async (event: RequestEvent) => {
 	const cookie = {
-		id: event.cookies.get("id") ?? "-1",
+		id: Number(event.cookies.get("id") ?? "-1"),
 		token: event.cookies.get("token") ?? "",
 		isAdmin: JSON.parse(event.cookies.get("isAdmin") ?? "false"),
 	};
@@ -12,12 +12,15 @@ export const POST = async (event: RequestEvent) => {
 		body = await event.request.json();
 	} catch (error) {
 		console.log("Error parsing JSON, returning 400");
-		return new Response("", { status: 400 });
+		return new Response("Bad Request", { status: 400 });
+	}
+	if (cookie.isAdmin || cookie.id !== body.id) {
+		return new Response("Forbidden", { status: 403 });
 	}
 	console.log(cookie);
 	console.log(body);
 	const req = await api.userdata.resetLikedMovies(
-		Number(cookie.id),
+		cookie.id,
 		cookie.token,
 		body.id,
 	);
