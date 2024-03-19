@@ -1,5 +1,5 @@
 ### User
-email: testuser@example.com
+email: testuser@example.cpm
 password: Password01!
 DoB: 24/05/2006
 First Name: Test
