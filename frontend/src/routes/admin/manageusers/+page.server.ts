@@ -1,5 +1,5 @@
 import api from "$lib/api";
-import { fail } from "@sveltejs/kit";
+import { redirect } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 export const load: PageServerLoad = async ({ cookies }) => {
 	const cookie = {
@@ -17,9 +17,7 @@ export const load: PageServerLoad = async ({ cookies }) => {
 			};
 		}
 
-		return fail(403, {
-			error: "You are not authorized to view this page.",
-		});
+		return redirect(303, "/");
 	}
 
 	return {

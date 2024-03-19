@@ -17,12 +17,12 @@
 </h1>
 <h2 class={CSSclasses.h2}>Ready to get down to business?</h2>
 <a href="/admin/manageusers">
-	<Button class="my-6 mx-2">Manage Users</Button>
+	<Button class=" my-2 mx-2">Manage Users</Button>
 </a>
 <form method="POST">
 	<Button
 		type="submit"
-		class="my-6 mx-2"
+		class="mx-2"
 		variant="destructive"
 		on:click={() => toast.success('10 test users created and added to the database!')}
 	>

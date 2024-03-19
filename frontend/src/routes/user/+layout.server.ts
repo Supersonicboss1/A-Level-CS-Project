@@ -1,5 +1,5 @@
 import api from "$lib/api";
-import { fail } from "@sveltejs/kit";
+import { redirect } from "@sveltejs/kit";
 import type { LayoutServerLoad } from "./$types";
 
 export const load: LayoutServerLoad = async ({ cookies }) => {
@@ -11,16 +11,15 @@ export const load: LayoutServerLoad = async ({ cookies }) => {
     if (cookie.id !== -1 && cookie.token && !cookie.isAdmin) {
         const userData = await api.userdata.getUserData(cookie.id, cookie.token);
         const likedMovies = await api.userdata.getLikedMovies(cookie.id, cookie.token);
+        console.log("User data and liked movies loaded successfully!")
         return {userData: userData,
             likedMovies: likedMovies,
         };
     }
     if (cookie.isAdmin) {
-        		return fail(403, {
-											error: "Admin users cannot use the recommendations system",
-										});
+        console.log("Admin users cannot use the recommendations system");
+        		return redirect(303, "/admin/home");
     }
-    return fail(403, {
-        error: "You are not authorized to view this page",
-    });
+    console.log("User is not logged in, returning 403");
+    return redirect(303, "/auth/user");
 }
