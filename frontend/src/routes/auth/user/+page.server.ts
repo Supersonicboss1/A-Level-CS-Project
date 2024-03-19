@@ -70,6 +70,6 @@ export const actions: Actions = {
 			secure: false,
 			path: "/",
 		});
-		redirect(303, "/user/home");
+		redirect(303, "/user/firstrun");
 	},
 };
