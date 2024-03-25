@@ -63,6 +63,10 @@ export interface paths {
     /** Add Movie */
     post: operations["add_movie_movies_add_post"];
   };
+  "/movies/add/multiple": {
+    /** Add Multiple Movies */
+    post: operations["add_multiple_movies_movies_add_multiple_post"];
+  };
   "/movies/movie/{movie_id}": {
     /** Get Movie By Id */
     get: operations["get_movie_by_id_movies_movie__movie_id__get"];
@@ -623,6 +627,34 @@ export interface operations {
     requestBody: {
       content: {
         "application/json": components["schemas"]["MovieCreate"];
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      200: {
+        content: {
+          "application/json": true;
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  /** Add Multiple Movies */
+  add_multiple_movies_movies_add_multiple_post: {
+    parameters: {
+      query: {
+        id: number;
+        token: string;
+      };
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["MovieCreate"][];
       };
     };
     responses: {
