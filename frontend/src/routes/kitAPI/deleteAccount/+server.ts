@@ -26,5 +26,10 @@ export const POST = async (event: RequestEvent) => {
 	);
 	// If the request fails, return a 400 status code.
 	if (!deleteUserRequest) return new Response("", { status: 400 });
+	// clear the cookies
+	event.cookies.delete("id", { path: "/" });
+	event.cookies.delete("token", { path: "/" });
+	event.cookies.delete("isAdmin", { path: "/" });
+
 	return new Response("", { status: 200 });
 };
