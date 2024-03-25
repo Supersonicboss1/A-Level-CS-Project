@@ -9,10 +9,15 @@
 	export let userData: User;
 	let openDelete: boolean;
 	let openEdit: boolean;
-	function setOpen(open: boolean) {
+	function setOpenEdit() {
 		// This is a hack to force the dropdown to close when the user clicks on an item due to focus issues with the UI library
-		open = false;
-		open = true;
+		openEdit = false;
+		openEdit = true;
+	}
+	function setOpenDelete() {
+		// This is a hack to force the dropdown to close when the user clicks on an item due to focus issues with the UI library
+		openDelete = false;
+		openDelete = true;
 	}
 	function resetLikedFilms() {
 		fetch('/kitAPI/resetLiked', {
@@ -51,14 +56,14 @@
 			</DropdownMenu.Item>
 		</DropdownMenu.Group>
 		<DropdownMenu.Separator />
-		<DropdownMenu.Item on:click={() => setOpen(openEdit)} class="text-blue-500"
+		<DropdownMenu.Item on:click={() => setOpenEdit()} class="text-blue-500"
 			>Edit account details</DropdownMenu.Item
 		>
 				<DropdownMenu.Separator />
 		<DropdownMenu.Item on:click={resetLikedFilms} class="text-orange-500"
 			>Reset liked films</DropdownMenu.Item
 		>
-		<DropdownMenu.Item on:click={() => setOpen(openDelete)} class="text-red-500"
+		<DropdownMenu.Item on:click={() => setOpenDelete()} class="text-red-500"
 			>Delete account</DropdownMenu.Item
 		>
 
