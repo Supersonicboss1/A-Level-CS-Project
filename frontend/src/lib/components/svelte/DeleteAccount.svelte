@@ -20,7 +20,7 @@
 					open = false
 				}
 				console.log('invalidating');
-				window.location.reload(); // TODO: this better
+				window.location.href = "/"; // TODO: this better
 			})
 			.catch((err) => {
 				console.log(err);
