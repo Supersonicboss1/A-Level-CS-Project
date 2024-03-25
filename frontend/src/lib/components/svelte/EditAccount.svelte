@@ -6,16 +6,6 @@
 	import { toast } from 'svelte-sonner';
 	import { Button, buttonVariants } from '../ui/button';
 	export let userInfo: User;
-	let editableUserInfo: User
-	$: editableUserInfo = {
-		firstName: userInfo.firstName,
-		lastName: userInfo.lastName,
-		email: userInfo.email,
-		dob: userInfo.dob,
-		id: userInfo.id,
-		token: userInfo.token,
-		password: '',
-	}
 	export let open = false;
 	export let customOpen = false; // if the user wants to open the dialog from a different component - if this is false, avoid setting the value of open
 	const handleEdit = () => {
@@ -24,11 +14,11 @@
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({ editableUserInfo })
+			body: JSON.stringify({ userInfo })
 		})
 			.then((res) => {
 				console.log(res.ok);
-				toast.success('Account deleted successfully');
+				toast.success('Account edited successfully');
 				if (customOpen) {
 					open = false
 				}
@@ -56,28 +46,23 @@
 		<div class="grid grid-cols-2">
 			<div class="space-y-1 mr-5">
 				<Label>First Name</Label>
-				<Input type="text" bind:value={editableUserInfo.firstName}/>
+				<Input type="text" bind:value={userInfo.firstName}/>
 			</div>
 
 			<div class="space-y-1">
 				<Label for="lastname">Last Name</Label>
-				<Input id="lastname" type="text" placeholder="Physics" bind:value={editableUserInfo.lastName} />
+				<Input id="lastname" type="text" placeholder="Physics" bind:value={userInfo.lastName} />
 			</div>
 		</div>
 
 		<div class="space-y-1">
 			<Label for="email">Email Address</Label>
-			<Input type="email" bind:value={editableUserInfo.email}/>
-		</div>
-
-		<div class="space-y-1">
-			<Label for="password">Password</Label>
-			<Input type="password" bind:value={editableUserInfo.password}/>
+			<Input type="email" bind:value={userInfo.email}/>
 		</div>
 
 		<div class="space-y-1">
 			<Label for="dob">Date of Birth</Label>
-			<Input type="date" bind:value={editableUserInfo.dob} />
+			<Input type="date" bind:value={userInfo.dob} />
 		</div>
 
 		<Dialog.Footer>

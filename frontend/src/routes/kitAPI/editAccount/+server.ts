@@ -9,16 +9,21 @@ export const POST = async (event: RequestEvent) => {
 		isAdmin: JSON.parse(event.cookies.get("isAdmin") ?? "false"),
 	};
 
+	let req: {
+		userInfo: User;
+	};
 	let body: User;
 	try {
 		// Put this in a try block in case something goes wrong with the request.
-		body = await event.request.json();
+		req = await event.request.json();
+		body = req.userInfo;
 	} catch (error) {
 		return new Response("Bad Request", { status: 400 });
 	}
 
 	// If the user is not an admin, they can only edit their own account.
-	if (!cookie.isAdmin || body.id === cookie.id)
+	console.log(cookie.isAdmin, body, cookie.id);
+	if (cookie.isAdmin === false && body.id !== cookie.id)
 		return new Response("Forbidden", { status: 403 });
 
 	const editUserRequest = await api.userdata.editUser(
