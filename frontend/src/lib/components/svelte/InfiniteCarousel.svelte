@@ -1,19 +1,19 @@
 <script lang="ts">
 	import type { MovieRead } from '$lib/types';
-	export let movies: MovieRead[]
 	import MoviePoster from './MoviePoster.svelte';
+	export let movies: MovieRead[]
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div class="flex flex-none overflow-x-hidden">
 	<div class="carousel-container scroll">
 		{#each movies as movie}
-			<MoviePoster info={movie} />
+			<MoviePoster info={movie} shouldBeSignedIn={false} />
 		{/each}
 	</div>
 	<div class="carousel-container scroll">
 		{#each movies as movie}
-			<MoviePoster info={movie} />
+			<MoviePoster info={movie} shouldBeSignedIn={false} />
 		{/each}
 	</div>
 </div>

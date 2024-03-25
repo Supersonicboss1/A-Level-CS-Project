@@ -7,6 +7,7 @@
 	import FavouriteFilm from './FavouriteFilm.svelte';
 	export let info: MovieRead;
 	export let isFavourite: boolean = false;
+	export let shouldBeSignedIn: boolean = true;
 </script>
 
 <Dialog.Root>
@@ -36,6 +37,6 @@
 			<Separator />
 			<p class={CSSclasses.p}>{info.description}</p>
 		</div>
-		<FavouriteFilm movie_id={info.id} signedIn={true} {isFavourite}/>
+		<FavouriteFilm movie_id={info.id} signedIn={shouldBeSignedIn} {isFavourite}/>
 	</Dialog.Content>
 </Dialog.Root>
