@@ -47,6 +47,11 @@ def add_movie(movie_data: MovieCreate, id: int, token: str):
     return True
 
 
+@router.post("/add/multiple", response_model=Literal[True])
+def add_multiple_movies(movies: List[MovieCreate], id: int, token: str):
+    for movie in movies:
+        add_movie(movie, id, token)
+
 @router.get("/movie/{movie_id}", response_model=MovieRead)
 def get_movie_by_id(movie_id: int):
     with Session(engine) as session:
