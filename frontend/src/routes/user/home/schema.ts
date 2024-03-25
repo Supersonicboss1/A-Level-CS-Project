@@ -3,7 +3,7 @@ export const recommendFormSchema = z.object({
 	genre: z.string().optional(),
 	ageRating: z.enum(["Any", "U", "PG", "12A", "12", "15", "18"]),
 	runtime: z.string().optional().refine((x) => {
-		if (x == null) {
+		if (x == null || x === "" || x === "0" || x === undefined) {
 			return true;
 		}
 		const num = Number(x);
