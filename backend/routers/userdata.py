@@ -68,6 +68,7 @@ def edit_user_account(
             user.firstName = new_info.firstName
             user.lastName = new_info.lastName
             user.dob = new_info.dob
+            user.email = new_info.email
             session.commit()  # TODO: check if this works
             return True
         # check if user is admin
