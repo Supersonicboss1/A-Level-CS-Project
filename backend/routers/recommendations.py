@@ -88,7 +88,8 @@ def get_recommendations(
         print(movies)
         movies_scored = []
         for movie in movies:
-            if movie.id is not None:
+            # check if movie is not None and that the movie is not already liked by the user
+            if movie.id is not None and movie not in liked_movies:
                 movies_scored.append(
                     MovieWithScore(
                         id=movie.id,
